@@ -1,0 +1,43 @@
+:root {
+  /* Colors */
+  --color-cream: #f8f5f3; /* background primary */
+  --color-bone: #eae6e2; /* background secondary — footer, cards */
+  --color-terracotta: #cf6f4c; /* accent primary — CTAs */
+  --color-terracotta-hover: #d97757;
+  --color-carbon: #282828; /* text primary */
+  --color-white: #ffffff; /* text over dark photos */
+
+  --color-text-secondary: rgba(40, 40, 40, 0.7);
+  --color-text-subtle: rgba(40, 40, 40, 0.46);
+  --color-border: rgba(40, 40, 40, 0.12);
+  --color-border-strong: rgba(40, 40, 40, 0.24);
+
+  --color-text-on-dark-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-on-dark-subtle: rgba(255, 255, 255, 0.6);
+
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+  --tracking-eyebrow: 0.19em;
+  --tracking-button: 0.125em;
+
+  /* Shape */
+  --radius-card-sm: 12px;
+  --radius-card-md: 16px;
+  --radius-card-lg: 20px;
+  --radius-pill: 9999px;
+  --radius-button: 0px;
+
+  /* Motion */
+  --ease-hover: 200ms ease;
+  --ease-content: 500ms ease;
+
+  /* Layout */
+  --content-max: 1280px;
+  --section-pad-x: 70px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --section-pad-x: 24px;
+  }
+}

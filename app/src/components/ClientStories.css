@@ -1,0 +1,114 @@
+.client-stories {
+  background: var(--color-cream);
+  padding: 90px 0;
+}
+
+.client-stories-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+
+.client-stories-eyebrow {
+  color: var(--color-terracotta);
+  margin-bottom: 16px;
+}
+
+.client-stories-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.client-stories-rating-value {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.client-stories-count {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.client-stories-cta {
+  font-size: 13px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  color: var(--color-carbon);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 2px;
+}
+
+.client-stories-cta:hover {
+  color: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+}
+
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--color-terracotta);
+}
+
+.star-empty {
+  color: var(--color-border-strong);
+}
+
+.client-stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.review-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-md);
+  padding: 26px;
+  /* Off-screen cards skip layout/paint until they scroll into view —
+     keeps this section cheap on mobile even as more reviews are added. */
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+
+.review-author {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-text-subtle);
+}
+
+.review-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .client-stories {
+    padding: 60px 0;
+  }
+}

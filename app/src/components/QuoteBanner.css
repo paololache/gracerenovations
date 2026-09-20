@@ -1,0 +1,27 @@
+.quote-banner {
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+.quote-banner-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 40px var(--section-pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.quote-banner-headline {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.quote-banner-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
