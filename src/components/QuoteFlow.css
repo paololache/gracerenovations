@@ -1,0 +1,236 @@
+.quote-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.quote-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: rgba(40, 40, 40, 0.6);
+  cursor: pointer;
+}
+
+.quote-card {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--color-cream);
+  border-radius: var(--radius-card-lg);
+  padding: 50px;
+  box-shadow: 0 30px 80px rgba(40, 40, 40, 0.28);
+  animation: quote-card-in var(--ease-content);
+}
+
+@keyframes quote-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quote-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--color-carbon);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background var(--ease-hover);
+}
+
+.quote-close:hover {
+  background: var(--color-bone);
+}
+
+.quote-progress {
+  margin-bottom: 34px;
+}
+
+.quote-step-label {
+  color: var(--color-text-subtle);
+  margin-bottom: 14px;
+}
+
+.quote-progress-track {
+  height: 3px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.quote-progress-fill {
+  height: 100%;
+  background: var(--color-terracotta);
+  transition: width var(--ease-content);
+}
+
+.quote-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quote-question {
+  padding: 0;
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+}
+
+.quote-field-hint {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+}
+
+.quote-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quote-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: left;
+  width: 100%;
+  padding: 18px 22px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-sm);
+  cursor: pointer;
+  transition: border-color var(--ease-hover), background var(--ease-hover);
+}
+
+.quote-option:hover {
+  border-color: var(--color-border-strong);
+}
+
+.quote-option-selected {
+  border-color: var(--color-terracotta);
+  background: rgba(207, 111, 76, 0.08);
+}
+
+.quote-option-label {
+  font-size: 17px;
+}
+
+.quote-option-hint {
+  font-size: 13px;
+  color: var(--color-text-subtle);
+}
+
+.quote-contact-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quote-input {
+  width: 100%;
+  padding: 16px 18px;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--color-carbon);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-sm);
+  transition: border-color var(--ease-hover);
+}
+
+.quote-input:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+}
+
+.quote-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 34px;
+}
+
+.quote-back {
+  background: none;
+  border: none;
+  padding: 12px 4px;
+  font-size: 13px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.quote-back:hover {
+  color: var(--color-carbon);
+}
+
+.quote-actions .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.quote-result {
+  text-align: center;
+  padding: 20px 0 10px;
+}
+
+.quote-result-eyebrow {
+  color: var(--color-terracotta);
+  margin-bottom: 18px;
+}
+
+.quote-result-figure {
+  font-size: 56px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.quote-result-copy {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 40ch;
+  margin: 0 auto 34px;
+}
+
+.quote-result-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .quote-card {
+    padding: 34px 24px;
+  }
+
+  .quote-result-figure {
+    font-size: 44px;
+  }
+}

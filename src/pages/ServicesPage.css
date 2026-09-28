@@ -1,0 +1,218 @@
+.services-index {
+  background: var(--color-carbon);
+}
+
+.services-index-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 44px;
+  padding-top: 26px;
+  padding-bottom: 26px;
+}
+
+.services-index button {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  color: var(--color-white);
+  font-size: 13px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--ease-hover);
+}
+
+.services-index button span {
+  color: var(--color-terracotta);
+  margin-right: 8px;
+}
+
+.services-index button:hover {
+  color: var(--color-terracotta-hover);
+}
+
+.service-details {
+  padding: 126px 0 40px;
+}
+
+.service-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: start;
+  margin-bottom: 126px;
+  scroll-margin-top: 40px;
+}
+
+.service-detail-reverse .service-detail-image {
+  order: 2;
+}
+
+.service-detail-image {
+  position: sticky;
+  top: 40px;
+  height: 620px;
+}
+
+.service-detail-title {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 26px;
+}
+
+.service-detail-facts {
+  display: flex;
+  gap: 50px;
+  margin: 36px 0 40px;
+  padding: 26px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.service-detail-fact-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  margin-bottom: 8px;
+}
+
+.service-detail-fact-value {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.service-detail-subhead {
+  color: var(--color-text-subtle);
+  margin-bottom: 18px;
+}
+
+.service-detail-list {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 30px;
+}
+
+.service-detail-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.service-detail-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 10px;
+  height: 1px;
+  background: var(--color-terracotta);
+}
+
+.service-detail-examples {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.service-detail-examples li {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 15px;
+}
+
+.service-detail-examples a {
+  color: var(--color-carbon);
+}
+
+.service-detail-examples a:hover {
+  color: var(--color-terracotta);
+}
+
+.service-detail-examples span {
+  color: var(--color-text-secondary);
+}
+
+.other-trades {
+  background: var(--color-bone);
+  padding: 110px 0;
+}
+
+.other-trades .section-title {
+  max-width: 24ch;
+}
+
+.other-trades-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.other-trade {
+  background: var(--color-cream);
+  border-radius: var(--radius-card-md);
+  padding: 34px 30px;
+}
+
+.other-trade h3 {
+  font-size: 22px;
+  font-weight: 300;
+  margin-bottom: 12px;
+}
+
+.other-trade p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .service-details {
+    padding-top: 70px;
+  }
+
+  .service-detail {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 90px;
+  }
+
+  .service-detail-reverse .service-detail-image {
+    order: 0;
+  }
+
+  .service-detail-image {
+    position: static;
+    height: 360px;
+  }
+
+  .service-detail-title {
+    font-size: 36px;
+  }
+
+  .other-trades-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .service-detail-list,
+  .other-trades-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-detail-facts {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
