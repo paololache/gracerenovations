@@ -1,5 +1,6 @@
-import { ImagePlaceholder } from './ImagePlaceholder'
-import { site } from '../data/site'
+import { stats } from '../data/company'
+import { routeHref } from '../lib/router'
+import { Photo } from './Photo'
 import './About.css'
 
 export function About() {
@@ -8,21 +9,21 @@ export function About() {
       <div className="section about-grid">
         <div>
           <p className="eyebrow about-eyebrow">About</p>
-          <h2 className="about-title">A local crew that treats your home like the job site it is.</h2>
+          <h2 className="about-title">Nine people, one county, since 2009.</h2>
           <p className="about-copy">
             We do not subcontract the work we are known for. The person who prices your job is on site the day it
             starts, and stays until the last coat of paint.
           </p>
           <p className="about-copy">
-            Written schedule before demolition, and clear updates while we are in your house — from the first
-            estimate through the final walkthrough.
+            Licensed, bonded and insured. Written schedule before demolition, weekly updates while we are in your
+            house, and a final invoice we publish next to the photos.
           </p>
-          <a href="#crew" className="btn btn-primary about-cta">
+          <a href={routeHref('about')} className="btn btn-primary about-cta">
             Meet the crew
           </a>
 
           <div className="about-stats">
-            {site.stats.map((stat) => (
+            {stats.slice(0, 3).map((stat) => (
               <div key={stat.label}>
                 <div className="about-stat-value">{stat.value}</div>
                 <div className="about-stat-label">{stat.label}</div>
@@ -33,10 +34,20 @@ export function About() {
 
         <div className="about-images">
           <div className="about-image">
-            <ImagePlaceholder shape="rounded" radius={16} caption="Crew on site" />
+            <Photo
+              id="1541888946425-d81bb19240f5"
+              alt="Crew in safety vests walking a job site"
+              radius={16}
+              sizes="(max-width: 900px) 50vw, 300px"
+            />
           </div>
           <div className="about-image about-image-offset">
-            <ImagePlaceholder shape="rounded" radius={16} caption="Detail shot" />
+            <Photo
+              id="1523413651479-597eb2da0ad6"
+              alt="Close-up of freshly set white subway tile and a faucet"
+              radius={16}
+              sizes="(max-width: 900px) 50vw, 300px"
+            />
           </div>
         </div>
       </div>

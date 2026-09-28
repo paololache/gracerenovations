@@ -5,7 +5,8 @@
 
 .projects-heading {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
+  gap: 24px;
   justify-content: space-between;
   margin-bottom: 50px;
 }
@@ -74,6 +75,7 @@
 }
 
 .project-card {
+  position: relative;
   background: var(--color-cream);
   border-radius: var(--radius-card-lg);
   padding: 30px;
@@ -104,13 +106,73 @@
   color: var(--color-text-secondary);
 }
 
+.project-story-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+  transition: color var(--ease-hover);
+}
+
+/* Full-card click target laid over the card, so the content stays plain markup. */
+.project-story-hit {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.project-story-hit:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+}
+
+.project-card,
+.project-feature .photo {
+  transition: background var(--ease-hover), transform var(--ease-content);
+}
+
+.project-card:hover {
+  background: var(--color-white);
+}
+
+.project-feature:hover .photo {
+  transform: scale(1.02);
+}
+
+.project-card:hover .project-story-link,
+.project-feature:hover .project-story-link {
+  color: var(--color-terracotta-hover);
+}
+
 @media (max-width: 900px) {
+  .projects-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
   }
 
   .project-feature {
-    height: 420px;
+    height: auto;
+    background: var(--color-cream);
+  }
+
+  .project-feature > .photo {
+    height: 260px;
+  }
+
+  .project-feature-card {
+    position: static;
+    max-width: none;
+    border-radius: 0;
   }
 
   .project-card {

@@ -1,5 +1,5 @@
+import { NAV_ITEMS, routeHref } from '../lib/router'
 import { Logo } from './Logo'
-import { site } from '../data/site'
 import './Footer.css'
 
 export function Footer() {
@@ -13,21 +13,34 @@ export function Footer() {
 
         <div className="footer-columns">
           <div>
+            <p className="eyebrow footer-heading">Pages</p>
+            {NAV_ITEMS.map((item) => (
+              <div key={item.route}>
+                <a href={routeHref(item.route)}>{item.label}</a>
+              </div>
+            ))}
+          </div>
+          <div>
             <p className="eyebrow footer-heading">Contact</p>
-            <div>{site.phone}</div>
-            <div>{site.email}</div>
+            <div>
+              <a href="tel:+15552104488">(555) 210-4488</a>
+            </div>
+            <div>
+              <a href="mailto:hello@gracebuildingco.com">hello@gracebuildingco.com</a>
+            </div>
           </div>
           <div>
             <p className="eyebrow footer-heading">Office</p>
-            <div>{site.address.line1}</div>
-            <div>{site.address.hours}</div>
+            <div>418 Mill Road, Suite 2</div>
+            <div>Millbrook</div>
+            <div>Mon–Fri, 7am–5pm</div>
           </div>
         </div>
       </div>
 
       <div className="section footer-bottom">
-        <span>© {new Date().getFullYear()} {site.businessName}</span>
-        {site.license && <span>{site.license}</span>}
+        <span>© 2026 Grace Building Co.</span>
+        <span>License #CB-104772</span>
       </div>
     </footer>
   )

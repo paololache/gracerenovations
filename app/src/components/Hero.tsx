@@ -1,6 +1,5 @@
-import { ImagePlaceholder } from './ImagePlaceholder'
-import { Logo } from './Logo'
-import { site } from '../data/site'
+import { routeHref } from '../lib/router'
+import { Photo } from './Photo'
 import './Hero.css'
 
 interface HeroProps {
@@ -11,27 +10,28 @@ export function Hero({ onStartEstimate }: HeroProps) {
   return (
     <header className="hero">
       <div className="hero-media">
-        <ImagePlaceholder shape="rect" caption="Wide finished interior, darker exposure" priority />
+        <Photo
+          id="1600566753086-00f18fb6b3ea"
+          alt="Open-plan living room with tall windows after a whole-home renovation"
+          priority
+        />
       </div>
       <div className="hero-scrim" aria-hidden="true" />
 
-      <div className="hero-nav">
-        <Logo />
-        <nav className="hero-links" aria-label="Primary">
-          <a href="#services">Services</a>
-          <a href="#projects">Work</a>
-          <a href="#reviews">Reviews</a>
-          <a href="#about">About</a>
-          <button type="button" className="btn btn-primary hero-cta" onClick={onStartEstimate}>
+      <div className="hero-copy">
+        <p className="eyebrow hero-eyebrow">47 projects published with their invoices</p>
+        <h1 className="hero-title">Nobody should sign a building contract on a promise.</h1>
+        <p className="hero-sub">
+          So we publish what every job cost, and give you a range for yours before we ever set foot in the house.
+        </p>
+        <div className="hero-actions">
+          <button type="button" className="btn btn-primary" onClick={onStartEstimate}>
             Get a cost range
           </button>
-        </nav>
-      </div>
-
-      <div className="hero-copy">
-        <p className="eyebrow hero-eyebrow">{site.hero.eyebrow}</p>
-        <h1 className="hero-title">{site.hero.headline}</h1>
-        <p className="hero-sub">{site.hero.subhead}</p>
+          <a className="btn btn-outline-light" href={routeHref('projects')}>
+            See the projects
+          </a>
+        </div>
       </div>
     </header>
   )

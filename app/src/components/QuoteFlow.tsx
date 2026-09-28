@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { services } from '../data/services'
-import { site } from '../data/site'
 import { estimateRange, formatCurrency, type ProjectScope, type ProjectSize } from '../lib/estimate'
 import './QuoteFlow.css'
 
@@ -95,10 +94,10 @@ export function QuoteFlow({ open, onClose }: QuoteFlowProps) {
     answers.service && answers.size && answers.scope ? estimateRange(answers.service, answers.size, answers.scope) : [0, 0]
 
   const scheduleHref = service
-    ? `mailto:${site.email}?subject=${encodeURIComponent(
+    ? `mailto:hello@gracebuildingco.com?subject=${encodeURIComponent(
         `Cost range follow-up — ${service.name}`,
       )}&body=${encodeURIComponent(
-        `Hi Grace Renovations,\n\nI got an estimated range of ${formatCurrency(rangeMin)}–${formatCurrency(
+        `Hi Grace Building Co.,\n\nI got an estimated range of ${formatCurrency(rangeMin)}–${formatCurrency(
           rangeMax,
         )} for a ${answers.size} ${service.name.toLowerCase()} project (${answers.scope?.replace('-', ' ')} scope, ${answers.timeline} timeline).\n\nZip: ${answers.zip}\nName: ${answers.name}\nPhone: ${answers.phone}\n\nI'd like to schedule a visit.`,
       )}`
@@ -127,7 +126,7 @@ export function QuoteFlow({ open, onClose }: QuoteFlowProps) {
             <form onSubmit={onSubmit} className="quote-form">
               {step === 0 && (
                 <fieldset className="quote-fieldset">
-                  <legend className="quote-question">What are you renovating?</legend>
+                  <legend className="quote-question">What are we building?</legend>
                   <div className="quote-options">
                     {services.map((s) => (
                       <button
@@ -138,7 +137,7 @@ export function QuoteFlow({ open, onClose }: QuoteFlowProps) {
                         onClick={() => setAnswers((a) => ({ ...a, service: s.id }))}
                       >
                         <span className="quote-option-label">{s.name}</span>
-                        <span className="quote-option-hint">{s.description}</span>
+                        <span className="quote-option-hint">{s.priceLabel}</span>
                       </button>
                     ))}
                   </div>
@@ -272,7 +271,8 @@ export function QuoteFlow({ open, onClose }: QuoteFlowProps) {
             </p>
             <p className="quote-result-copy">
               Based on {answers.size} {service?.name.toLowerCase()} projects with a {answers.scope?.replace('-', ' ')}{' '}
-              scope. A final number comes after we see the space.
+              scope, in line with the 47 projects we&rsquo;ve published invoices for. A final number comes after we
+              see the space.
             </p>
             <div className="quote-result-actions">
               <a className="btn btn-primary" href={scheduleHref}>

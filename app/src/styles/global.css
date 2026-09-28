@@ -22,7 +22,12 @@ body {
 }
 
 #root {
-  overflow-x: hidden;
+  /* clip, not hidden: hidden would make #root a scroll container and break position: sticky */
+  overflow-x: clip;
+}
+
+.site-shell {
+  position: relative;
 }
 
 a {
@@ -120,6 +125,45 @@ img {
   margin: 0 auto;
   padding-left: var(--section-pad-x);
   padding-right: var(--section-pad-x);
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.section-eyebrow {
+  color: var(--color-terracotta);
+  margin-bottom: 20px;
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+}
+
+.link-caps {
+  font-size: 13px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-carbon);
+}
+
+.link-caps:hover {
+  color: var(--color-terracotta);
 }
 
 .visually-hidden {

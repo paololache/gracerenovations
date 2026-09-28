@@ -33,6 +33,14 @@
   color: var(--color-text-secondary);
 }
 
+.footer-columns a {
+  color: inherit;
+}
+
+.footer-columns a:hover {
+  color: var(--color-terracotta);
+}
+
 .footer-heading {
   color: var(--color-carbon);
   margin-bottom: 12px;
@@ -49,6 +57,11 @@
 }
 
 @media (max-width: 560px) {
+  .footer-columns {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
   .footer-bottom {
     flex-direction: column;
     gap: 8px;

@@ -82,7 +82,16 @@
   }
 
   .about-stats {
-    flex-wrap: wrap;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .about-stat-value {
+    font-size: 26px;
+  }
+
+  .about-stat-label {
+    font-size: 11px;
   }
 }

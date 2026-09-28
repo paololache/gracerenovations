@@ -1,0 +1,104 @@
+.projects-summary {
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+.projects-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  padding-top: 44px;
+  padding-bottom: 44px;
+}
+
+.projects-summary-value {
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.projects-summary-label {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  color: var(--color-text-on-dark-subtle);
+}
+
+.projects-stories {
+  padding: 110px 0 0;
+}
+
+.projects-stories-lede {
+  max-width: 44ch;
+}
+
+.projects-archive {
+  padding: 110px 0 126px;
+}
+
+.projects-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 60px;
+}
+
+.projects-filter {
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-carbon);
+  padding: 10px 20px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--ease-hover), border-color var(--ease-hover), color var(--ease-hover);
+}
+
+.projects-filter span {
+  margin-left: 6px;
+  color: var(--color-text-subtle);
+}
+
+.projects-filter:hover {
+  border-color: var(--color-carbon);
+}
+
+.projects-filter.is-active {
+  background: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+.projects-filter.is-active span {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.projects-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 60px 30px;
+}
+
+.projects-archive-note {
+  margin-top: 70px;
+  padding-top: 26px;
+  border-top: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-text-subtle);
+}
+
+@media (max-width: 900px) {
+  .projects-archive-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-summary-grid,
+  .projects-archive-grid {
+    grid-template-columns: 1fr;
+  }
+}
