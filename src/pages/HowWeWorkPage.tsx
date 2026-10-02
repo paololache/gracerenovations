@@ -4,6 +4,7 @@ import { Photo } from '../components/Photo'
 import { QuoteBanner } from '../components/QuoteBanner'
 import { processFaqs } from '../data/faqs'
 import { commitments, paymentSchedule, processSteps } from '../data/process'
+import { reveal, revealStagger } from '../lib/motion'
 import type { PageProps } from '../lib/router'
 import './HowWeWorkPage.css'
 
@@ -19,7 +20,7 @@ export function HowWeWorkPage({ onStartEstimate, onRequestEstimate }: PageProps)
 
       <section className="process">
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">The process</p>
               <h2 className="section-title">From the first question to the final walkthrough.</h2>
@@ -55,13 +56,13 @@ export function HowWeWorkPage({ onStartEstimate, onRequestEstimate }: PageProps)
 
       <section className="commitments">
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">In writing, on every job</p>
               <h2 className="section-title">Six things we put on paper before we start.</h2>
             </div>
           </div>
-          <div className="commitments-grid">
+          <div className="commitments-grid" {...revealStagger}>
             {commitments.map((c) => (
               <div key={c.title} className="commitment">
                 <h3>{c.title}</h3>
@@ -73,7 +74,7 @@ export function HowWeWorkPage({ onStartEstimate, onRequestEstimate }: PageProps)
       </section>
 
       <section className="payments">
-        <div className="section payments-grid">
+        <div className="section payments-grid" {...revealStagger}>
           <div>
             <p className="eyebrow section-eyebrow">Payment schedule</p>
             <h2 className="section-title payments-title">You never pay ahead of the work.</h2>
@@ -95,7 +96,7 @@ export function HowWeWorkPage({ onStartEstimate, onRequestEstimate }: PageProps)
       </section>
 
       <section className="updates">
-        <div className="section updates-grid">
+        <div className="section updates-grid" {...revealStagger}>
           <div className="updates-image">
             <Photo
               id="1581858726788-75bc0f6a952d"

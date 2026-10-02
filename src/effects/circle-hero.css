@@ -1,0 +1,117 @@
+/*
+ * Circle-mask hero. On wide screens the section is taller than the viewport
+ * and its content stays pinned while you scroll; a ring draws itself around
+ * the content and a fill color closes in from the edges until only the
+ * circle shows. circle-hero.ts drives the scroll part.
+ *
+ * <section class="fx-circle-hero">
+ *   <div class="fx-circle-hero__stage">
+ *     …your background image and content…
+ *     <svg class="fx-circle-hero__ring" viewBox="0 0 100 100" aria-hidden="true">
+ *       <circle cx="50" cy="50" r="49.5" pathLength="1" />
+ *     </svg>
+ *     <div class="fx-circle-hero__mask" aria-hidden="true"></div>
+ *   </div>
+ * </section>
+ *
+ * State classes on the section (from circle-hero.ts):
+ *   .is-stuck   from 20% of the scroll until the circle settles
+ *   .is-scaled  last 17.5%: the mask has closed in
+ * Also sets --fx-circle-progress (0–1) for your own styles.
+ *
+ * Variables:
+ *   --fx-circle-size        ring diameter                       (min(80vmin, 900px))
+ *   --fx-circle-fill        color that closes in                (Canvas)
+ *   --fx-circle-ring        ring color                          (currentColor)
+ *   --fx-circle-scroll      section height on wide screens      (200vh)
+ *   --fx-circle-scale-from  how far out the mask starts         (4)
+ * Add .fx-circle-hero--invert to blend the mask with "difference" until it settles.
+ */
+.fx-circle-hero {
+  --fx-circle-size: min(80vmin, 900px);
+  --fx-circle-scale: var(--fx-circle-scale-from, 4);
+}
+
+:where(.fx-circle-hero, .fx-circle-hero__stage) {
+  position: relative;
+}
+
+.fx-circle-hero__stage {
+  overflow: hidden;
+}
+
+.fx-circle-hero__ring,
+.fx-circle-hero__mask {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .fx-circle-hero {
+    height: var(--fx-circle-scroll, 200vh);
+  }
+
+  .fx-circle-hero__stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  /* Ring: 1px stroke that draws itself 1.2s after load */
+  .fx-circle-hero__ring {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    width: var(--fx-circle-size);
+    height: var(--fx-circle-size);
+    translate: -50% -50%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .fx-circle-hero__ring circle {
+    fill: none;
+    stroke: var(--fx-circle-ring, currentColor);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transform: rotate(90deg);
+    transform-origin: center;
+    animation: fx-ring-draw var(--fx-dur-xslow) var(--fx-ease-standard) 1.2s forwards;
+    transition: stroke var(--fx-dur-xslow);
+  }
+
+  /* Mask: everything outside the circle is filled; scales from 4 → 1 on scroll */
+  .fx-circle-hero__mask {
+    --fx-circle-r: calc(var(--fx-circle-size) / 2 - 1px);
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at 50% 50%,
+      transparent 0,
+      transparent var(--fx-circle-r),
+      var(--fx-circle-fill, Canvas) calc(var(--fx-circle-r) + 1px),
+      var(--fx-circle-fill, Canvas) 100%
+    );
+    transform: scale(var(--fx-circle-scale));
+  }
+
+  .fx-circle-hero--invert .fx-circle-hero__mask {
+    mix-blend-mode: difference;
+  }
+
+  .fx-circle-hero--invert.is-scaled .fx-circle-hero__mask {
+    mix-blend-mode: normal;
+  }
+}
+
+@keyframes fx-ring-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

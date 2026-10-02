@@ -33,6 +33,16 @@
   margin-bottom: 26px;
 }
 
+/* fx-card: photo zooms, title turns terracotta, arrow nudges on hover */
+.story-card {
+  --fx-card-accent: var(--color-terracotta);
+}
+
+.story-card-photo {
+  height: 100%;
+  border-radius: var(--radius-card-md);
+}
+
 .story-card-before {
   position: absolute;
   left: 16px;

@@ -1,0 +1,110 @@
+/*
+ * Button behaviours. They only set how colors swap and how things move;
+ * size, type and spacing stay with your own button class.
+ *
+ *   .fx-btn-swap     filled → outlined on hover
+ *   .fx-btn-fill     outlined → filled on hover
+ *   .fx-press        shrinks slightly on hover, like being pressed
+ *   .fx-round-btn    circular outline icon button
+ *   .fx-pulse        repeating ring around the element; stops on hover
+ *
+ * Colors:
+ *   --fx-btn-color     the fill / outline color      (CanvasText)
+ *   --fx-btn-contrast  text color on the fill        (Canvas)
+ *   --fx-btn-hover     .fx-btn-fill fill on hover     (--fx-btn-color)
+ * Other: --fx-press-scale (0.98), --fx-round-size (70px), --fx-pulse-color
+ */
+.fx-btn-swap,
+.fx-btn-fill {
+  border: 1px solid var(--fx-btn-color, CanvasText);
+  transition:
+    background-color var(--fx-dur-base) var(--fx-ease-in),
+    border-color var(--fx-dur-base) var(--fx-ease-in),
+    color var(--fx-dur-base) var(--fx-ease-in);
+}
+
+.fx-btn-swap {
+  background: var(--fx-btn-color, CanvasText);
+  color: var(--fx-btn-contrast, Canvas);
+}
+
+.fx-btn-swap:hover,
+.fx-btn-swap:focus-visible {
+  background: transparent;
+  color: var(--fx-btn-color, CanvasText);
+}
+
+.fx-btn-fill {
+  background: transparent;
+  color: var(--fx-btn-color, CanvasText);
+}
+
+.fx-btn-fill:hover,
+.fx-btn-fill:focus-visible {
+  background: var(--fx-btn-hover, var(--fx-btn-color, CanvasText));
+  border-color: var(--fx-btn-hover, var(--fx-btn-color, CanvasText));
+  color: var(--fx-btn-contrast, Canvas);
+}
+
+.fx-press {
+  transition:
+    scale 100ms var(--fx-ease-standard),
+    background-color var(--fx-dur-base) var(--fx-ease-in);
+}
+
+.fx-press:hover,
+.fx-press:active {
+  scale: var(--fx-press-scale, 0.98);
+}
+
+.fx-round-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fx-round-size, 70px);
+  height: var(--fx-round-size, 70px);
+  padding: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    color var(--fx-dur-base) var(--fx-ease-standard),
+    border-color var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.fx-round-btn:hover,
+.fx-round-btn:focus-visible {
+  color: var(--fx-btn-hover, currentColor);
+}
+
+.fx-pulse {
+  animation: fx-pulse 1.5s infinite;
+}
+
+.fx-pulse:hover,
+.fx-pulse:focus-visible {
+  animation: none;
+}
+
+@keyframes fx-pulse {
+  0% {
+    scale: 0.9;
+    box-shadow: 0 0 0 0 var(--fx-pulse-color, color-mix(in srgb, currentColor 45%, transparent));
+  }
+  70% {
+    scale: 1;
+    box-shadow: 0 0 0 20px transparent;
+  }
+  100% {
+    scale: 0.9;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-pulse {
+    animation: none !important;
+  }
+}

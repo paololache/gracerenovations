@@ -1,4 +1,5 @@
 import { services } from '../data/services'
+import { reveal, revealStagger } from '../lib/motion'
 import { routeHref } from '../lib/router'
 import { Photo } from './Photo'
 import './Services.css'
@@ -7,12 +8,12 @@ export function Services() {
   return (
     <section className="services" id="work">
       <div className="section">
-        <div className="services-heading">
+        <div className="services-heading" {...reveal}>
           <h2>What we take on</h2>
           <a href={routeHref('services')}>Four trades, one crew</a>
         </div>
 
-        <div className="services-grid">
+        <div className="services-grid" {...revealStagger}>
           {services.map((service) => (
             <a className="service-card" key={service.id} href={routeHref('services')}>
               <div className="service-card-image">

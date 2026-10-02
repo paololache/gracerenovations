@@ -3,6 +3,7 @@ import { Photo } from '../components/Photo'
 import { QuoteBanner } from '../components/QuoteBanner'
 import { Testimonials } from '../components/Testimonials'
 import { credentials, milestones, serviceArea, stats, team, values } from '../data/company'
+import { reveal, revealStagger } from '../lib/motion'
 import type { PageProps } from '../lib/router'
 import './AboutPage.css'
 
@@ -17,7 +18,7 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
       />
 
       <section className="about-story">
-        <div className="section about-story-grid">
+        <div className="section about-story-grid" {...revealStagger}>
           <div>
             <p className="eyebrow section-eyebrow">Our story</p>
             <h2 className="section-title about-story-title">We started with one bathroom and a promise to be straight about money.</h2>
@@ -62,7 +63,7 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
       </section>
 
       <section className="about-stats-band">
-        <div className="section about-stats-band-grid">
+        <div className="section about-stats-band-grid" {...revealStagger}>
           {stats.map((stat) => (
             <div key={stat.label}>
               <div className="about-stats-band-value">{stat.value}</div>
@@ -74,13 +75,13 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
 
       <section className="about-values">
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">What we hold to</p>
               <h2 className="section-title">Four rules that have not changed since the first job.</h2>
             </div>
           </div>
-          <div className="about-values-grid">
+          <div className="about-values-grid" {...revealStagger}>
             {values.map((value, i) => (
               <div key={value.title} className="about-value">
                 <span className="about-value-number">{String(i + 1).padStart(2, '0')}</span>
@@ -94,14 +95,14 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
 
       <section className="about-team" id="crew">
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">The crew</p>
               <h2 className="section-title">The people who will be in your house.</h2>
             </div>
             <p className="about-team-note">Average time with the company: eleven years.</p>
           </div>
-          <ul className="about-team-grid">
+          <ul className="about-team-grid" {...revealStagger}>
             {team.map((person) => (
               <li key={person.name} className="about-person">
                 <p className="about-person-role">{person.role}</p>
@@ -114,7 +115,7 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
       </section>
 
       <section className="about-history">
-        <div className="section about-history-grid">
+        <div className="section about-history-grid" {...revealStagger}>
           <div>
             <p className="eyebrow section-eyebrow">Milestones</p>
             <h2 className="section-title">Seventeen years, one step at a time.</h2>
@@ -131,7 +132,7 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
       </section>
 
       <section className="about-credentials">
-        <div className="section about-credentials-grid">
+        <div className="section about-credentials-grid" {...revealStagger}>
           <div className="about-credentials-card">
             <p className="eyebrow section-eyebrow">Licensed and insured</p>
             <ul className="about-credentials-list">

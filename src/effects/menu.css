@@ -1,0 +1,140 @@
+/*
+ * Navigation pieces.
+ *
+ *   .fx-dropdown > .fx-dropdown__panel
+ *       Opens slowly after a short wait (so it doesn't flicker when the
+ *       pointer just passes over), closes fast. Opens on hover, keyboard
+ *       focus, or .is-open.
+ *       --fx-dropdown-bg (Canvas), --fx-dropdown-shadow
+ *
+ *   .fx-burger with three <span>s
+ *       Bars fold into an X when [aria-expanded="true"] or .is-open.
+ *       --fx-burger-width (24px), --fx-burger-height (16px), --fx-burger-bar (1px)
+ *
+ *   .fx-drawer
+ *       Off-canvas panel that slides in from the left with .is-open.
+ *       --fx-drawer-width, --fx-drawer-bg (Canvas), --fx-drawer-shadow
+ */
+
+/* Dropdown */
+:where(.fx-dropdown) {
+  position: relative;
+}
+
+.fx-dropdown__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 3;
+  background: var(--fx-dropdown-bg, Canvas);
+  box-shadow: var(--fx-dropdown-shadow, 3px 2px 42px 0 rgb(0 0 0 / 0.3));
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 100ms var(--fx-ease-brand) 200ms,
+    visibility 0s linear 300ms;
+}
+
+.fx-dropdown:hover > .fx-dropdown__panel,
+.fx-dropdown:focus-within > .fx-dropdown__panel,
+.fx-dropdown.is-open > .fx-dropdown__panel {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--fx-dur-base) var(--fx-ease-brand) 400ms,
+    visibility 0s linear 400ms;
+}
+
+/* Keyboard users shouldn't wait for the hover delay */
+.fx-dropdown:focus-within > .fx-dropdown__panel {
+  transition-delay: 0s;
+}
+
+/* Burger → X */
+.fx-burger {
+  --fx-burger-mid: calc(50% - var(--fx-burger-bar, 1px) / 2);
+  position: relative;
+  display: inline-block;
+  width: var(--fx-burger-width, 24px);
+  height: var(--fx-burger-height, 16px);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.fx-burger > span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--fx-burger-bar, 1px);
+  background: currentColor;
+}
+
+.fx-burger > span:nth-child(1) {
+  top: 0;
+  transition:
+    top var(--fx-dur-fast) ease-in var(--fx-dur-fast),
+    transform var(--fx-dur-fast) var(--fx-ease-snap-in);
+}
+
+.fx-burger > span:nth-child(2) {
+  top: var(--fx-burger-mid);
+  transition: opacity 100ms ease-in var(--fx-dur-fast);
+}
+
+.fx-burger > span:nth-child(3) {
+  bottom: 0;
+  transition:
+    bottom var(--fx-dur-fast) ease-in var(--fx-dur-fast),
+    transform var(--fx-dur-fast) var(--fx-ease-snap-in);
+}
+
+/* Open: bars meet in the middle first, then rotate */
+.fx-burger:is([aria-expanded='true'], .is-open) > span:nth-child(1) {
+  top: var(--fx-burger-mid);
+  transform: rotate(225deg);
+  transition:
+    top var(--fx-dur-fast) ease-out,
+    transform var(--fx-dur-fast) var(--fx-ease-snap-out) var(--fx-dur-fast);
+}
+
+.fx-burger:is([aria-expanded='true'], .is-open) > span:nth-child(2) {
+  opacity: 0;
+  transition: opacity 100ms ease-out;
+}
+
+.fx-burger:is([aria-expanded='true'], .is-open) > span:nth-child(3) {
+  bottom: var(--fx-burger-mid);
+  transform: rotate(315deg);
+  transition:
+    bottom var(--fx-dur-fast) ease-out,
+    transform var(--fx-dur-fast) var(--fx-ease-snap-out) var(--fx-dur-fast);
+}
+
+/* Off-canvas drawer */
+.fx-drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 50;
+  width: var(--fx-drawer-width, min(85vw, 380px));
+  overflow-y: auto;
+  background: var(--fx-drawer-bg, Canvas);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform var(--fx-dur-mid) var(--fx-ease-brand),
+    box-shadow var(--fx-dur-mid) var(--fx-ease-brand),
+    visibility 0s linear var(--fx-dur-mid);
+}
+
+.fx-drawer.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  box-shadow: var(--fx-drawer-shadow, 3px 2px 42px 0 rgb(0 0 0 / 0.3));
+  transition:
+    transform var(--fx-dur-mid) var(--fx-ease-brand),
+    box-shadow var(--fx-dur-mid) var(--fx-ease-brand),
+    visibility 0s;
+}

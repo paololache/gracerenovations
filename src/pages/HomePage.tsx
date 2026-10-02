@@ -1,5 +1,4 @@
 import { About } from '../components/About'
-import { GoogleReviews } from '../components/GoogleReviews'
 import { Hero } from '../components/Hero'
 import { ProcessPreview } from '../components/ProcessPreview'
 import { QuoteBanner } from '../components/QuoteBanner'
@@ -14,7 +13,6 @@ export function HomePage({ onStartEstimate, onOpenStory, onRequestEstimate }: Pa
       <Hero onStartEstimate={onStartEstimate} />
       <QuoteBanner onStartEstimate={onRequestEstimate} />
       <RecentProjects onOpenStory={onOpenStory} />
-      <GoogleReviews />
       <Services />
       <ProcessPreview />
       <About />

@@ -1,0 +1,107 @@
+/*
+ * Image and card hovers.
+ *
+ *   .fx-zoom               frame whose image (direct <img> or .fx-zoom__media) zooms on hover
+ *     .fx-zoom--strong     zoom 1.1 instead of 1.05
+ *     .fx-zoom--linear     linear timing
+ *     .fx-zoom--self       the frame itself zooms (no inner element)
+ *   .fx-card               card that reacts as a whole on hover:
+ *     .fx-card__media      image zooms (inside a .fx-zoom frame)
+ *     .fx-card__title      changes to --fx-card-accent
+ *     .fx-card__reveal     hidden until hover on desktop, always shown on touch
+ *     .fx-arrow            nudges right (from links.css)
+ *   .fx-unround-on-hover   image corners go square on hover
+ *   .fx-skew / .fx-skew--soft   slanted top and bottom edges via clip-path
+ *
+ * Variables: --fx-zoom-scale (1.05), --fx-zoom-duration (700ms), --fx-zoom-delay (0s),
+ *            --fx-card-accent (currentColor: set it to see a color change),
+ *            --fx-skew-tl / -tr / -br / -bl (corner offsets)
+ */
+
+/* Zoom frames. The mask makes rounded corners clip the zoomed image in Safari. */
+.fx-zoom {
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(#fff, #000);
+  mask-image: radial-gradient(#fff, #000);
+}
+
+.fx-zoom > img,
+.fx-zoom .fx-zoom__media,
+.fx-zoom--self {
+  transition: scale var(--fx-zoom-duration, var(--fx-dur-slow)) var(--fx-ease-standard) var(--fx-zoom-delay, 0s);
+}
+
+.fx-zoom:hover > img,
+.fx-zoom:hover .fx-zoom__media,
+.fx-zoom--self:hover,
+.fx-card:hover .fx-zoom > img,
+.fx-card:hover .fx-zoom .fx-zoom__media {
+  scale: var(--fx-zoom-scale, 1.05);
+}
+
+.fx-zoom--strong {
+  --fx-zoom-scale: 1.1;
+}
+
+.fx-zoom--linear > img,
+.fx-zoom--linear .fx-zoom__media {
+  transition-timing-function: linear;
+}
+
+/* Cards */
+.fx-card .fx-zoom {
+  --fx-zoom-delay: 100ms;
+}
+
+.fx-card__title {
+  transition: color var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.fx-card:hover .fx-card__title,
+.fx-card:focus-within .fx-card__title {
+  color: var(--fx-card-accent, currentColor);
+}
+
+.fx-card .fx-arrow {
+  transition-duration: var(--fx-dur-mid);
+}
+
+.fx-card:hover .fx-arrow,
+.fx-card:focus-within .fx-arrow {
+  transform: translateX(var(--fx-arrow-shift, 5px));
+}
+
+@media (hover: hover) and (min-width: 992px) {
+  .fx-card__reveal {
+    opacity: 0;
+    transition: opacity var(--fx-dur-base) var(--fx-ease-standard);
+  }
+
+  .fx-card:hover .fx-card__reveal,
+  .fx-card:focus-within .fx-card__reveal {
+    opacity: 1;
+  }
+}
+
+.fx-unround-on-hover img {
+  transition: border-radius var(--fx-dur-slow) var(--fx-ease-standard);
+}
+
+.fx-unround-on-hover:hover img {
+  border-radius: 0 !important;
+}
+
+/* Slanted shapes */
+.fx-skew {
+  clip-path: polygon(
+    0 var(--fx-skew-tl, 12%),
+    100% var(--fx-skew-tr, 0%),
+    100% var(--fx-skew-br, 100%),
+    0 var(--fx-skew-bl, 91%)
+  );
+}
+
+.fx-skew--soft {
+  --fx-skew-tl: 3%;
+  --fx-skew-bl: 89%;
+}

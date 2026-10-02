@@ -1,4 +1,5 @@
 import { processSteps } from '../data/process'
+import { reveal, revealStagger } from '../lib/motion'
 import { routeHref } from '../lib/router'
 import './ProcessPreview.css'
 
@@ -6,7 +7,7 @@ export function ProcessPreview() {
   return (
     <section className="process-preview">
       <div className="section">
-        <div className="section-head">
+        <div className="section-head" {...reveal}>
           <div>
             <p className="eyebrow section-eyebrow">How we work</p>
             <h2 className="section-title">From two minutes online to the final walkthrough.</h2>
@@ -16,7 +17,7 @@ export function ProcessPreview() {
           </a>
         </div>
 
-        <ol className="process-preview-grid">
+        <ol className="process-preview-grid" {...revealStagger}>
           {processSteps.map((step) => (
             <li key={step.number} className="process-preview-step">
               <span className="process-preview-number">{step.number}</span>

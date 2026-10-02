@@ -1,12 +1,13 @@
 import { initials, testimonials } from '../data/testimonials'
+import { reveal, revealStagger } from '../lib/motion'
 import './Testimonials.css'
 
 export function Testimonials() {
   return (
     <section className="testimonials">
       <div className="section">
-        <p className="eyebrow testimonials-eyebrow">What owners said afterwards</p>
-        <div className="testimonials-grid">
+        <p className="eyebrow testimonials-eyebrow" {...reveal}>What owners said afterwards</p>
+        <div className="testimonials-grid" {...revealStagger}>
           {testimonials.map((t) => (
             <figure key={t.id} className="testimonial">
               <blockquote className="testimonial-quote">{t.quote}</blockquote>

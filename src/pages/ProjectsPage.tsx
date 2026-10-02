@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { GoogleReviews } from '../components/GoogleReviews'
 import { PageHero } from '../components/PageHero'
 import { ProjectCard } from '../components/ProjectCard'
 import { QuoteBanner } from '../components/QuoteBanner'
@@ -7,6 +6,7 @@ import { SuccessStoriesGrid } from '../components/SuccessStories'
 import { projects } from '../data/projects'
 import { services, type Service } from '../data/services'
 import { stories } from '../data/stories'
+import { reveal, revealStagger } from '../lib/motion'
 import type { PageProps } from '../lib/router'
 import './ProjectsPage.css'
 
@@ -44,7 +44,7 @@ export function ProjectsPage({ onOpenStory, onRequestEstimate }: PageProps) {
       />
 
       <section className="projects-summary">
-        <div className="section projects-summary-grid">
+        <div className="section projects-summary-grid" {...revealStagger}>
           {summary.map((item) => (
             <div key={item.label}>
               <div className="projects-summary-value">{item.value}</div>
@@ -56,7 +56,7 @@ export function ProjectsPage({ onOpenStory, onRequestEstimate }: PageProps) {
 
       <section className="projects-stories" data-lead-trigger>
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">Success stories</p>
               <h2 className="section-title">How we found it, and how we left it.</h2>
@@ -72,7 +72,7 @@ export function ProjectsPage({ onOpenStory, onRequestEstimate }: PageProps) {
 
       <section className="projects-archive">
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">Archive</p>
               <h2 className="section-title">Every project has its story.</h2>
@@ -94,7 +94,7 @@ export function ProjectsPage({ onOpenStory, onRequestEstimate }: PageProps) {
             ))}
           </div>
 
-          <div className="projects-archive-grid">
+          <div className="projects-archive-grid" {...revealStagger}>
             {visible.map((project) => (
               <ProjectCard key={project.id} project={project} onOpenStory={onOpenStory} />
             ))}
@@ -106,7 +106,6 @@ export function ProjectsPage({ onOpenStory, onRequestEstimate }: PageProps) {
         </div>
       </section>
 
-      <GoogleReviews />
       <QuoteBanner onStartEstimate={onRequestEstimate} />
     </>
   )

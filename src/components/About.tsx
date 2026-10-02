@@ -1,4 +1,5 @@
 import { stats } from '../data/company'
+import { revealStagger } from '../lib/motion'
 import { routeHref } from '../lib/router'
 import { Photo } from './Photo'
 import './About.css'
@@ -6,7 +7,7 @@ import './About.css'
 export function About() {
   return (
     <section className="about" id="about">
-      <div className="section about-grid">
+      <div className="section about-grid" {...revealStagger}>
         <div>
           <p className="eyebrow about-eyebrow">About</p>
           <h2 className="about-title">Nine people, one county, since 2009.</h2>

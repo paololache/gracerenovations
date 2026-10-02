@@ -1,0 +1,59 @@
+/*
+ * Continuous marquee: a row of items that scrolls forever at a steady pace.
+ * marquee.ts duplicates the items so the loop has no gap.
+ *
+ * <div class="fx-marquee">
+ *   <div class="fx-marquee__track">…items…</div>
+ * </div>
+ *
+ *   .fx-marquee--reverse   scrolls the other way (stack two rows for the
+ *                          opposite-direction gallery look)
+ *   .fx-marquee--pause     pauses while hovered
+ *
+ * Variables: --fx-marquee-duration (40s, or set from speed by marquee.ts),
+ *            --fx-marquee-gap (16px)
+ * With reduced motion the row stops and becomes horizontally scrollable.
+ */
+.fx-marquee {
+  overflow: hidden;
+}
+
+.fx-marquee__track {
+  display: flex;
+  gap: var(--fx-marquee-gap, 16px);
+  width: max-content;
+  animation: fx-marquee var(--fx-marquee-duration, 40s) linear infinite;
+}
+
+.fx-marquee__track > * {
+  flex: none;
+}
+
+.fx-marquee--reverse .fx-marquee__track {
+  animation-direction: reverse;
+}
+
+.fx-marquee--pause:hover .fx-marquee__track {
+  animation-play-state: paused;
+}
+
+/* Two identical halves: moving by one half (plus half a gap) loops seamlessly */
+@keyframes fx-marquee {
+  to {
+    translate: calc(-50% - var(--fx-marquee-gap, 16px) / 2) 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-marquee {
+    overflow-x: auto;
+  }
+
+  .fx-marquee__track {
+    animation: none !important;
+  }
+
+  .fx-marquee__track > [data-fx-clone] {
+    display: none;
+  }
+}

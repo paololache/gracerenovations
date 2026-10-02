@@ -1,0 +1,52 @@
+/*
+ * One-off animations.
+ *
+ *   .fx-pop-in     scales up from 0 with a slight overshoot (e.g. a success message)
+ *   .fx-fade-in    quick fade (e.g. a lightbox or overlay)
+ *   .fx-spinner    dual-ring loading spinner in currentColor (--fx-spinner-size, 32px)
+ */
+.fx-pop-in {
+  animation: fx-pop-in var(--fx-dur-xslow) var(--fx-ease-pop) both;
+}
+
+.fx-fade-in {
+  animation: fx-fade-in var(--fx-dur-fast) ease-out both;
+}
+
+.fx-spinner {
+  display: inline-block;
+  width: var(--fx-spinner-size, 32px);
+  height: var(--fx-spinner-size, 32px);
+  border: 2px solid currentColor;
+  border-color: currentColor transparent;
+  border-radius: 50%;
+  animation: fx-spin 1.2s linear infinite;
+}
+
+@keyframes fx-pop-in {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes fx-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fx-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* A spinner should keep spinning, just slower, so it still reads as "busy" */
+@media (prefers-reduced-motion: reduce) {
+  .fx-spinner {
+    animation: fx-spin 2.4s linear infinite !important;
+  }
+}

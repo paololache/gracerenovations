@@ -1,4 +1,5 @@
 import type { FaqItem } from '../data/faqs'
+import { revealStagger } from '../lib/motion'
 import './Faq.css'
 
 interface FaqProps {
@@ -9,7 +10,7 @@ interface FaqProps {
 export function Faq({ title, items }: FaqProps) {
   return (
     <section className="faq">
-      <div className="section faq-grid">
+      <div className="section faq-grid" {...revealStagger}>
         <h2 className="section-title">{title}</h2>
         <div className="faq-list">
           {items.map((item) => (

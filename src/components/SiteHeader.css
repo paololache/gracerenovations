@@ -1,18 +1,55 @@
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 30;
+  /* fx-header: white over the hero, carbon on the cream bar */
+  --fx-header-bg: var(--color-cream);
+  --fx-header-fg: var(--color-white);
+  --fx-header-fg-active: var(--color-carbon);
+  --fx-header-line-opacity: 0.35;
+}
+
+.site-header.is-active {
+  --fx-header-line-opacity: 0.12;
+}
+
+/* Faster than the fx default, so the dark text never sits on the photo */
+.site-header::after {
+  transition-duration: 600ms;
+  transition-delay: 0s;
+}
+
+.site-header [data-fx-step='1'] {
+  --fx-step-delay: 150ms;
+}
+.site-header [data-fx-step='2'] {
+  --fx-step-delay: 220ms;
+}
+.site-header [data-fx-step='3'] {
+  --fx-step-delay: 300ms;
+}
+
+.site-header-inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 30px var(--section-pad-x);
+  transition: padding var(--fx-dur-mid) var(--fx-ease-brand);
 }
 
-.site-header-home:hover {
+.site-header.is-active .site-header-inner {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.site-header-home,
+.site-header-home:hover,
+.site-header .logo {
   color: inherit;
 }
 
@@ -26,18 +63,19 @@
 }
 
 .site-nav a {
-  color: rgba(255, 255, 255, 0.8);
+  color: inherit;
+  opacity: 0.8;
   padding: 6px 0;
-  border-bottom: 1px solid transparent;
+  transition: opacity var(--ease-hover);
 }
 
-.site-nav a:hover {
-  color: var(--color-white);
+.site-nav a:hover,
+.site-nav a[aria-current='page'] {
+  opacity: 1;
 }
 
-.site-nav a.is-active {
-  color: var(--color-white);
-  border-bottom-color: var(--color-terracotta);
+.site-nav a::after {
+  background: var(--color-terracotta);
 }
 
 .site-header-cta {
@@ -47,8 +85,8 @@
 .site-menu-toggle {
   display: none;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: var(--color-white);
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  color: inherit;
   padding: 10px 18px;
   font-size: 12px;
   letter-spacing: var(--tracking-button);

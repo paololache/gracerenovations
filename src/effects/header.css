@@ -1,0 +1,97 @@
+/*
+ * Header: transparent → solid on scroll.
+ *   .fx-header             the bar (you choose position: fixed / sticky)
+ *   .fx-header.is-active   set by watchHeader() in header.ts
+ *   [data-fx-step="1..4"]  children that change color in a cascade
+ *
+ * Variables (set on .fx-header):
+ *   --fx-header-bg            background that slides down        (Canvas)
+ *   --fx-header-fg            text color before scroll           (inherit)
+ *   --fx-header-fg-active     text color after scroll            (CanvasText)
+ *   --fx-header-line-opacity  hairline opacity before / after    (0.8 / 0.3)
+ */
+/* Zero specificity, so your own position: fixed / sticky wins */
+:where(.fx-header) {
+  position: relative;
+}
+
+.fx-header {
+  --fx-header-line-opacity: 0.8;
+  isolation: isolate;
+  color: var(--fx-header-fg, inherit);
+  transition: color 400ms var(--fx-ease-brand);
+}
+
+.fx-header.is-active {
+  --fx-header-line-opacity: 0.3;
+  color: var(--fx-header-fg-active, CanvasText);
+}
+
+/* Background slides down from above */
+.fx-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fx-header-bg, Canvas);
+  transform: translateY(calc(-100% - 1px));
+  transition: transform 800ms var(--fx-ease-brand) var(--fx-dur-mid);
+}
+
+.fx-header.is-active::after {
+  transform: translateY(0);
+}
+
+/* Bottom hairline: draws left → right on load, dims when active */
+.fx-header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  opacity: var(--fx-header-line-opacity);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: fx-line-in var(--fx-dur-xslow) var(--fx-ease-brand) var(--fx-dur-mid) forwards;
+  transition: opacity var(--fx-dur-mid) var(--fx-ease-brand);
+}
+
+.fx-header.is-active::before {
+  transition-delay: var(--fx-dur-xslow);
+}
+
+/* Staggered cascade: each step changes color a little later than the last */
+.fx-header [data-fx-step] {
+  transition:
+    color 400ms var(--fx-ease-brand) var(--fx-step-delay),
+    border-color 400ms var(--fx-ease-brand) var(--fx-step-delay),
+    background-color 400ms var(--fx-ease-brand) var(--fx-step-delay);
+}
+
+.fx-header [data-fx-step='1'] {
+  --fx-step-delay: 450ms;
+}
+.fx-header [data-fx-step='2'] {
+  --fx-step-delay: 550ms;
+}
+.fx-header [data-fx-step='3'] {
+  --fx-step-delay: 900ms;
+}
+.fx-header [data-fx-step='4'] {
+  --fx-step-delay: 1000ms;
+}
+
+/* Reusable: any element with .fx-line-in draws in like the header hairline */
+.fx-line-in {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: fx-line-in var(--fx-dur-xslow) var(--fx-ease-brand) var(--fx-line-delay, 0s) forwards;
+}
+
+@keyframes fx-line-in {
+  to {
+    transform: scaleX(1);
+  }
+}

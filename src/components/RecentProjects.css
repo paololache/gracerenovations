@@ -132,17 +132,22 @@
   outline-offset: 3px;
 }
 
-.project-card,
-.project-feature .photo {
-  transition: background var(--ease-hover), transform var(--ease-content);
+/* fx-card: photo zooms, title turns terracotta, arrow nudges on hover */
+.project-feature,
+.project-card {
+  --fx-card-accent: var(--color-terracotta);
+}
+
+.project-card {
+  transition: background var(--ease-hover);
 }
 
 .project-card:hover {
   background: var(--color-white);
 }
 
-.project-feature:hover .photo {
-  transform: scale(1.02);
+.project-card-image {
+  border-radius: var(--radius-card-sm);
 }
 
 .project-card:hover .project-story-link,

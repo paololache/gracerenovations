@@ -1,0 +1,141 @@
+/*
+ * Accordion / list details.
+ *
+ *   .fx-draw-line            1px separator that draws left → right once its
+ *                            container has .is-revealed (from reveal.ts) or the
+ *                            line itself has .is-drawn
+ *   .fx-plus                 "+" sign that turns into "−" when a parent has
+ *                            [aria-expanded="true"] or .is-open
+ *   .fx-hover-group          hovering it plays the line sweep and plus wiggle
+ *
+ * Variables: --fx-line-size (1px), --fx-line-sweep (currentColor, the moving highlight),
+ *            --fx-plus-size (14px), --fx-plus-bar (1px), --fx-hover-duration (1s)
+ */
+:where(.fx-draw-line) {
+  position: relative;
+  display: block;
+}
+
+.fx-draw-line {
+  height: var(--fx-line-size, 1px);
+  overflow: hidden;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--fx-dur-xslow) var(--fx-ease-standard);
+}
+
+.is-revealed .fx-draw-line,
+.is-revealed.fx-draw-line,
+.fx-draw-line.is-drawn {
+  transform: scaleX(1);
+}
+
+/* Highlight that sweeps along the line on hover */
+.fx-draw-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent, var(--fx-line-sweep, currentColor), transparent);
+  translate: -100% 0;
+  opacity: 0;
+}
+
+.fx-hover-group:hover .fx-draw-line::after {
+  opacity: 1;
+  animation: fx-line-sweep var(--fx-hover-duration, 1s) var(--fx-ease-standard);
+}
+
+@keyframes fx-line-sweep {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 200% 0;
+  }
+}
+
+/* Plus → minus, with a wiggle on hover: each bar exits one side and re-enters from the other */
+:where(.fx-plus) {
+  position: relative;
+  display: inline-block;
+}
+
+.fx-plus {
+  flex: none;
+  width: var(--fx-plus-size, 14px);
+  height: var(--fx-plus-size, 14px);
+  overflow: hidden;
+}
+
+.fx-plus::before,
+.fx-plus::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  transition:
+    translate 400ms var(--fx-ease-standard),
+    opacity 400ms var(--fx-ease-standard);
+}
+
+/* Horizontal bar */
+.fx-plus::before {
+  left: 0;
+  top: calc(50% - var(--fx-plus-bar, 1px) / 2);
+  width: 100%;
+  height: var(--fx-plus-bar, 1px);
+}
+
+/* Vertical bar */
+.fx-plus::after {
+  top: 0;
+  left: calc(50% - var(--fx-plus-bar, 1px) / 2);
+  width: var(--fx-plus-bar, 1px);
+  height: 100%;
+}
+
+.fx-hover-group:hover .fx-plus::before {
+  animation: fx-cross-x var(--fx-hover-duration, 1s) var(--fx-ease-standard);
+}
+
+.fx-hover-group:hover .fx-plus::after {
+  animation: fx-cross-y var(--fx-hover-duration, 1s) var(--fx-ease-standard)
+    calc(var(--fx-hover-duration, 1s) * 0.25);
+}
+
+:is([aria-expanded='true'], .is-open) .fx-plus::after,
+.fx-plus:is([aria-expanded='true'], .is-open)::after {
+  translate: 0 100%;
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes fx-cross-x {
+  50% {
+    translate: 100% 0;
+  }
+  50.01% {
+    translate: -100% 0;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+@keyframes fx-cross-y {
+  50% {
+    translate: 0 100%;
+  }
+  50.01% {
+    translate: 0 -100%;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+/* Disabled rows look dimmer */
+.fx-dimmed {
+  opacity: 0.75;
+}

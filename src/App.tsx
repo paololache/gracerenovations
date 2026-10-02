@@ -5,6 +5,7 @@ import { QuoteFlow } from './components/QuoteFlow'
 import { SiteHeader } from './components/SiteHeader'
 import { StoryModal } from './components/StoryModal'
 import { storyFor } from './data/stories'
+import { useReveal } from './effects'
 import { PAGE_TITLES, useHashRoute } from './lib/router'
 import { markLeadSeen, useLeadTrigger } from './lib/useLeadTrigger'
 import { AboutPage } from './pages/AboutPage'
@@ -47,6 +48,9 @@ function App() {
   useEffect(() => {
     document.title = PAGE_TITLES[route]
   }, [route])
+
+  // Wire the scroll reveals of whichever page is showing
+  useReveal(undefined, [route])
 
   return (
     <>

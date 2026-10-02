@@ -1,0 +1,98 @@
+/*
+ * Link and tab effects. Lines and arrows use currentColor, so they follow
+ * whatever color the link already has.
+ *
+ *   .fx-underline         line grows from the right on hover, retracts to the right
+ *   .fx-underline--draw   line draws in left → right, exits to the right
+ *                         (use for tabs: add .is-active or aria-selected="true")
+ *   .fx-arrow-link        a child .fx-arrow nudges right on hover
+ *   .fx-icon-link         gap between icon and text widens on hover
+ *   .fx-shift-prev / .fx-shift-next   pagination arrows that move outward on hover
+ *
+ * Variables: --fx-underline-offset (-3px), --fx-underline-size (1px),
+ *            --fx-arrow-shift (5px), --fx-icon-gap / --fx-icon-gap-hover (6px / 10px),
+ *            --fx-shift (20px)
+ */
+:where(.fx-underline) {
+  position: relative;
+}
+
+.fx-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: var(--fx-underline-offset, -3px);
+  width: 100%;
+  height: var(--fx-underline-size, 1px);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--fx-dur-mid) var(--fx-ease-standard);
+  pointer-events: none;
+}
+
+.fx-underline:hover::after,
+.fx-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Draw variant: origin flips so it enters from the left and leaves to the right */
+.fx-underline--draw:hover::after,
+.fx-underline--draw:focus-visible::after,
+.fx-underline--draw.is-active::after,
+.fx-underline--draw[aria-selected='true']::after,
+.fx-underline--draw[aria-current='page']::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Arrow nudge */
+:where(.fx-arrow-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:where(.fx-arrow) {
+  display: inline-block;
+}
+
+.fx-arrow {
+  transition: transform var(--fx-dur-fast) var(--fx-ease-standard);
+}
+
+.fx-arrow-link:hover .fx-arrow,
+.fx-arrow-link:focus-visible .fx-arrow,
+.fx-group:hover .fx-arrow {
+  transform: translateX(var(--fx-arrow-shift, 5px));
+}
+
+/* Icon gap grows */
+:where(.fx-icon-link) {
+  display: inline-flex;
+  align-items: center;
+}
+
+.fx-icon-link {
+  gap: var(--fx-icon-gap, 6px);
+  transition: gap var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.fx-icon-link:hover,
+.fx-icon-link:focus-visible {
+  gap: var(--fx-icon-gap-hover, 10px);
+}
+
+/* Pagination arrows shift outward */
+.fx-shift-prev,
+.fx-shift-next {
+  transition: transform var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.fx-shift-prev:hover {
+  transform: translateX(calc(var(--fx-shift, 20px) * -1));
+}
+
+.fx-shift-next:hover {
+  transform: translateX(var(--fx-shift, 20px));
+}

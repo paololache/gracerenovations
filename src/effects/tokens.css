@@ -1,0 +1,42 @@
+/*
+ * Motion tokens shared by every fx-* module. Colors and type are never set
+ * here: each module reads its colors from --fx-* variables that fall back to
+ * currentColor or the system colors Canvas / CanvasText.
+ */
+:root {
+  /* Easing */
+  --fx-ease-brand: cubic-bezier(0.33, 0, 0.13, 1); /* soft start, long settle: headers, lines, hero */
+  --fx-ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* hovers, zooms, wipes */
+  --fx-ease-in: cubic-bezier(0.4, 0, 1, 1); /* buttons */
+  --fx-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* reveals (≈ GSAP power1.out) */
+  --fx-ease-snap-in: cubic-bezier(0.55, 0.055, 0.675, 0.19); /* burger collapse */
+  --fx-ease-snap-out: cubic-bezier(0.215, 0.61, 0.355, 1); /* burger expand */
+  --fx-ease-pop: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* overshoot */
+
+  /* Durations */
+  --fx-dur-fast: 150ms;
+  --fx-dur-base: 300ms;
+  --fx-dur-mid: 500ms;
+  --fx-dur-slow: 700ms;
+  --fx-dur-xslow: 1000ms;
+}
+
+/*
+ * Reduced motion: every fx-* effect jumps straight to its end state, and
+ * looping animations stop. Modules with JS (reveal, circle hero, marquee)
+ * also skip their setup when this preference is on.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [class*='fx-'],
+  [class*='fx-']::before,
+  [class*='fx-']::after,
+  [class*='fx-'] *,
+  [data-fx-reveal],
+  [data-fx-reveal] * {
+    animation-duration: 1ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0s !important;
+  }
+}

@@ -1,0 +1,79 @@
+/*
+ * Scroll reveal. Markup is declarative; reveal.ts wires it up.
+ *
+ *   data-fx-reveal="fade | fade-up | fade-down | fade-left | fade-right | up | down | bg-zoom-out"
+ *   data-fx-reveal-duration="1000"   ms  (default 200)
+ *   data-fx-reveal-delay="100"       ms  (default 0)
+ *   data-fx-reveal-offset="150"      px before the element enters (default 150)
+ *   data-fx-reveal-stagger="300"     ms between children marked data-fx-reveal-item
+ *                                    (or between direct children, if none are marked)
+ *   data-fx-reveal-lines             split plain text into lines that rise one by one
+ *   data-fx-reveal-ease="..."        any CSS timing function
+ *
+ * "up" and "down" move by the element's own height, so they need a clipping
+ * parent: wrap them in .fx-mask (lines get one automatically).
+ *
+ * Content is only hidden once reveal.ts has added .fx-reveal-ready to <html>,
+ * so pages stay readable without JS or with reduced motion.
+ */
+
+/* Presets set where each target starts from */
+[data-fx-reveal='fade'] {
+  --fx-from-opacity: 0;
+}
+[data-fx-reveal='fade-up'] {
+  --fx-from-opacity: 0;
+  --fx-from-y: 50px;
+}
+[data-fx-reveal='fade-down'] {
+  --fx-from-opacity: 0;
+  --fx-from-y: -100%;
+}
+[data-fx-reveal='fade-left'] {
+  --fx-from-opacity: 0;
+  --fx-from-x: 30px;
+}
+[data-fx-reveal='fade-right'] {
+  --fx-from-opacity: 0;
+  --fx-from-x: -30px;
+}
+[data-fx-reveal='up'] {
+  --fx-from-y: 100%;
+}
+[data-fx-reveal='down'] {
+  --fx-from-y: -100%;
+}
+
+.fx-reveal-ready .fx-reveal-target {
+  transition-property: opacity, translate, background-size;
+  transition-duration: var(--fx-reveal-duration, 200ms);
+  transition-timing-function: var(--fx-reveal-ease, var(--fx-ease-out));
+  transition-delay: calc(var(--fx-reveal-delay, 0ms) + var(--fx-i, 0) * var(--fx-reveal-stagger, 0ms));
+}
+
+.fx-reveal-ready [data-fx-reveal]:not(.is-revealed).fx-reveal-target,
+.fx-reveal-ready [data-fx-reveal]:not(.is-revealed) .fx-reveal-target {
+  opacity: var(--fx-from-opacity, 1);
+  translate: var(--fx-from-x, 0) var(--fx-from-y, 0);
+}
+
+.fx-reveal-ready [data-fx-reveal='bg-zoom-out']:not(.is-revealed).fx-reveal-target,
+.fx-reveal-ready [data-fx-reveal='bg-zoom-out']:not(.is-revealed) .fx-reveal-target {
+  background-size: 120%;
+}
+
+/* Clipping wrapper for "up" / "down" */
+.fx-mask {
+  display: block;
+  overflow: hidden;
+}
+
+/* Lines produced by data-fx-reveal-lines */
+.fx-line {
+  display: block;
+  overflow: hidden;
+}
+
+.fx-line__inner {
+  display: block;
+}

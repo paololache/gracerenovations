@@ -5,6 +5,7 @@ import { QuoteBanner } from '../components/QuoteBanner'
 import { serviceFaqs } from '../data/faqs'
 import { formatCost, projects } from '../data/projects'
 import { otherTrades, services } from '../data/services'
+import { reveal, revealStagger } from '../lib/motion'
 import { routeHref } from '../lib/router'
 import type { PageProps } from '../lib/router'
 import './ServicesPage.css'
@@ -41,6 +42,7 @@ export function ServicesPage({ onRequestEstimate }: PageProps) {
               key={service.id}
               id={`service-${service.id}`}
               className={`section service-detail ${index % 2 === 1 ? 'service-detail-reverse' : ''}`}
+              {...revealStagger}
             >
               <div className="service-detail-image">
                 <Photo {...service.photo} radius={20} sizes="(max-width: 900px) 100vw, 580px" />
@@ -88,13 +90,13 @@ export function ServicesPage({ onRequestEstimate }: PageProps) {
 
       <section className="other-trades">
         <div className="section">
-          <div className="section-head">
+          <div className="section-head" {...reveal}>
             <div>
               <p className="eyebrow section-eyebrow">In-house trades</p>
               <h2 className="section-title">Everything the big jobs need, done by the same crew.</h2>
             </div>
           </div>
-          <div className="other-trades-grid">
+          <div className="other-trades-grid" {...revealStagger}>
             {otherTrades.map((trade) => (
               <div key={trade.name} className="other-trade">
                 <h3>{trade.name}</h3>
