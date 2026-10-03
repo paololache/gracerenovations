@@ -11,12 +11,8 @@
   border-radius: var(--radius-card-md);
 }
 
-.project-tile-image .photo {
-  transition: transform var(--ease-content);
-}
-
-.project-tile:hover .project-tile-image .photo {
-  transform: scale(1.03);
+.project-tile {
+  --fx-card-accent: var(--color-terracotta);
 }
 
 .project-tile .badge {

@@ -23,7 +23,7 @@ export const projects: Project[] = [
     duration: 'Five months',
     cost: 214000,
     description: 'Rear wall opened, kitchen relocated, all systems replaced.',
-    photo: { id: '1600607687939-ce8a6c25118c', alt: 'Open-plan living area with wood feature wall and large windows' },
+    photo: { local: 'painting', alt: 'Living room with slate-blue walls, white crown moulding, an arched doorway and refinished oak floors' },
   },
   {
     id: 'oak-street',
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     duration: 'Six weeks',
     cost: 34200,
     description: 'Wall removed, island added, wiring replaced.',
-    photo: { id: '1600585152220-90363fe7e115', alt: 'White kitchen island with oak stools and black pendant lights' },
+    photo: { local: 'kitchen', alt: 'White shaker kitchen with a fluted farmhouse sink, stone-look backsplash and a gas range' },
   },
   {
     id: 'delmar',
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     duration: 'Three weeks',
     cost: 11800,
     description: 'Tub to walk-in shower, new vent and tile.',
-    photo: { id: '1584622650111-993a426fbf0a', alt: 'Glass walk-in shower with white tile and a wood vanity' },
+    photo: { local: 'bathroom-2', alt: 'Bathroom with a frameless glass shower, black fixtures and a floating oak vanity' },
   },
   {
     id: 'maple-ridge',
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     duration: 'Four and a half months',
     cost: 148000,
     description: 'Two-storey rear addition with a family room below and a primary suite above.',
-    photo: { id: '1600566753190-17f0baa2a6c3', alt: 'Modern rear addition with timber cladding and black framed glass' },
+    photo: { local: 'sunroom', alt: 'Sunroom addition with a green feature wall, white shiplap ceiling and a row of windows onto the garden' },
   },
   {
     id: 'hawthorne',
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     duration: 'Seven weeks',
     cost: 41600,
     description: 'Galley opened to the dining room, painted cabinetry and open shelving.',
-    photo: { id: '1600489000022-c2086d79f9d4', alt: 'Kitchen with charcoal lower cabinets, white tile and open shelves' },
+    photo: { local: 'hero-kitchen', alt: 'Kitchen with white shaker cabinets, a stainless French-door fridge and wood-look floors' },
   },
   {
     id: 'linden',
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     duration: 'Four weeks',
     cost: 24900,
     description: 'Closet borrowed for a freestanding tub, heated floor and double vanity.',
-    photo: { id: '1620626011761-996317b8d101', alt: 'Freestanding white tub beside a window with plants' },
+    photo: { local: 'bathroom', alt: 'Bathroom with botanical wallpaper, a gold arched mirror, globe sconces and a dark vanity' },
   },
   {
     id: 'willow',
@@ -100,7 +100,7 @@ export const projects: Project[] = [
     duration: 'Six months',
     cost: 186500,
     description: 'Ranch house lifted to two storeys, three bedrooms and a bath added.',
-    photo: { id: '1628744448840-55bdb2497bd4', alt: 'Single-storey home exterior with cedar cladding and a flat roof' },
+    photo: { local: 'roofing-2', alt: 'Two-storey home with tan siding, black shutters and a two-car garage' },
   },
   {
     id: 'birch-hollow',
@@ -144,7 +144,7 @@ export const projects: Project[] = [
     duration: 'Four months',
     cost: 72400,
     description: 'Glass-walled family room on a new slab, opening onto the back garden.',
-    photo: { id: '1600585154340-be6161a56a0c', alt: 'Modern house at dusk with a glass-walled ground floor facing the lawn' },
+    photo: { local: 'exterior', alt: 'Screened garden room with grey-trimmed openings and a screen door, built on a new slab' },
   },
 ]
 

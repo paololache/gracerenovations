@@ -1,12 +1,13 @@
+import { localPhotos, type LocalPhoto } from '../assets/photos'
 import './Photo.css'
 
-export interface PhotoRef {
-  /** Unsplash photo id, e.g. "1600585152220-90363fe7e115". */
-  id: string
-  alt: string
-}
+/**
+ * A photo is either one of Grace's own job photos (`local`, from
+ * src/assets/photos) or an Unsplash stand-in (`id`) where no job photo exists yet.
+ */
+export type PhotoRef = { alt: string } & ({ local: LocalPhoto; id?: never } | { id: string; local?: never })
 
-interface PhotoProps extends PhotoRef {
+type PhotoProps = PhotoRef & {
   sizes?: string
   radius?: number | '50%'
   priority?: boolean
@@ -18,16 +19,15 @@ const WIDTHS = [480, 800, 1200, 1800, 2400]
 const photoUrl = (id: string, width: number) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${width}&q=70`
 
-/**
- * Reference photography served from Unsplash. These are stand-ins for the
- * crew's own job photos — swap the ids in `src/data/*` once those exist.
- */
-export function Photo({ id, alt, sizes = '100vw', radius = 0, priority = false, className }: PhotoProps) {
+export function Photo({ id, local, alt, sizes = '100vw', radius = 0, priority = false, className }: PhotoProps) {
+  const source = local
+    ? { src: localPhotos[local].large, srcSet: `${localPhotos[local].small} 640w, ${localPhotos[local].large} 1280w` }
+    : { src: photoUrl(id!, 1200), srcSet: WIDTHS.map((w) => `${photoUrl(id!, w)} ${w}w`).join(', ') }
+
   return (
     <img
       className={['photo', className].filter(Boolean).join(' ')}
-      src={photoUrl(id, 1200)}
-      srcSet={WIDTHS.map((w) => `${photoUrl(id, w)} ${w}w`).join(', ')}
+      {...source}
       sizes={sizes}
       alt={alt}
       loading={priority ? 'eager' : 'lazy'}

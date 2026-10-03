@@ -11,14 +11,15 @@ export function Hero({ onStartEstimate }: HeroProps) {
     <header className="hero">
       <div className="hero-media">
         <Photo
-          id="1600566753086-00f18fb6b3ea"
-          alt="Open-plan living room with tall windows after a whole-home renovation"
+          id="1600585154084-4e5fe7c39198"
+          alt="Open-plan living room with oak floors, a timber feature wall and glass doors onto a deck"
+          sizes="100vw"
           priority
         />
       </div>
       <div className="hero-scrim" aria-hidden="true" />
 
-      <div className="hero-copy">
+      <div className="hero-copy" data-fx-reveal="fade-up" data-fx-reveal-duration="1000" data-fx-reveal-stagger="140" data-fx-reveal-offset="0">
         <p className="eyebrow hero-eyebrow">47 projects published with their invoices</p>
         <h1 className="hero-title">Nobody should sign a building contract on a promise.</h1>
         <p className="hero-sub">

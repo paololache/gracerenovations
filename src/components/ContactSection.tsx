@@ -58,7 +58,7 @@ export function ContactSection({ className = '' }: { className?: string }) {
     <section className={`contact-section ${className}`} aria-labelledby="contact-title">
       {/* Fades in while the photo settles from a slight zoom (see .contact-bg.is-revealed) */}
       <div className="contact-bg" aria-hidden="true" data-fx-reveal="fade" data-fx-reveal-duration="1400" data-fx-reveal-offset="0">
-        <Photo id="1600210492486-724fe5c67fb0" alt="" sizes="100vw" />
+        <Photo local="deck-2" alt="" sizes="100vw" />
       </div>
 
       <div className="contact-layout">

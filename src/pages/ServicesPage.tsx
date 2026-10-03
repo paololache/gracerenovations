@@ -17,7 +17,7 @@ export function ServicesPage({ onRequestEstimate }: PageProps) {
         eyebrow="Services"
         title="Four trades, one crew, prices on the page."
         sub="Kitchens, bathrooms, whole homes and additions. Each one below shows what is included, how long we are on site and what our last jobs actually cost."
-        photo={{ id: '1484154218962-a197022b5858', alt: 'White kitchen with black pendant lights and island seating' }}
+        photo={{ local: 'hero-kitchen', alt: 'Kitchen with white shaker cabinets and a stainless French-door fridge' }}
       />
 
       <nav className="services-index" aria-label="Services">

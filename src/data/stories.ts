@@ -41,7 +41,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1600607687939-ce8a6c25118c', alt: 'Open-plan living area with wood feature wall and large windows' },
+      photo: { local: 'painting', alt: 'Living room with slate-blue walls, white crown moulding, an arched doorway and refinished oak floors' },
       text: 'One open floor from front door to garden, with the kitchen moved to the back where the light is. Every system in the house is new and inspected.',
       results: [
         '14-foot opening on an engineered steel beam',
@@ -81,7 +81,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1600585152220-90363fe7e115', alt: 'White kitchen island with oak stools and black pendant lights' },
+      photo: { local: 'kitchen', alt: 'White shaker kitchen with a fluted farmhouse sink, stone-look backsplash and a gas range' },
       text: 'An island that seats four, full-height cabinets and lighting that works at night. The dining room and kitchen are now one room.',
       results: [
         'Wall removed on a flush beam, no soffit',
@@ -121,7 +121,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1584622650111-993a426fbf0a', alt: 'Glass walk-in shower with white tile and a wood vanity' },
+      photo: { local: 'bathroom-2', alt: 'Bathroom with a frameless glass shower, black fixtures and a floating oak vanity' },
       text: 'A walk-in shower with a low curb, bonded waterproofing and a fan that finally vents outside. The ceiling below has stayed dry.',
       results: [
         'New subfloor and sistered joists',
@@ -201,7 +201,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1605276374104-dee2a0ed3cd6', alt: 'Two-storey suburban family home with a garage and front lawn' },
+      photo: { local: 'roofing-2', alt: 'Two-storey home with tan siding, black shutters and a two-car garage' },
       text: 'A full second floor that looks like it was always there, with siding and rooflines tied into the original house.',
       results: [
         'Three bedrooms and a full bath upstairs',
@@ -241,7 +241,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1600566753190-17f0baa2a6c3', alt: 'Modern rear addition with timber cladding and black framed glass' },
+      photo: { local: 'sunroom', alt: 'Sunroom addition with a green feature wall, white shiplap ceiling and a row of windows onto the garden' },
       text: 'A family room opening onto the garden, with a primary suite and bath above. Timber cladding and black glass mark the new part without fighting the old one.',
       results: [
         '520 square feet added on two floors',
@@ -281,7 +281,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1600489000022-c2086d79f9d4', alt: 'Kitchen with charcoal lower cabinets, white tile and open shelves' },
+      photo: { local: 'hero-kitchen', alt: 'Kitchen with white shaker cabinets, a stainless French-door fridge and wood-look floors' },
       text: 'One bright room from the stove to the dining table. Charcoal lowers, white tile to the ceiling and open shelves where the dark uppers used to be.',
       results: [
         'Kitchen and dining room joined into one space',
@@ -321,7 +321,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1620626011761-996317b8d101', alt: 'Freestanding white tub beside a window with plants' },
+      photo: { local: 'bathroom', alt: 'Bathroom with botanical wallpaper, a gold arched mirror, globe sconces and a dark vanity' },
       text: 'A freestanding tub under the window, a separate shower, a double vanity and a floor that is warm on winter mornings.',
       results: [
         'Two feet borrowed from the hall closet',
@@ -481,7 +481,7 @@ export const stories: SuccessStory[] = [
       ],
     },
     after: {
-      photo: { id: '1600585154340-be6161a56a0c', alt: 'Modern house at dusk with a glass-walled ground floor facing the lawn' },
+      photo: { local: 'exterior', alt: 'Screened garden room with grey-trimmed openings and a screen door, built on a new slab' },
       text: 'A glass-walled family room on the garden side, a patio at the same level and water that now drains away from the house.',
       results: [
         '380 square feet of new living space',

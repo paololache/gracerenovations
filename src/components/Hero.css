@@ -10,11 +10,25 @@
   inset: 0;
 }
 
+.hero-media .photo {
+  /* Slow settle from a slight zoom on load */
+  animation: hero-settle 2.4s var(--fx-ease-standard) both;
+}
+
+@keyframes hero-settle {
+  from {
+    scale: 1.08;
+  }
+}
+
+/* Darker where the copy sits (left), opening up toward the windows on the right */
 .hero-scrim {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: rgba(40, 40, 40, 0.58);
+  background:
+    linear-gradient(90deg, rgba(24, 22, 20, 0.82) 0%, rgba(24, 22, 20, 0.55) 45%, rgba(24, 22, 20, 0.12) 100%),
+    linear-gradient(180deg, rgba(24, 22, 20, 0.35) 0%, transparent 30%);
 }
 
 .hero-copy {
@@ -59,6 +73,15 @@
 }
 
 @media (max-width: 900px) {
+  /* Phones: keep the sofa and glass doors in frame, darken top to bottom behind the copy */
+  .hero-media .photo {
+    object-position: 62% center;
+  }
+
+  .hero-scrim {
+    background: linear-gradient(180deg, rgba(24, 22, 20, 0.6) 0%, rgba(24, 22, 20, 0.72) 55%, rgba(24, 22, 20, 0.85) 100%);
+  }
+
   .hero {
     height: auto;
     min-height: 640px;

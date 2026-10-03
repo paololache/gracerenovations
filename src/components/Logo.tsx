@@ -1,9 +1,10 @@
+import lion from '../assets/grace-lion.webp'
 import './Logo.css'
 
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <div className={`logo ${dark ? 'logo-dark' : ''}`}>
-      <span className="logo-mark" aria-hidden="true" />
+      <img className="logo-mark" src={lion} alt="" width="64" height="33" />
       <span className="logo-word">Grace Building Co.</span>
     </div>
   )

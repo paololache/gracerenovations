@@ -99,8 +99,8 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
 
         <aside className="lead-aside">
           <Photo
-            id="1600607687939-ce8a6c25118c"
-            alt="Open-plan living area finished by our crew"
+            local="kitchen"
+            alt="White shaker kitchen finished by our crew"
             sizes="(max-width: 900px) 100vw, 400px"
             className="lead-aside-photo"
           />

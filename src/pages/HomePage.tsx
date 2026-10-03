@@ -14,7 +14,7 @@ import type { PageProps } from '../lib/router'
 export function HomePage({ onStartEstimate, onOpenStory, onRequestEstimate }: PageProps) {
   const curtain = useRef<HTMLDivElement>(null)
   // The project map stays put and fades back while the contact section slides up over it
-  useCurtain(curtain)
+  useCurtain(curtain, { minWidth: 0 })
 
   return (
     <>

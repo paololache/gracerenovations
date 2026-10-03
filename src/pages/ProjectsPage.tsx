@@ -40,7 +40,7 @@ export function ProjectsPage({ onOpenStory, onRequestEstimate }: PageProps) {
         eyebrow="Projects"
         title="Every job we finish, with what it cost."
         sub="Photos, scope, time on site and the final invoice. These are the most recent twelve; the rest of the archive is in the folder we bring to every visit."
-        photo={{ id: '1617806118233-18e1de247200', alt: 'Renovated dining room with green velvet chairs and a round pendant light' }}
+        photo={{ local: 'deck-2', alt: 'Composite deck with dark railings along a brick home at sunset' }}
       />
 
       <section className="projects-summary">

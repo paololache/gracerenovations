@@ -14,7 +14,7 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
         eyebrow="About us"
         title="Nine people, one county, since 2009."
         sub="A small building company that decided the best sales pitch was to show the invoices. The same crew has been building together for more than a decade."
-        photo={{ id: '1589939705384-5185137a7f0f', alt: 'Carpenter in a hard hat cutting lumber on a job site' }}
+        photo={{ local: 'truck', alt: 'Grace work truck with the lion logo on the door' }}
       />
 
       <section className="about-story">
@@ -52,8 +52,8 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
             </div>
             <div className="about-story-image-short">
               <Photo
-                id="1523413651479-597eb2da0ad6"
-                alt="Close-up of white subway tile and a faucet"
+                local="bathroom"
+                alt="Wallpapered bathroom with a gold arched mirror"
                 radius={20}
                 sizes="(max-width: 900px) 50vw, 240px"
               />

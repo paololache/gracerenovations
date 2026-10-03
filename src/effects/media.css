@@ -5,7 +5,8 @@
  *     .fx-zoom--strong     zoom 1.1 instead of 1.05
  *     .fx-zoom--linear     linear timing
  *     .fx-zoom--self       the frame itself zooms (no inner element)
- *   .fx-card               card that reacts as a whole on hover:
+ *   .fx-card               card that reacts as a whole on hover (or, on touch
+ *                          screens, while centred: see touch-active.ts):
  *     .fx-card__media      image zooms (inside a .fx-zoom frame)
  *     .fx-card__title      changes to --fx-card-accent
  *     .fx-card__reveal     hidden until hover on desktop, always shown on touch
@@ -35,7 +36,10 @@
 .fx-zoom:hover .fx-zoom__media,
 .fx-zoom--self:hover,
 .fx-card:hover .fx-zoom > img,
-.fx-card:hover .fx-zoom .fx-zoom__media {
+.fx-card:hover .fx-zoom .fx-zoom__media,
+.fx-card.is-touch-active .fx-zoom > img,
+.fx-card.is-touch-active .fx-zoom .fx-zoom__media,
+.fx-card.is-touch-active.fx-zoom > img {
   scale: var(--fx-zoom-scale, 1.05);
 }
 
@@ -58,7 +62,8 @@
 }
 
 .fx-card:hover .fx-card__title,
-.fx-card:focus-within .fx-card__title {
+.fx-card:focus-within .fx-card__title,
+.fx-card.is-touch-active .fx-card__title {
   color: var(--fx-card-accent, currentColor);
 }
 
@@ -67,7 +72,8 @@
 }
 
 .fx-card:hover .fx-arrow,
-.fx-card:focus-within .fx-arrow {
+.fx-card:focus-within .fx-arrow,
+.fx-card.is-touch-active .fx-arrow {
   transform: translateX(var(--fx-arrow-shift, 5px));
 }
 

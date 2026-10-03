@@ -37,6 +37,7 @@ The TypeScript helpers come from `./effects` (React hooks) or from each module f
 | `media.css` | Image zoom on hover (with the Safari rounded-corner fix), card hover, slanted clip-path shapes | – |
 | `buttons.css` | Fill ↔ outline swap, press-in, round icon button, pulse ring | – |
 | `curtain.css` · `curtain.ts` | A section stays pinned and fades back while the next one slides up over it | `initCurtain` / `useCurtain` |
+| `touch-active.ts` | On touch screens, plays card hover effects while the card is centred on screen | `initTouchActive` |
 | `marquee.css` · `marquee.ts` | Endless scrolling row, either direction, optional pause on hover | `initMarquee` / `useMarquee` |
 | `misc.css` | Pop-in, fade-in, spinner | – |
 

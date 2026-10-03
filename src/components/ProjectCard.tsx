@@ -12,12 +12,12 @@ export function ProjectCard({ project, onOpenStory }: ProjectCardProps) {
   const tag = services.find((s) => s.id === project.serviceId)?.tag
 
   return (
-    <article className="project-tile">
-      <div className="project-tile-image">
+    <article className="project-tile fx-card">
+      <div className="project-tile-image fx-zoom">
         <Photo {...project.photo} radius={16} sizes="(max-width: 900px) 100vw, 400px" />
       </div>
       <span className="badge badge-outline">{tag}</span>
-      <h3>{project.title}</h3>
+      <h3 className="fx-card__title">{project.title}</h3>
       <p className="project-tile-location">
         {project.location}, {project.year}
       </p>

@@ -10,25 +10,15 @@
 }
 
 .logo-mark {
-  width: 16px;
-  height: 16px;
+  /* The lion artwork has wide transparent margins; crop to the figure */
+  width: 52px;
+  height: 40px;
   flex: none;
-  background: var(--color-terracotta);
-  transform: rotate(45deg);
-  animation: logo-drift 6s ease-in-out infinite;
+  object-fit: cover;
+  object-position: 55% 60%;
 }
 
 .logo-word {
   font-size: 20px;
   font-weight: 500;
-}
-
-@keyframes logo-drift {
-  0%,
-  100% {
-    transform: translateY(0) rotate(45deg);
-  }
-  50% {
-    transform: translateY(-6px) rotate(45deg);
-  }
 }

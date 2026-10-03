@@ -38,8 +38,8 @@ export const services: Service[] = [
       'Recessed, pendant and under-cabinet lighting',
     ],
     photo: {
-      id: '1565538810643-b5bdb714032a',
-      alt: 'Brass faucet over a white quartz counter with green tile backsplash',
+      local: 'hero-kitchen',
+      alt: 'Kitchen with white shaker cabinets and a farmhouse sink under twin windows',
     },
     priceRange: [18000, 55000],
   },
@@ -62,8 +62,8 @@ export const services: Service[] = [
       'Heated floors on request',
     ],
     photo: {
-      id: '1600566752355-35792bedcfea',
-      alt: 'Modern bathroom with freestanding tub, grey tile and clerestory window',
+      local: 'bathroom',
+      alt: 'Bathroom with botanical wallpaper, a gold arched mirror and a dark vanity',
     },
     priceRange: [9000, 28000],
   },
@@ -86,8 +86,8 @@ export const services: Service[] = [
       'Phased schedule so the house stays liveable',
     ],
     photo: {
-      id: '1600210492486-724fe5c67fb0',
-      alt: 'Bright living room with leather sofa, plants and a gallery wall',
+      local: 'painting',
+      alt: 'Living room with slate-blue walls, an arched doorway and refinished oak floors',
     },
     priceRange: [85000, 260000],
   },
@@ -110,8 +110,8 @@ export const services: Service[] = [
       'Interior finishes matched to the house',
     ],
     photo: {
-      id: '1508450859948-4e04fabaa4ea',
-      alt: 'Timber framing of a multi-storey building under construction',
+      local: 'sunroom-2',
+      alt: 'Sunroom with vaulted ceiling and walls of windows facing the trees',
     },
     priceRange: [60000, 190000],
   },

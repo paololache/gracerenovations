@@ -36,16 +36,16 @@ export function About() {
         <div className="about-images">
           <div className="about-image">
             <Photo
-              id="1541888946425-d81bb19240f5"
-              alt="Crew in safety vests walking a job site"
+              local="truck"
+              alt="Grace work truck with the lion logo on the door"
               radius={16}
               sizes="(max-width: 900px) 50vw, 300px"
             />
           </div>
           <div className="about-image about-image-offset">
             <Photo
-              id="1523413651479-597eb2da0ad6"
-              alt="Close-up of freshly set white subway tile and a faucet"
+              local="exterior"
+              alt="Screened garden room built by our crew"
               radius={16}
               sizes="(max-width: 900px) 50vw, 300px"
             />
