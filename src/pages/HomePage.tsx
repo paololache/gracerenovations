@@ -1,6 +1,7 @@
 import { About } from '../components/About'
 import { Hero } from '../components/Hero'
 import { ProcessPreview } from '../components/ProcessPreview'
+import { ProjectMap } from '../components/ProjectMap'
 import { QuoteBanner } from '../components/QuoteBanner'
 import { RecentProjects } from '../components/RecentProjects'
 import { Services } from '../components/Services'
@@ -16,6 +17,7 @@ export function HomePage({ onStartEstimate, onOpenStory, onRequestEstimate }: Pa
       <Services />
       <ProcessPreview />
       <About />
+      <ProjectMap onOpenStory={onOpenStory} />
       <Testimonials />
     </>
   )

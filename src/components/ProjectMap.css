@@ -1,0 +1,465 @@
+/* Project map: sand band, text and gallery card on the left, slanted illustrated map on the right */
+.project-map-section {
+  background: var(--color-bone);
+  padding: 110px 0;
+  overflow: hidden;
+}
+
+.project-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: 60px;
+  align-items: center;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+/* Spec type: light 44px heading, 18px body */
+.project-map-title {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+
+.project-map-lede {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  margin-bottom: 50px;
+}
+
+/* Gallery card */
+.project-map-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 30px 44px;
+  border-radius: var(--radius-card-lg);
+  background: var(--color-white);
+  color: var(--color-carbon);
+  transition: box-shadow var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.project-map-card:hover {
+  color: var(--color-carbon);
+  box-shadow: 0 14px 40px rgba(40, 40, 40, 0.08);
+}
+
+.project-map-card-title {
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+/* Spec text link: tracked uppercase, arrow nudges on hover */
+.project-map-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 16px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+.project-map-card:hover .fx-arrow {
+  transform: translateX(5px);
+}
+
+/* Map frame */
+.project-map-stage {
+  position: relative;
+}
+
+.project-map-canvas {
+  position: relative;
+  aspect-ratio: 6 / 5;
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.project-map-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.map-land {
+  fill: #e8e6e3;
+}
+
+.map-street {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1;
+  opacity: 0.65;
+}
+
+.map-park {
+  fill: #dcdfd8;
+}
+
+.map-river {
+  fill: none;
+  stroke: #cdd0d2;
+  stroke-width: 40;
+  stroke-linecap: round;
+}
+
+.map-lake {
+  fill: #cdd0d2;
+}
+
+.map-water-label {
+  fill: #9a9da0;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.map-highway-edge {
+  fill: none;
+  stroke: #d2cfcb;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.map-highway {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.map-road {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* Towns */
+.project-map-pins {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-map-town {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+}
+
+.project-map-pin {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--fx-dur-base) var(--fx-ease-standard),
+    scale var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+/* Soft halo that breathes around each pin */
+.project-map-pin::before {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--color-terracotta);
+  opacity: 0.2;
+  animation: map-halo 2.6s var(--fx-ease-standard) infinite;
+}
+
+.project-map-pin:hover,
+.project-map-pin:focus-visible {
+  scale: 1.08;
+}
+
+.project-map-pin:focus-visible {
+  outline: 2px solid var(--color-carbon);
+  outline-offset: 4px;
+}
+
+.project-map-pin.is-open {
+  background: var(--color-carbon);
+}
+
+.project-map-pin.is-open::before {
+  background: var(--color-carbon);
+}
+
+@keyframes map-halo {
+  0%,
+  100% {
+    scale: 0.85;
+    opacity: 0.25;
+  }
+  50% {
+    scale: 1.15;
+    opacity: 0.12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-map-pin::before {
+    animation: none !important;
+  }
+}
+
+.project-map-dot {
+  width: 14px;
+  height: 14px;
+  border: 3px solid #e8e6e3;
+  border-radius: 50%;
+  background: var(--color-terracotta);
+  opacity: 0.85;
+}
+
+.project-map-label {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5f5c59;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow:
+    0 0 3px #e8e6e3,
+    0 0 3px #e8e6e3,
+    0 0 3px #e8e6e3;
+}
+
+.project-map-label small {
+  margin-top: 2px;
+  font-size: 9px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+/* Towns without published projects: label beside a small dot (left of it near the right edge) */
+.project-map-town:not(.has-projects) .project-map-label {
+  top: 50%;
+  left: calc(100% + 6px);
+  translate: 0 -50%;
+}
+
+.project-map-town.label-left:not(.has-projects) .project-map-label {
+  left: auto;
+  right: calc(100% + 6px);
+}
+
+/* Projects of the selected town: opens beside the pin (placement classes from ProjectMap.tsx) */
+.project-map-panel {
+  --pin-gap: 36px;
+  position: absolute;
+  z-index: 5;
+  width: 300px;
+  padding: 16px 20px 8px;
+  border-radius: var(--radius-card-md);
+  background: var(--color-cream);
+  box-shadow: 0 18px 50px rgba(40, 40, 40, 0.2);
+  animation: fx-fade-in var(--fx-dur-base) ease-out;
+}
+
+/* Right of a pin on the left half of the map, left of a pin on the right half */
+.project-map-panel.is-right-of {
+  left: calc(var(--pin-x) + var(--pin-gap));
+  max-width: calc(100% - var(--pin-x) - var(--pin-gap) - 12px);
+}
+
+.project-map-panel.is-left-of {
+  right: calc(100% - var(--pin-x) + var(--pin-gap));
+  max-width: calc(var(--pin-x) - var(--pin-gap) - 12px);
+}
+
+/* Lines up with the pin: top edge for pins in the upper half, bottom edge for the lower half */
+.project-map-panel.is-below {
+  top: calc(var(--pin-y) - 24px);
+}
+
+.project-map-panel.is-above {
+  bottom: calc(100% - var(--pin-y) - 24px);
+}
+
+.project-map-panel[hidden] {
+  display: none;
+}
+
+.project-map-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.project-map-panel-head .eyebrow {
+  font-size: 11px;
+  color: var(--color-terracotta);
+}
+
+.project-map-panel-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-carbon);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.project-map-panel-close:hover {
+  background: var(--color-bone);
+}
+
+.project-map-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-map-project {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-top: 1px solid var(--color-border);
+  background: none;
+  color: var(--color-carbon);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.project-map-project strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 400;
+  transition: color var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.project-map-project small {
+  font-size: 12px;
+  color: var(--color-text-subtle);
+}
+
+.project-map-project:hover strong {
+  color: var(--color-terracotta);
+}
+
+.project-map-project .fx-arrow {
+  color: var(--color-terracotta);
+}
+
+.project-map-note {
+  margin-top: 14px;
+  font-size: 12px;
+  text-align: right;
+  color: var(--color-text-subtle);
+}
+
+@media (max-width: 900px) {
+  .project-map-section {
+    padding: 80px 0;
+  }
+
+  .project-map-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .project-map-title {
+    font-size: 32px;
+  }
+
+  .project-map-lede {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .project-map-card {
+    padding: 24px 28px;
+  }
+
+  .project-map-card-title {
+    font-size: 22px;
+  }
+
+  .project-map-card-link {
+    font-size: 14px;
+  }
+
+  .project-map-canvas {
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* Phones: the map is too small to cover, so the panel sits below it */
+@media (max-width: 640px) {
+  .project-map-panel.project-map-panel {
+    position: static;
+    width: auto;
+    max-width: none;
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-map-pin {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .project-map-label {
+    font-size: 11px;
+  }
+}
+
+/* Smallest phones: tighter markers so neighbouring labels don't touch */
+@media (max-width: 360px) {
+  .project-map-pin {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .project-map-pin::before {
+    inset: -6px;
+  }
+
+  .project-map-label {
+    font-size: 10px;
+  }
+
+  .project-map-label small {
+    display: none;
+  }
+
+  .project-map-note {
+    text-align: left;
+  }
+}
