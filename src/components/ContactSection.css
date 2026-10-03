@@ -1,0 +1,240 @@
+/* Contact band: light photo, copy on the left, slanted terracotta form card on the right */
+.contact-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-cream);
+  padding: 150px 0 0;
+}
+
+/* As the curtain over the project map: full screen, rounded top edge */
+.fx-curtain.is-on > .contact-section {
+  --fx-curtain-radius: 32px;
+  min-height: 100vh;
+}
+
+.contact-bg {
+  position: absolute;
+  inset: 0;
+}
+
+/* A light veil keeps the dark copy readable over the photo */
+.contact-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 245, 243, 0.6);
+}
+
+.contact-bg .photo {
+  scale: 1.12;
+  transition: scale 2s var(--fx-ease-standard);
+}
+
+.contact-bg.is-revealed .photo,
+:root:not(.fx-reveal-ready) .contact-bg .photo {
+  scale: 1;
+}
+
+.contact-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 70px;
+  align-items: center;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+.contact-title {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.contact-lede {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-carbon);
+  margin-bottom: 22px;
+}
+
+.contact-direct {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-terracotta);
+}
+
+.contact-direct a {
+  color: inherit;
+}
+
+.contact-direct a:hover {
+  color: var(--color-terracotta-hover);
+}
+
+/*
+ * Slanted card: the whole card is skewed so its top edge runs down to the
+ * right with rounded corners; the content is skewed back so it sits straight.
+ * The bottom runs past the section edge and is cut off there.
+ */
+.contact-card-wrap {
+  align-self: end;
+}
+
+.contact-card {
+  --contact-skew: 5deg;
+  margin-bottom: -80px;
+  padding: 150px 44px 150px;
+  border-radius: 32px;
+  background: var(--color-terracotta);
+  transform: skewY(var(--contact-skew));
+  transform-origin: top left;
+}
+
+.contact-card-inner {
+  transform: skewY(calc(var(--contact-skew) * -1));
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.contact-field-wide {
+  grid-column: 1 / -1;
+}
+
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  padding: 15px 22px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--color-white);
+  font: inherit;
+  font-size: 16px;
+  resize: vertical;
+  transition:
+    background var(--fx-dur-base) var(--fx-ease-standard),
+    border-color var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.contact-field.is-invalid input {
+  border-color: var(--color-white);
+  box-shadow: inset 0 0 0 1px var(--color-white);
+}
+
+.contact-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 22px;
+  margin-top: 6px;
+}
+
+.contact-submit {
+  background: var(--color-white);
+  color: var(--color-carbon);
+  padding: 16px 40px;
+  transition:
+    background var(--fx-dur-base) var(--fx-ease-in),
+    color var(--fx-dur-base) var(--fx-ease-in),
+    scale 100ms var(--fx-ease-standard);
+}
+
+.contact-submit:hover {
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+.contact-submit:active {
+  scale: 0.98;
+}
+
+.contact-submit:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 3px;
+}
+
+.contact-submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.contact-error {
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+.contact-done {
+  color: var(--color-white);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.contact-done-title {
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .contact-section {
+    padding-top: 90px;
+  }
+
+  .contact-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .contact-title {
+    font-size: 32px;
+  }
+
+  .contact-lede {
+    font-size: 16px;
+  }
+
+  /* Phone and email on their own lines */
+  .contact-direct a {
+    display: block;
+  }
+
+  .contact-direct-sep {
+    display: none;
+  }
+
+  .contact-card {
+    --contact-skew: 3deg;
+    margin-left: calc(var(--section-pad-x) * -0.5);
+    margin-right: calc(var(--section-pad-x) * -0.5);
+    padding: 70px 24px 110px;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

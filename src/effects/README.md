@@ -36,6 +36,7 @@ The TypeScript helpers come from `./effects` (React hooks) or from each module f
 | `image-wipe.css` · `image-wipe.ts` | Image swap: new image wipes in from the left inside a rounded frame and zooms 1.5 → 1 | `createImageWipe` / `useImageWipe` |
 | `media.css` | Image zoom on hover (with the Safari rounded-corner fix), card hover, slanted clip-path shapes | – |
 | `buttons.css` | Fill ↔ outline swap, press-in, round icon button, pulse ring | – |
+| `curtain.css` · `curtain.ts` | A section stays pinned and fades back while the next one slides up over it | `initCurtain` / `useCurtain` |
 | `marquee.css` · `marquee.ts` | Endless scrolling row, either direction, optional pause on hover | `initMarquee` / `useMarquee` |
 | `misc.css` | Pop-in, fade-in, spinner | – |
 

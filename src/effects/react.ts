@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, type RefObject } from 'react'
 import { initCircleHero, type CircleHeroOptions } from './circle-hero'
+import { initCurtain, type CurtainOptions } from './curtain'
 import { watchHeader, type WatchHeaderOptions } from './header'
 import { createImageWipe, type ImageWipe } from './image-wipe'
 import { initMarquee, type MarqueeOptions } from './marquee'
@@ -43,6 +44,14 @@ export function useMarquee(ref: RefObject<HTMLElement | null>, options: MarqueeO
   useEffect(() => {
     if (!ref.current) return
     return initMarquee(ref.current, options)
+  }, deps) // eslint-disable-line react-hooks/exhaustive-deps
+}
+
+/** Pins the under section of a .fx-curtain and fades it as the over section slides across. */
+export function useCurtain(ref: RefObject<HTMLElement | null>, options: CurtainOptions = {}, deps: unknown[] = []) {
+  useEffect(() => {
+    if (!ref.current) return
+    return initCurtain(ref.current, options)
   }, deps) // eslint-disable-line react-hooks/exhaustive-deps
 }
 

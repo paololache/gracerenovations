@@ -1,0 +1,51 @@
+/*
+ * Curtain: a section stays put and fades back while the next one slides up
+ * over it. curtain.ts drives it from the scroll position.
+ *
+ * <div class="fx-curtain">
+ *   <section class="fx-curtain__under">…</section>
+ *   <section class="fx-curtain__over">…</section>
+ * </div>
+ *
+ * The wrapper limits the effect to these two sections. The "over" section
+ * needs its own opaque background. curtain.ts adds .is-on to the wrapper only
+ * when the effect suits the screen (see its options); otherwise the two
+ * sections simply scroll one after the other.
+ *
+ * The under section is at least a full screen tall while the curtain is on;
+ * centre its content yourself if it is shorter (e.g. display: grid; align-content: center).
+ *
+ * Variables:
+ *   --fx-cover           0 → 1 as the over section covers the under one (set by curtain.ts)
+ *   --fx-curtain-fade    how much the under content fades     (0.85)
+ *   --fx-curtain-scale   how much it shrinks                  (0.06)
+ *   --fx-curtain-lift    how far it drifts up                 (40px)
+ *   --fx-curtain-radius  rounded top corners of the over section (0)
+ *   --fx-curtain-shadow  shadow along the over section's top edge
+ */
+.fx-curtain.is-on > .fx-curtain__under {
+  position: sticky;
+  /* Tall sections stick once their bottom edge reaches the bottom of the screen */
+  top: var(--fx-stick-top, 0px);
+  z-index: 0;
+  /* At least a full screen, so it is seen whole before the cover starts */
+  min-height: 100vh;
+}
+
+.fx-curtain.is-on > .fx-curtain__under > * {
+  opacity: calc(1 - var(--fx-cover, 0) * var(--fx-curtain-fade, 0.85));
+  scale: calc(1 - var(--fx-cover, 0) * var(--fx-curtain-scale, 0.06));
+  translate: 0 calc(var(--fx-cover, 0) * var(--fx-curtain-lift, 40px) * -1);
+  transform-origin: center top;
+  will-change: opacity, scale, translate;
+}
+
+.fx-curtain__over {
+  position: relative;
+  z-index: 1;
+}
+
+.fx-curtain.is-on > .fx-curtain__over {
+  border-radius: var(--fx-curtain-radius, 0) var(--fx-curtain-radius, 0) 0 0;
+  box-shadow: var(--fx-curtain-shadow, 0 -24px 60px rgb(0 0 0 / 0.08));
+}

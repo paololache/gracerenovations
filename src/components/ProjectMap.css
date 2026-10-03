@@ -5,7 +5,14 @@
   overflow: hidden;
 }
 
+/* Under the contact-section curtain the band fills the screen: keep the content centred */
+.fx-curtain.is-on > .project-map-section {
+  display: grid;
+  align-content: center;
+}
+
 .project-map-layout {
+  width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
   gap: 60px;
@@ -143,10 +150,18 @@
 }
 
 /* Towns */
+/* Covers the whole map, so its scroll reveal triggers from the map's top edge */
 .project-map-pins {
+  position: absolute;
+  inset: 0;
   list-style: none;
   margin: 0;
   padding: 0;
+  pointer-events: none;
+}
+
+.project-map-pins > li {
+  pointer-events: auto;
 }
 
 .project-map-town {

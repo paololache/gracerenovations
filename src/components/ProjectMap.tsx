@@ -2,7 +2,7 @@ import { useEffect, useState, type CSSProperties } from 'react'
 import { formatCost } from '../data/projects'
 import { services } from '../data/services'
 import { MAP_HEIGHT, MAP_WIDTH, OFFICE_TOWN, mapTowns } from '../data/serviceMap'
-import { reveal, revealStagger } from '../lib/motion'
+import { revealStagger } from '../lib/motion'
 import { routeHref } from '../lib/router'
 import './ProjectMap.css'
 
@@ -86,7 +86,12 @@ function MapArt() {
   )
 }
 
-export function ProjectMap({ onOpenStory }: { onOpenStory: (projectId: string) => void }) {
+interface ProjectMapProps {
+  onOpenStory: (projectId: string) => void
+  className?: string
+}
+
+export function ProjectMap({ onOpenStory, className = '' }: ProjectMapProps) {
   const [openTown, setOpenTown] = useState<string | null>(null)
   const selected = mapTowns.find((t) => t.name === openTown)
 
@@ -98,7 +103,7 @@ export function ProjectMap({ onOpenStory }: { onOpenStory: (projectId: string) =
   }, [openTown])
 
   return (
-    <section className="project-map-section" aria-labelledby="project-map-title">
+    <section className={`project-map-section ${className}`} aria-labelledby="project-map-title">
       <div className="project-map-layout">
         <div className="project-map-copy" {...revealStagger}>
           <h2 id="project-map-title" className="project-map-title">
@@ -203,7 +208,7 @@ export function ProjectMap({ onOpenStory }: { onOpenStory: (projectId: string) =
               )}
             </div>
           </div>
-          <p className="project-map-note" {...reveal}>
+          <p className="project-map-note">
             Illustrated map, not to scale. Showing the {published} projects published on this site.
           </p>
         </div>
