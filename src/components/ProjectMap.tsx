@@ -1,29 +1,13 @@
-import { useEffect, useState, type CSSProperties } from 'react'
-import { formatCost } from '../data/projects'
-import { services } from '../data/services'
+import { company, serviceArea } from '../data/company'
 import { MAP_HEIGHT, MAP_WIDTH, OFFICE_TOWN, mapTowns } from '../data/serviceMap'
 import { revealStagger } from '../lib/motion'
 import { routeHref } from '../lib/router'
+import { Accented } from './Heading'
 import './ProjectMap.css'
 
-const tagFor = (serviceId: string) => services.find((s) => s.id === serviceId)?.tag
 const pct = (value: number, of: number) => `${(value / of) * 100}%`
-const published = mapTowns.reduce((n, town) => n + town.projects.length, 0)
 
-/**
- * On wide screens the project panel opens beside the selected pin, on the
- * side with more room, so it never covers it. On phones it sits below the map.
- */
-function panelPlacement(town: { x: number; y: number }) {
-  const side = town.x > MAP_WIDTH / 2 ? 'is-left-of' : 'is-right-of'
-  const align = town.y > MAP_HEIGHT / 2 ? 'is-above' : 'is-below'
-  return {
-    className: `${side} ${align}`,
-    style: { '--pin-x': pct(town.x, MAP_WIDTH), '--pin-y': pct(town.y, MAP_HEIGHT) } as CSSProperties,
-  }
-}
-
-/** Illustrated, not to scale: roads, river and parks only frame where the towns sit. */
+/** Illustrated, not to scale: the ring road, highways and river only frame where the towns sit. */
 function MapArt() {
   return (
     <svg className="project-map-art" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} aria-hidden="true">
@@ -40,83 +24,62 @@ function MapArt() {
       <rect width="330" height={MAP_HEIGHT} fill="url(#map-streets)" />
       <rect x="330" width="270" height={MAP_HEIGHT} fill="url(#map-streets-b)" />
 
-      {/* Parks */}
-      <ellipse cx="196" cy="300" rx="44" ry="26" className="map-park" />
-      <rect x="378" y="176" width="70" height="40" rx="10" transform="rotate(-18 413 196)" className="map-park" />
-      <ellipse cx="520" cy="430" rx="52" ry="30" className="map-park" />
-      <ellipse cx="78" cy="96" rx="40" ry="22" className="map-park" />
+      {/* Parks and a reservoir */}
+      <ellipse cx="190" cy="390" rx="44" ry="26" className="map-park" />
+      <ellipse cx="520" cy="420" rx="52" ry="30" className="map-park" />
+      <ellipse cx="80" cy="110" rx="40" ry="22" className="map-park" />
+      <ellipse cx="520" cy="250" rx="36" ry="58" transform="rotate(-20 520 250)" className="map-lake" />
 
-      {/* Water */}
-      <path
-        id="map-river"
-        d="M470 -20C420 80 340 150 345 250S392 380 342 520"
-        className="map-river"
-      />
-      <ellipse cx="146" cy="430" rx="34" ry="18" className="map-lake" />
+      {/* A river running through the city, north-east to south-west */}
+      <path id="map-river" d="M430 -20C410 90 390 170 350 250S270 400 230 520" className="map-river" />
       <text className="map-water-label">
-        <textPath href="#map-river" startOffset="34%">
-          Mill River
+        <textPath href="#map-river" startOffset="84%">
+          White River
         </textPath>
       </text>
 
-      {/* Highways: pale edge, then white road */}
-      {[
-        'M-20 120C120 150 250 210 282 262S420 330 620 300',
-        'M300 -20C300 100 270 180 282 262S250 420 220 520',
-      ].map((d) => (
-        <g key={d}>
-          <path d={d} className="map-highway-edge" />
-          <path d={d} className="map-highway" />
-        </g>
-      ))}
-
-      {/* Local roads */}
-      {[
-        'M40 430C160 360 200 300 282 262',
-        'M470 128C420 200 380 240 345 250',
-        'M150 190C200 120 260 90 330 92',
-        'M540 262C500 320 470 350 438 372',
-        'M112 382C160 396 200 408 236 414',
-        'M330 92C390 96 430 110 470 128',
-        'M150 190C136 260 120 330 112 382',
-      ].map((d) => (
-        <path key={d} d={d} className="map-road" />
-      ))}
+      {/* Ring road around the city, then highways out to the suburbs */}
+      <ellipse cx="330" cy="300" rx="128" ry="112" className="map-highway-edge" />
+      <ellipse cx="330" cy="300" rx="128" ry="112" className="map-highway" />
+      {['M-20 228C120 240 240 280 330 300S500 330 620 360', 'M330 -20C326 120 330 220 330 300S320 440 300 520', 'M330 300C380 240 430 180 520 40'].map(
+        (d) => (
+          <g key={d}>
+            <path d={d} className="map-highway-edge" />
+            <path d={d} className="map-highway" />
+          </g>
+        ),
+      )}
     </svg>
   )
 }
 
-interface ProjectMapProps {
-  onOpenStory: (projectId: string) => void
-  className?: string
-}
-
-export function ProjectMap({ onOpenStory, className = '' }: ProjectMapProps) {
-  const [openTown, setOpenTown] = useState<string | null>(null)
-  const selected = mapTowns.find((t) => t.name === openTown)
-
-  useEffect(() => {
-    if (!openTown) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpenTown(null)
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [openTown])
-
+/** "Serving Indianapolis & Central Indiana": service areas over an illustrated map, plus a link to the gallery. */
+export function ProjectMap({ className = '' }: { className?: string }) {
   return (
     <section className={`project-map-section ${className}`} aria-labelledby="project-map-title">
       <div className="project-map-layout">
         <div className="project-map-copy" {...revealStagger}>
+          <p className="eyebrow eyebrow-rule section-eyebrow">Service areas</p>
           <h2 id="project-map-title" className="project-map-title">
-            Built across eight towns, close to home.
+            <Accented text="Serving Indianapolis &" accent="Central Indiana." />
           </h2>
           <p className="project-map-lede">
-            Our shop is on Mill Road in Millbrook, and every job is within about thirty minutes of it. Tap a pin to see
-            what we built there.
+            {company.legalName} proudly serves homeowners throughout Indianapolis, Speedway, Carmel, Fishers, Brownsburg,
+            and surrounding Central Indiana communities.
           </p>
-          <a className="project-map-card fx-arrow-link" href={routeHref('projects')}>
+          <ul className="project-map-chips">
+            {serviceArea.map((area) => (
+              <li key={area}>{area}</li>
+            ))}
+          </ul>
+          <p className="project-map-note-text">
+            Not sure if we serve your area? Call <a href={company.phoneHref}>{company.phone}</a> and tell us where your
+            project is located.
+          </p>
+          <a className="project-map-card fx-arrow-link" href={routeHref('gallery')}>
             <span className="project-map-card-title">View Project Gallery</span>
             <span className="project-map-card-link">
-              Browse the map
+              See our work
               <svg className="fx-arrow" width="26" height="12" viewBox="0 0 26 12" aria-hidden="true">
                 <path d="M0 6h24M19 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.2" />
               </svg>
@@ -125,92 +88,37 @@ export function ProjectMap({ onOpenStory, className = '' }: ProjectMapProps) {
         </div>
 
         <div className="project-map-frame" data-fx-reveal="fade-left" data-fx-reveal-duration="1000">
-          <div
-            className="project-map-stage"
-            onClick={(e) => {
-              // A click anywhere on the map that isn't a pin or the panel closes the panel
-              if (!(e.target as Element).closest('.project-map-pin, .project-map-panel')) setOpenTown(null)
-            }}
-          >
+          <div className="project-map-stage">
             <div className="project-map-canvas">
               <MapArt />
 
               <ul className="project-map-pins" {...revealStagger} data-fx-reveal-stagger="90">
                 {mapTowns.map((town) => {
-                  const count = town.projects.length
-                  const isOpen = town.name === openTown
+                  const isOffice = town.name === OFFICE_TOWN
                   return (
                     <li
                       key={town.name}
-                      className={`project-map-town ${count ? 'has-projects' : ''} ${town.labelLeft || town.x > MAP_WIDTH * 0.75 ? 'label-left' : ''}`}
+                      className={`project-map-town ${isOffice ? 'has-projects' : ''} ${town.labelLeft ? 'label-left' : ''}`}
                       style={{ left: pct(town.x, MAP_WIDTH), top: pct(town.y, MAP_HEIGHT) }}
                     >
-                      {count ? (
-                        <button
-                          type="button"
-                          className={`project-map-pin ${isOpen ? 'is-open' : ''}`}
-                          aria-expanded={isOpen}
-                          aria-controls="project-map-panel"
-                          aria-label={`${town.name}: ${count} published ${count === 1 ? 'project' : 'projects'}`}
-                          onClick={() => setOpenTown(isOpen ? null : town.name)}
-                        >
-                          {count}
-                        </button>
+                      {isOffice ? (
+                        <span className="project-map-pin" aria-hidden="true">
+                          <img src="/grace-lion.webp" alt="" />
+                        </span>
                       ) : (
                         <span className="project-map-dot" aria-hidden="true" />
                       )}
                       <span className="project-map-label">
                         {town.name}
-                        {town.name === OFFICE_TOWN && <small>Our shop</small>}
+                        {isOffice && <small>Based here</small>}
                       </span>
                     </li>
                   )
                 })}
               </ul>
             </div>
-
-            <div
-              id="project-map-panel"
-              className={`project-map-panel ${selected ? panelPlacement(selected).className : ''}`}
-              style={selected ? panelPlacement(selected).style : undefined}
-              role="region"
-              aria-live="polite"
-              hidden={!selected}
-            >
-              {selected && (
-                <>
-                  <div className="project-map-panel-head">
-                    <p className="eyebrow">
-                      {selected.name} · {selected.projects.length} projects
-                    </p>
-                    <button type="button" className="project-map-panel-close" aria-label="Close" onClick={() => setOpenTown(null)}>
-                      ×
-                    </button>
-                  </div>
-                  <ul>
-                    {selected.projects.map((project) => (
-                      <li key={project.id}>
-                        <button type="button" className="project-map-project fx-arrow-link" onClick={() => onOpenStory(project.id)}>
-                          <span>
-                            <strong>{project.title}</strong>
-                            <small>
-                              {tagFor(project.serviceId)} · {project.year} · {formatCost(project.cost)}
-                            </small>
-                          </span>
-                          <span className="fx-arrow" aria-hidden="true">
-                            →
-                          </span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </div>
           </div>
-          <p className="project-map-note">
-            Illustrated map, not to scale. Showing the {published} projects published on this site.
-          </p>
+          <p className="project-map-note">Illustrated map, not to scale.</p>
         </div>
       </div>
     </section>

@@ -1,0 +1,41 @@
+.trust-strip {
+  background: var(--color-navy-soft);
+  color: var(--color-white);
+}
+
+.trust-strip-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 22px var(--section-pad-x);
+  list-style: none;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-on-dark-secondary);
+}
+
+.trust-strip-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Small terracotta diamond, echoing the old logo mark */
+.trust-strip-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  background: var(--color-terracotta);
+  rotate: 45deg;
+}
+
+@media (max-width: 900px) {
+  .trust-strip-list {
+    justify-content: flex-start;
+    font-size: 11px;
+  }
+}

@@ -13,7 +13,7 @@
   inset: 0;
   border: none;
   padding: 0;
-  background: rgba(40, 40, 40, 0.6);
+  background: rgba(11, 26, 58, 0.6);
   cursor: pointer;
   animation: lead-fade var(--ease-content);
 }
@@ -38,7 +38,7 @@
   overflow: hidden;
   background: var(--color-cream);
   border-radius: var(--radius-card-lg);
-  box-shadow: 0 30px 80px rgba(40, 40, 40, 0.3);
+  box-shadow: 0 30px 80px rgba(11, 26, 58, 0.3);
   animation: lead-in 450ms ease;
 }
 
@@ -232,18 +232,16 @@
 }
 
 .lead-chips {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .lead-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  min-height: 44px;
-  padding: 9px 11px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 14px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card-sm);
   background: var(--color-white);
@@ -255,10 +253,6 @@
   transition: border-color var(--ease-hover), background var(--ease-hover);
 }
 
-.lead-chip small {
-  font-size: 11px;
-  color: var(--color-text-subtle);
-}
 
 .lead-chip:focus-visible,
 .lead-close:focus-visible,
@@ -272,16 +266,30 @@
 }
 
 .lead-chip.is-selected {
-  border-color: var(--color-terracotta);
-  background: rgba(207, 111, 76, 0.08);
+  border-color: var(--color-carbon);
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+select.lead-input {
+  appearance: none;
+  padding-right: 36px;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.lead-error a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .lead-chips-small .lead-chip {
   white-space: nowrap;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 7px 8px;
+  min-height: 36px;
+  padding: 6px 12px;
   font-size: 13px;
 }
 
@@ -446,25 +454,9 @@
     font-size: 22px;
   }
 
-  .lead-chips {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lead-chips-small {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .lead-chips-small .lead-chip {
-    font-size: 12px;
-    padding: 6px 4px;
-  }
 }
 
 @media (max-width: 340px) {
-  .lead-chips-small {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .lead-fields {
     grid-template-columns: minmax(0, 1fr);
   }

@@ -36,7 +36,30 @@
   font-size: 18px;
   line-height: 1.5;
   color: var(--color-text-secondary);
-  margin-bottom: 50px;
+  margin-bottom: 24px;
+}
+
+.project-map-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.project-map-chips li {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-tint);
+  font-size: 13px;
+}
+
+.project-map-note-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 36px;
 }
 
 /* Gallery card */
@@ -54,7 +77,7 @@
 
 .project-map-card:hover {
   color: var(--color-carbon);
-  box-shadow: 0 14px 40px rgba(40, 40, 40, 0.08);
+  box-shadow: 0 14px 40px rgba(11, 26, 58, 0.08);
 }
 
 .project-map-card-title {
@@ -173,50 +196,40 @@
 
 .project-map-pin {
   position: relative;
-  width: 40px;
-  height: 40px;
-  border: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: var(--color-terracotta);
+  background: var(--color-carbon);
   color: var(--color-white);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
   transition:
     background var(--fx-dur-base) var(--fx-ease-standard),
     scale var(--fx-dur-base) var(--fx-ease-standard);
 }
 
 /* Soft halo that breathes around each pin */
+.project-map-pin img {
+  width: 34px;
+  height: 22px;
+  object-fit: cover;
+  object-position: 55% 60%;
+}
+
 .project-map-pin::before {
   content: '';
   position: absolute;
   inset: -9px;
   z-index: -1;
   border-radius: 50%;
-  background: var(--color-terracotta);
+  background: var(--color-blue);
   opacity: 0.2;
   animation: map-halo 2.6s var(--fx-ease-standard) infinite;
 }
 
-.project-map-pin:hover,
-.project-map-pin:focus-visible {
-  scale: 1.08;
-}
 
-.project-map-pin:focus-visible {
-  outline: 2px solid var(--color-carbon);
-  outline-offset: 4px;
-}
 
-.project-map-pin.is-open {
-  background: var(--color-carbon);
-}
 
-.project-map-pin.is-open::before {
-  background: var(--color-carbon);
-}
 
 @keyframes map-halo {
   0%,
@@ -237,12 +250,12 @@
 }
 
 .project-map-dot {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border: 3px solid #e8e6e3;
   border-radius: 50%;
   background: var(--color-terracotta);
-  opacity: 0.85;
+  box-shadow: 0 0 0 1px rgba(207, 111, 76, 0.35);
 }
 
 .project-map-label {
@@ -282,111 +295,6 @@
 .project-map-town.label-left:not(.has-projects) .project-map-label {
   left: auto;
   right: calc(100% + 6px);
-}
-
-/* Projects of the selected town: opens beside the pin (placement classes from ProjectMap.tsx) */
-.project-map-panel {
-  --pin-gap: 36px;
-  position: absolute;
-  z-index: 5;
-  width: 300px;
-  padding: 16px 20px 8px;
-  border-radius: var(--radius-card-md);
-  background: var(--color-cream);
-  box-shadow: 0 18px 50px rgba(40, 40, 40, 0.2);
-  animation: fx-fade-in var(--fx-dur-base) ease-out;
-}
-
-/* Right of a pin on the left half of the map, left of a pin on the right half */
-.project-map-panel.is-right-of {
-  left: calc(var(--pin-x) + var(--pin-gap));
-  max-width: calc(100% - var(--pin-x) - var(--pin-gap) - 12px);
-}
-
-.project-map-panel.is-left-of {
-  right: calc(100% - var(--pin-x) + var(--pin-gap));
-  max-width: calc(var(--pin-x) - var(--pin-gap) - 12px);
-}
-
-/* Lines up with the pin: top edge for pins in the upper half, bottom edge for the lower half */
-.project-map-panel.is-below {
-  top: calc(var(--pin-y) - 24px);
-}
-
-.project-map-panel.is-above {
-  bottom: calc(100% - var(--pin-y) - 24px);
-}
-
-.project-map-panel[hidden] {
-  display: none;
-}
-
-.project-map-panel-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.project-map-panel-head .eyebrow {
-  font-size: 11px;
-  color: var(--color-terracotta);
-}
-
-.project-map-panel-close {
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--color-carbon);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.project-map-panel-close:hover {
-  background: var(--color-bone);
-}
-
-.project-map-panel ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.project-map-project {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 12px 0;
-  border: none;
-  border-top: 1px solid var(--color-border);
-  background: none;
-  color: var(--color-carbon);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.project-map-project strong {
-  display: block;
-  font-size: 15px;
-  font-weight: 400;
-  transition: color var(--fx-dur-base) var(--fx-ease-standard);
-}
-
-.project-map-project small {
-  font-size: 12px;
-  color: var(--color-text-subtle);
-}
-
-.project-map-project:hover strong {
-  color: var(--color-terracotta);
-}
-
-.project-map-project .fx-arrow {
-  color: var(--color-terracotta);
 }
 
 .project-map-note {
@@ -429,16 +337,6 @@
 
   .project-map-canvas {
     clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
-  }
-}
-
-/* Phones: the map is too small to cover, so the panel sits below it */
-@media (max-width: 640px) {
-  .project-map-panel.project-map-panel {
-    position: static;
-    width: auto;
-    max-width: none;
-    margin-top: 14px;
   }
 }
 

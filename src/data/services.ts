@@ -1,127 +1,187 @@
 import type { PhotoRef } from '../components/Photo'
 
 export interface Service {
-  id: 'kitchen' | 'bathroom' | 'whole-home' | 'addition'
+  id: 'kitchen' | 'bathroom' | 'sunroom' | 'painting' | 'exterior' | 'remodeling'
   number: string
   name: string
   /** Singular label used as a project tag, e.g. "Kitchen". */
   tag: string
+  /** One line for the service cards. */
   description: string
+  /** The heading on the services page; `accent` is set in the italic serif. */
+  heading: { text: string; accent: string }
   longDescription: string
-  priceLabel: string
-  timeline: string
+  benefits: string[]
   included: string[]
+  whoFor: string[]
+  cta: string
   photo: PhotoRef
-  /** Internal estimation range in dollars, used by the quote calculator.
-   *  Whole-home's public price label is open-ended ("$85k+"); the upper
-   *  bound here is only for sizing the calculator's output. */
-  priceRange: [number, number]
 }
 
 export const services: Service[] = [
   {
     id: 'kitchen',
     number: '01',
-    name: 'Kitchens',
+    name: 'Kitchen Renovations',
     tag: 'Kitchen',
-    description: 'Cabinetry, counters, plumbing moves and lighting. Four to seven weeks on site.',
+    description: 'Layout improvements, cabinets, counters, flooring, and finish work.',
+    heading: { text: 'Kitchen renovations that make your home', accent: 'work better.' },
     longDescription:
-      'Most of our kitchens start with a wall that should not be there. We move plumbing and gas, rewire to current code, and install cabinetry our own carpenters level and scribe. A temporary kitchen goes in on day one so you can still cook.',
-    priceLabel: '$18k–$55k',
-    timeline: '4–7 weeks on site',
-    included: [
-      'Layout design and 3D walkthrough',
-      'Wall removal with engineered beams',
-      'Plumbing, gas and electrical relocation',
-      'Custom or semi-custom cabinetry install',
-      'Stone, quartz or butcher-block counters',
-      'Recessed, pendant and under-cabinet lighting',
+      'Your kitchen should be functional, clean, and built around the way you use your home. We help homeowners improve outdated kitchens with renovation work focused on better layouts, cleaner finishes, and long-term usability.',
+    benefits: [
+      'Improve everyday function and flow',
+      'Modernize finishes without losing character',
+      'One contractor coordinating the project',
+      'Clean, careful workmanship',
     ],
-    photo: {
-      local: 'hero-kitchen',
-      alt: 'Kitchen with white shaker cabinets and a farmhouse sink under twin windows',
-    },
-    priceRange: [18000, 55000],
+    included: [
+      'Cabinet updates and replacements',
+      'Countertop and surface improvements',
+      'Flooring support',
+      'Painting and finish work',
+      'Fixtures, hardware, and detail work',
+      'Practical layout improvements',
+    ],
+    whoFor: ['Homeowners updating a single kitchen', 'Owners preparing to sell', 'Homeowners refreshing a dated space'],
+    cta: 'Start Your Kitchen Renovation',
+    photo: { local: 'kitchen', alt: 'White shaker kitchen with a fluted farmhouse sink, stone-look backsplash and a gas range' },
   },
   {
     id: 'bathroom',
     number: '02',
-    name: 'Bathrooms',
+    name: 'Bathroom Renovations',
     tag: 'Bathroom',
-    description: 'Full gut to tile, waterproofing and fixtures. Two to four weeks on site.',
+    description: 'Vanities, tile, flooring, fixtures, and clean finish work.',
+    heading: { text: 'Bathroom renovations with', accent: 'clean finish work.' },
     longDescription:
-      'Bathrooms fail behind the tile, so that is where we spend the money. Every shower gets a bonded waterproofing membrane and a flood test before tile goes on. We replace venting to the outside, not into the attic.',
-    priceLabel: '$9k–$28k',
-    timeline: '2–4 weeks on site',
-    included: [
-      'Demolition down to studs and subfloor',
-      'Waterproofing membrane with 24-hour flood test',
-      'Tub-to-shower conversions and curbless entries',
-      'Tile, vanity, fixtures and glass',
-      'Exhaust fans ducted outside',
-      'Heated floors on request',
+      'Whether your bathroom needs a full refresh or targeted upgrades, Grace Renovations can help improve the look, comfort, and function of the space. From flooring and fixtures to finishes and detail work, the goal is a cleaner bathroom that fits your home.',
+    benefits: [
+      'Improve daily function and feel',
+      'Clean, careful tile and finish work',
+      'Updated fixtures and storage',
+      'Practical solutions for tight spaces',
     ],
-    photo: {
-      local: 'bathroom',
-      alt: 'Bathroom with botanical wallpaper, a gold arched mirror and a dark vanity',
-    },
-    priceRange: [9000, 28000],
+    included: [
+      'Vanities',
+      'Flooring',
+      'Tile',
+      'Fixtures',
+      'Painting',
+      'Drywall and finish repairs',
+      'Shower and tub area updates',
+    ],
+    whoFor: ['Homeowners updating a primary bath', 'Guest or hall bath refreshes', 'Owners preparing to sell'],
+    cta: 'Request a Bathroom Consultation',
+    photo: { local: 'bathroom', alt: 'Bathroom with botanical wallpaper, a gold arched mirror, globe sconces and a dark vanity' },
   },
   {
-    id: 'whole-home',
+    id: 'sunroom',
     number: '03',
-    name: 'Whole homes',
-    tag: 'Whole home',
-    description: 'Layout changes, structure, systems and finishes under one contract.',
+    name: 'Sunroom Renovations',
+    tag: 'Sunroom',
+    description: 'Refresh and improve sunrooms for everyday comfort and use.',
+    heading: { text: 'Sunrooms & interior spaces built for', accent: 'everyday use.' },
     longDescription:
-      'One contract, one schedule, one project lead from demolition to the final walkthrough. We phase whole-home work so at least one bathroom and a place to sleep stay usable, or plan the move-out with you if that is cheaper.',
-    priceLabel: '$85k+',
-    timeline: '3–7 months on site',
-    included: [
-      'Architectural and structural drawings',
-      'Open-plan conversions and load-bearing changes',
-      'Full electrical, plumbing and HVAC replacement',
-      'Insulation and air sealing to current code',
-      'Flooring, trim, doors and paint throughout',
-      'Phased schedule so the house stays liveable',
+      'Grace Renovations helps homeowners turn underused or outdated rooms into cleaner, more comfortable spaces. Whether it is a sunroom, living area, bedroom, or interior improvement project, we focus on practical updates and quality results.',
+    benefits: [
+      'Make an underused room actually usable',
+      'Refresh finishes, flooring, and trim',
+      'Improve comfort and visual appeal',
+      'Practical improvements without overbuilding',
     ],
-    photo: {
-      local: 'painting',
-      alt: 'Living room with slate-blue walls, an arched doorway and refinished oak floors',
-    },
-    priceRange: [85000, 260000],
+    included: [
+      'Interior refresh and finishes',
+      'Flooring updates',
+      'Trim, paint, and drywall repair',
+      'Fixture and hardware updates',
+      'Cosmetic and functional improvements',
+    ],
+    whoFor: ['Homeowners with dated sunrooms', 'Homeowners reclaiming an underused space'],
+    cta: 'Talk About Your Sunroom',
+    photo: { local: 'sunroom', alt: 'Sunroom with a green feature wall, white shiplap ceiling and a row of windows onto the garden' },
   },
   {
-    id: 'addition',
+    id: 'painting',
     number: '04',
-    name: 'Additions',
-    tag: 'Addition',
-    description: 'Permits, foundation and framing for extra rooms or a second floor.',
+    name: 'Interior Painting',
+    tag: 'Painting',
+    description: 'Walls, trim, ceilings, and clean interior paint refreshes.',
+    heading: { text: 'Interior painting that', accent: 'refreshes your home.' },
     longDescription:
-      'We handle the zoning board, the surveyor and the engineer so you do not have to. Foundations, framing, roofing and tie-in to the existing house are all done by our crew, and the new rooms are finished to match the old ones.',
-    priceLabel: '$60k–$190k',
-    timeline: '4–8 months incl. permits',
-    included: [
-      'Zoning review, survey and permit filings',
-      'Foundation, framing and roofing',
-      'Second-story and rear additions',
-      'Seamless tie-in of siding and rooflines',
-      'Heating and cooling for the new space',
-      'Interior finishes matched to the house',
+      'Fresh paint can completely change how a room feels. Grace Renovations provides interior painting and finish work for homeowners who want clean walls, updated rooms, and a more polished final result.',
+    benefits: [
+      'Clean lines and careful prep',
+      'Drop cloths, masking, and respect for your home',
+      'Walls, trim, ceilings, and doors',
+      'Color help when you want it',
     ],
-    photo: {
-      local: 'sunroom-2',
-      alt: 'Sunroom with vaulted ceiling and walls of windows facing the trees',
-    },
-    priceRange: [60000, 190000],
+    included: [
+      'Wall painting',
+      'Trim, doors, and baseboards',
+      'Ceiling painting',
+      'Drywall patch and prep',
+      'Touch-ups around renovation work',
+    ],
+    whoFor: [
+      'Homeowners refreshing a room',
+      'Whole-home repaints before moving in',
+      'Painting paired with other renovation work',
+    ],
+    cta: 'Request a Painting Estimate',
+    photo: { local: 'painting', alt: 'Living room with slate-blue walls, white crown moulding, an arched doorway and oak floors' },
+  },
+  {
+    id: 'exterior',
+    number: '05',
+    name: 'Interior & Exterior Renovations',
+    tag: 'Interior & Exterior',
+    description: 'Home improvement work inside and outside the home.',
+    heading: { text: 'Interior & exterior renovations', accent: 'in Indianapolis.' },
+    longDescription:
+      'Get support with home improvement work inside and outside the home, from repairs and updates to larger renovation projects. We help homeowners across Central Indiana keep their property in great shape.',
+    benefits: [
+      'One contractor for inside and outside work',
+      'Clear communication throughout',
+      'Practical solutions for older homes',
+      'Clean finish work and detail',
+    ],
+    included: [
+      'Interior renovation and finish work',
+      'Exterior repair and refresh',
+      'Trim, doors, and detail carpentry',
+      'Painting inside and out as part of projects',
+      'Drywall, fixtures, and hardware',
+    ],
+    whoFor: ['Homeowners with mixed inside/outside projects', 'Owners updating a home in stages'],
+    cta: 'Plan Your Project',
+    photo: { local: 'deck', alt: 'New pressure-treated deck with a staircase and railings off the back of a home' },
+  },
+  {
+    id: 'remodeling',
+    number: '06',
+    name: 'Remodeling & Home Improvements',
+    tag: 'Remodeling',
+    description: 'Bring outdated spaces back to life with practical upgrades.',
+    heading: { text: 'Remodeling & home improvements', accent: 'that last.' },
+    longDescription:
+      'Bring outdated spaces back to life with remodeling support, finish work, repairs, and practical upgrades. Grace Renovations focuses on making your home feel finished, functional, and worth coming home to.',
+    benefits: [
+      'Update the spaces that matter most',
+      'Combine repairs and improvements',
+      'Clear scope and pricing direction',
+      'Long-term improvement, not just patchwork',
+    ],
+    included: [
+      'Room remodels and refreshes',
+      'Finish carpentry and trim',
+      'Flooring updates',
+      'Paint and drywall',
+      'Fixture and hardware upgrades',
+    ],
+    whoFor: ['Homeowners ready to refresh dated spaces', 'Owners combining multiple smaller projects'],
+    cta: 'Start Your Remodel',
+    photo: { local: 'exterior', alt: 'Screened garden room with grey-trimmed openings and a screen door' },
   },
 ]
 
-export const otherTrades: { name: string; description: string }[] = [
-  { name: 'Electrical', description: 'Panel upgrades, rewiring and EV chargers by our licensed electrician.' },
-  { name: 'Plumbing', description: 'Repiping, water heaters and fixture moves, inspected before walls close.' },
-  { name: 'Flooring', description: 'Hardwood install and refinishing, tile and luxury vinyl plank.' },
-  { name: 'Painting', description: 'Interior and exterior, with lead-safe practices on pre-1978 homes.' },
-  { name: 'Windows & doors', description: 'Replacement windows, exterior doors and new openings in bearing walls.' },
-  { name: 'Drawings & permits', description: 'Measured drawings, engineering and every permit filed in our name.' },
-]
+export const serviceName = (id: Service['id']) => services.find((s) => s.id === id)?.name ?? ''

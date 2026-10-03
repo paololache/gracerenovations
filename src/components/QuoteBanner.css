@@ -6,17 +6,37 @@
 .quote-banner-inner {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 40px var(--section-pad-x);
+  padding: 90px var(--section-pad-x);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
   flex-wrap: wrap;
 }
 
+.quote-banner-eyebrow {
+  color: var(--color-text-on-dark-subtle);
+  margin-bottom: 20px;
+}
+
 .quote-banner-headline {
-  font-size: 24px;
+  font-size: 40px;
   font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+  margin-bottom: 18px;
+}
+
+.quote-banner-headline .accent {
+  color: var(--color-terracotta-hover);
+}
+
+.quote-banner-sub {
+  max-width: 56ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-text-on-dark-secondary);
 }
 
 .quote-banner-actions {
@@ -24,4 +44,15 @@
   gap: 16px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .quote-banner-inner {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .quote-banner-headline {
+    font-size: 30px;
+  }
 }

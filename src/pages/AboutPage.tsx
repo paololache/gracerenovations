@@ -1,155 +1,92 @@
+import { Accented } from '../components/Heading'
 import { PageHero } from '../components/PageHero'
 import { Photo } from '../components/Photo'
 import { QuoteBanner } from '../components/QuoteBanner'
-import { Testimonials } from '../components/Testimonials'
-import { credentials, milestones, serviceArea, stats, team, values } from '../data/company'
-import { reveal, revealStagger } from '../lib/motion'
+import { WhyChoose } from '../components/WhyChoose'
+import { company, serviceArea } from '../data/company'
+import { revealStagger } from '../lib/motion'
 import type { PageProps } from '../lib/router'
 import './AboutPage.css'
 
-export function AboutPage({ onRequestEstimate }: PageProps) {
+const POINTS = [
+  'Locally based in Indianapolis, Indiana',
+  'Renovation experience since 2018',
+  'Kitchen, bathroom, sunroom, and interior focus',
+  'Practical solutions for outdated spaces',
+  'Clear communication throughout the project',
+]
+
+export function AboutPage({ onConsult }: PageProps) {
   return (
     <>
       <PageHero
-        eyebrow="About us"
-        title="Nine people, one county, since 2009."
-        sub="A small building company that decided the best sales pitch was to show the invoices. The same crew has been building together for more than a decade."
-        photo={{ local: 'truck', alt: 'Grace work truck with the lion logo on the door' }}
+        eyebrow="About"
+        title="A local renovation contractor for Central Indiana homeowners."
+        sub="Grace Renovations LLC - Indiana helps homeowners transform outdated spaces with reliable renovation, remodeling, painting, and home improvement services."
+        photo={{ local: 'truck', alt: 'Grace Renovations work truck with the orange lion logo on the door' }}
       />
 
       <section className="about-story">
         <div className="section about-story-grid" {...revealStagger}>
           <div>
-            <p className="eyebrow section-eyebrow">Our story</p>
-            <h2 className="section-title about-story-title">We started with one bathroom and a promise to be straight about money.</h2>
+            <p className="eyebrow eyebrow-rule section-eyebrow">Who we are</p>
+            <h2 className="section-title about-story-title">
+              <Accented text="Built around communication &" accent="craftsmanship." />
+            </h2>
             <p className="lede">
-              Grace Alvarez founded the company in 2009 after years as a lead carpenter for larger firms, watching
-              homeowners sign contracts that doubled by the end. The first job was a single bathroom in Millbrook. It
-              came in eleven dollars under the proposal.
+              {company.legalName} is a local renovation and remodeling contractor based in Indianapolis, serving
+              homeowners across Central Indiana since {company.since}. We focus on the work that helps your home function
+              better and feel finished — kitchens, bathrooms, sunrooms, interior painting, and broader renovation
+              projects.
             </p>
             <p className="lede">
-              We grew slowly, hiring an electrician, then a plumber, so the trades that cause most delays are on our own
-              payroll. In 2021 we began publishing every finished project with its final invoice. Today that archive is
-              the reason most of our clients call.
+              Our goal is simple: clear communication, practical planning, and clean finish work you can be proud of.
+              Whether you&rsquo;re updating a single room or improving multiple areas of your home, we&rsquo;ll walk
+              through the project with you so you know what to expect before work begins.
             </p>
+            <ul className="check-list about-points">
+              {POINTS.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
           </div>
           <div className="about-story-images">
             <div className="about-story-image-tall">
-              <Photo
-                id="1504307651254-35680f356dfd"
-                alt="Crew placing rebar and conduit on a job site"
-                radius={20}
-                sizes="(max-width: 900px) 100vw, 360px"
-              />
+              <Photo local="painting" alt="Living room repainted in slate blue with white trim" radius={20} sizes="(max-width: 900px) 100vw, 560px" />
             </div>
-            <div className="about-story-image-short">
-              <Photo
-                id="1621905251189-08b45d6a269e"
-                alt="Electrician in a hard hat wiring a panel"
-                radius={20}
-                sizes="(max-width: 900px) 50vw, 240px"
-              />
-            </div>
-            <div className="about-story-image-short">
-              <Photo
-                local="bathroom"
-                alt="Wallpapered bathroom with a gold arched mirror"
-                radius={20}
-                sizes="(max-width: 900px) 50vw, 240px"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="about-stats-band">
-        <div className="section about-stats-band-grid" {...revealStagger}>
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <div className="about-stats-band-value">{stat.value}</div>
-              <div className="about-stats-band-label">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="about-values">
-        <div className="section">
-          <div className="section-head" {...reveal}>
             <div>
-              <p className="eyebrow section-eyebrow">What we hold to</p>
-              <h2 className="section-title">Four rules that have not changed since the first job.</h2>
+              <Photo local="bathroom" alt="Bathroom with botanical wallpaper and a gold arched mirror" radius={20} sizes="(max-width: 900px) 50vw, 270px" />
             </div>
-          </div>
-          <div className="about-values-grid" {...revealStagger}>
-            {values.map((value, i) => (
-              <div key={value.title} className="about-value">
-                <span className="about-value-number">{String(i + 1).padStart(2, '0')}</span>
-                <h3>{value.title}</h3>
-                <p>{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="about-team" id="crew">
-        <div className="section">
-          <div className="section-head" {...reveal}>
             <div>
-              <p className="eyebrow section-eyebrow">The crew</p>
-              <h2 className="section-title">The people who will be in your house.</h2>
+              <Photo local="sunroom" alt="Sunroom with a green feature wall and shiplap ceiling" radius={20} sizes="(max-width: 900px) 50vw, 270px" />
             </div>
-            <p className="about-team-note">Average time with the company: eleven years.</p>
           </div>
-          <ul className="about-team-grid" {...revealStagger}>
-            {team.map((person) => (
-              <li key={person.name} className="about-person">
-                <p className="about-person-role">{person.role}</p>
-                <h3>{person.name}</h3>
-                <p className="about-person-since">With Grace since {person.since}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
-      <section className="about-history">
-        <div className="section about-history-grid" {...revealStagger}>
-          <div>
-            <p className="eyebrow section-eyebrow">Milestones</p>
-            <h2 className="section-title">Seventeen years, one step at a time.</h2>
-          </div>
-          <ol className="about-timeline">
-            {milestones.map((m) => (
-              <li key={m.year}>
-                <span className="about-timeline-year">{m.year}</span>
-                <p>{m.text}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <WhyChoose />
 
       <section className="about-credentials">
         <div className="section about-credentials-grid" {...revealStagger}>
           <div className="about-credentials-card">
-            <p className="eyebrow section-eyebrow">Licensed and insured</p>
+            <p className="eyebrow eyebrow-rule section-eyebrow">Contact</p>
+            <p className="lede">Call or request a free consultation — we respond promptly.</p>
             <ul className="about-credentials-list">
-              {credentials.map((c) => (
-                <li key={c}>{c}</li>
-              ))}
+              <li>
+                <a href={company.phoneHref}>{company.phone}</a>
+              </li>
+              <li>{company.address}</li>
             </ul>
           </div>
           <div className="about-credentials-card">
-            <p className="eyebrow section-eyebrow">Where we work</p>
+            <p className="eyebrow eyebrow-rule section-eyebrow">Service areas</p>
             <p className="lede about-area-copy">
-              Everything within about thirty minutes of our shop on Mill Road, so the crew is never far from your house.
+              Serving Indianapolis, Speedway, Carmel, Fishers, Brownsburg, and surrounding Central Indiana communities.
             </p>
             <div className="about-area-list">
-              {serviceArea.map((town) => (
-                <span key={town} className="badge badge-outline">
-                  {town}
+              {serviceArea.map((area) => (
+                <span key={area} className="badge badge-outline">
+                  {area}
                 </span>
               ))}
             </div>
@@ -157,8 +94,7 @@ export function AboutPage({ onRequestEstimate }: PageProps) {
         </div>
       </section>
 
-      <Testimonials />
-      <QuoteBanner onStartEstimate={onRequestEstimate} />
+      <QuoteBanner onConsult={onConsult} />
     </>
   )
 }

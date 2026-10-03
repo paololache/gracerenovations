@@ -95,6 +95,17 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
+.btn-outline-dark {
+  background: transparent;
+  color: var(--color-carbon);
+  border: 1px solid var(--color-border-strong);
+}
+
+.btn-outline-dark:hover {
+  border-color: var(--color-carbon);
+  color: var(--color-carbon);
+}
+
 .btn-outline-light:hover {
   border-color: rgba(255, 255, 255, 0.6);
   color: var(--color-white);
@@ -186,4 +197,62 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* The one closing phrase of a heading, set in italic serif and terracotta */
+.accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-terracotta);
+}
+
+/* Quiet blue rule beside eyebrows: the brand blue, kept small */
+.eyebrow-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow-rule::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: var(--color-blue);
+}
+
+.on-dark .eyebrow-rule::before {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Lists with a small check mark */
+.check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.check-list li {
+  position: relative;
+  padding: 10px 0 10px 28px;
+  border-top: 1px solid var(--color-border);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.check-list li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 16px;
+  width: 10px;
+  height: 6px;
+  border-left: 1.5px solid var(--color-terracotta);
+  border-bottom: 1.5px solid var(--color-terracotta);
+  rotate: -45deg;
+}
+
+:focus-visible {
+  outline-color: var(--color-blue);
 }

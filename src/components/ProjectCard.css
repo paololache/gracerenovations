@@ -27,12 +27,9 @@
   margin-bottom: 6px;
 }
 
-.project-tile-location {
-  font-size: 13px;
-  letter-spacing: var(--tracking-button);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-  margin-bottom: 14px;
+
+.project-tile h3 {
+  margin-top: 4px;
 }
 
 .project-tile-description {
@@ -42,29 +39,13 @@
   margin-bottom: 20px;
 }
 
-.project-tile-meta {
-  display: flex;
-  gap: 40px;
-  margin: auto 0 0;
-  padding-top: 18px;
-  border-top: 1px solid var(--color-border);
-}
 
-.project-tile-meta dt {
-  font-size: 11px;
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-  margin-bottom: 6px;
-}
 
-.project-tile-meta dd {
-  margin: 0;
-  font-size: 17px;
-}
 
 .project-tile-story {
-  margin-top: 18px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
   font-size: 12px;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;

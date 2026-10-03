@@ -1,22 +1,22 @@
 import { Faq } from '../components/Faq'
+import { Accented } from '../components/Heading'
 import { PageHero } from '../components/PageHero'
 import { Photo } from '../components/Photo'
 import { QuoteBanner } from '../components/QuoteBanner'
-import { serviceFaqs } from '../data/faqs'
-import { formatCost, projects } from '../data/projects'
-import { otherTrades, services } from '../data/services'
-import { reveal, revealStagger } from '../lib/motion'
-import { routeHref } from '../lib/router'
+import { faqs } from '../data/faqs'
+import { projects } from '../data/projects'
+import { services } from '../data/services'
+import { revealStagger } from '../lib/motion'
 import type { PageProps } from '../lib/router'
 import './ServicesPage.css'
 
-export function ServicesPage({ onRequestEstimate }: PageProps) {
+export function ServicesPage({ onConsult, onOpenProject }: PageProps) {
   return (
     <>
       <PageHero
-        eyebrow="Services"
-        title="Four trades, one crew, prices on the page."
-        sub="Kitchens, bathrooms, whole homes and additions. Each one below shows what is included, how long we are on site and what our last jobs actually cost."
+        eyebrow="Our services"
+        title="Renovation services built around your home."
+        sub="Whether you are updating one room or improving multiple areas, Grace Renovations LLC - Indiana provides practical renovation and remodeling support designed around quality, communication, and clean results."
         photo={{ local: 'hero-kitchen', alt: 'Kitchen with white shaker cabinets and a stainless French-door fridge' }}
       />
 
@@ -36,7 +36,7 @@ export function ServicesPage({ onRequestEstimate }: PageProps) {
 
       <div className="service-details">
         {services.map((service, index) => {
-          const examples = projects.filter((p) => p.serviceId === service.id).slice(0, 2)
+          const work = projects.filter((p) => p.serviceId === service.id)
           return (
             <section
               key={service.id}
@@ -49,66 +49,68 @@ export function ServicesPage({ onRequestEstimate }: PageProps) {
               </div>
 
               <div className="service-detail-copy">
-                <p className="eyebrow section-eyebrow">{service.number}</p>
-                <h2 className="service-detail-title">{service.name}</h2>
+                <p className="eyebrow eyebrow-rule section-eyebrow">
+                  {service.number} · {service.name}
+                </p>
+                <h2 className="service-detail-title">
+                  <Accented {...service.heading} />
+                </h2>
                 <p className="lede">{service.longDescription}</p>
 
-                <div className="service-detail-facts">
-                  <div>
-                    <span className="service-detail-fact-label">Typical cost</span>
-                    <span className="service-detail-fact-value">{service.priceLabel}</span>
-                  </div>
-                  <div>
-                    <span className="service-detail-fact-label">Time on site</span>
-                    <span className="service-detail-fact-value">{service.timeline}</span>
-                  </div>
-                </div>
-
-                <p className="eyebrow service-detail-subhead">What is included</p>
-                <ul className="service-detail-list">
-                  {service.included.map((item) => (
+                <ul className="service-detail-benefits">
+                  {service.benefits.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
 
-                <p className="eyebrow service-detail-subhead">Recent examples</p>
-                <ul className="service-detail-examples">
-                  {examples.map((p) => (
-                    <li key={p.id}>
-                      <a href={routeHref('projects')}>{p.title}</a>
-                      <span>
-                        {p.duration}, {formatCost(p.cost)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="service-detail-columns">
+                  <div>
+                    <p className="eyebrow service-detail-subhead">What&rsquo;s included</p>
+                    <ul className="check-list">
+                      {service.included.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="eyebrow service-detail-subhead">Who it&rsquo;s for</p>
+                    <ul className="check-list">
+                      {service.whoFor.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {work.length > 0 && (
+                  <>
+                    <p className="eyebrow service-detail-subhead">Our work</p>
+                    <ul className="service-detail-examples">
+                      {work.map((p) => (
+                        <li key={p.id}>
+                          <button type="button" className="fx-arrow-link" onClick={() => onOpenProject(p.id)}>
+                            {p.title}
+                            <span className="fx-arrow" aria-hidden="true">
+                              →
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                <button type="button" className="btn btn-primary service-detail-cta" onClick={onConsult}>
+                  {service.cta}
+                </button>
               </div>
             </section>
           )
         })}
       </div>
 
-      <section className="other-trades">
-        <div className="section">
-          <div className="section-head" {...reveal}>
-            <div>
-              <p className="eyebrow section-eyebrow">In-house trades</p>
-              <h2 className="section-title">Everything the big jobs need, done by the same crew.</h2>
-            </div>
-          </div>
-          <div className="other-trades-grid" {...revealStagger}>
-            {otherTrades.map((trade) => (
-              <div key={trade.name} className="other-trade">
-                <h3>{trade.name}</h3>
-                <p>{trade.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Faq title="Questions about the work" items={serviceFaqs} />
-      <QuoteBanner onStartEstimate={onRequestEstimate} />
+      <Faq title="Common questions from homeowners." items={faqs} />
+      <QuoteBanner onConsult={onConsult} />
     </>
   )
 }

@@ -89,7 +89,7 @@
 .contact-card {
   --contact-skew: 5deg;
   margin-bottom: -80px;
-  padding: 150px 44px 150px;
+  padding: 110px 44px 140px;
   border-radius: 32px;
   background: var(--color-terracotta);
   transform: skewY(var(--contact-skew));
@@ -111,7 +111,8 @@
 }
 
 .contact-field input,
-.contact-field textarea {
+.contact-field textarea,
+.contact-field select {
   width: 100%;
   padding: 15px 22px;
   border: 1px solid transparent;
@@ -132,13 +133,15 @@
 }
 
 .contact-field input:focus,
-.contact-field textarea:focus {
+.contact-field textarea:focus,
+.contact-field select:focus {
   outline: none;
   background: rgba(255, 255, 255, 0.24);
   border-color: rgba(255, 255, 255, 0.7);
 }
 
-.contact-field.is-invalid input {
+.contact-field.is-invalid input,
+.contact-field.is-invalid select {
   border-color: var(--color-white);
   box-shadow: inset 0 0 0 1px var(--color-white);
 }
@@ -178,6 +181,41 @@
 .contact-submit:disabled {
   opacity: 0.7;
   cursor: wait;
+}
+
+.contact-field select {
+  appearance: none;
+  padding-right: 44px;
+  background-image: linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(135deg, #fff 50%, transparent 50%);
+  background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* Native dropdown lists keep readable dark text */
+.contact-field option {
+  color: var(--color-carbon);
+}
+
+.contact-fineprint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.contact-eyebrow {
+  color: var(--color-blue);
+  margin-bottom: 18px;
+}
+
+.contact-benefits {
+  margin-bottom: 26px;
+  max-width: 360px;
+}
+
+.contact-error a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .contact-error {

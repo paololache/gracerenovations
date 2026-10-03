@@ -3,50 +3,39 @@ export interface FaqItem {
   answer: string
 }
 
-export const serviceFaqs: FaqItem[] = [
+export const faqs: FaqItem[] = [
   {
-    question: 'Do you take on small repairs?',
+    question: 'What types of renovations do you handle?',
     answer:
-      'Not usually. Our crew is scheduled in blocks of two weeks or more, so our smallest jobs are single bathrooms. We are happy to recommend a handyman we trust.',
+      'We handle kitchen renovations, bathroom renovations, sunrooms, interior painting, exterior renovations, remodeling, and general home improvement projects.',
   },
   {
-    question: 'Can I supply my own fixtures or tile?',
+    question: 'Do you offer free consultations?',
+    answer: 'Yes. Call 317-766-6648 or submit the form to schedule a free consultation.',
+  },
+  {
+    question: 'What areas do you serve?',
+    answer: 'We serve Indianapolis, Speedway, Carmel, Fishers, Brownsburg, Central Indiana, and surrounding communities.',
+  },
+  {
+    question: 'Can you help with smaller projects?',
+    answer: 'Yes. Grace Renovations can help with smaller home improvement projects as well as larger renovation work.',
+  },
+  {
+    question: 'How do I get started?',
     answer:
-      'Yes. We credit the allowance back on the proposal. We only ask that materials are on site before the week they are scheduled for installation.',
+      "Call or submit the contact form with your project details. We'll review what you need and walk you through the next steps.",
   },
   {
-    question: 'Do you work on older houses?',
-    answer:
-      'Most of our work is in homes built before 1960. We are EPA Lead-Safe Certified and price for plaster, knob-and-tube wiring and out-of-square framing up front.',
+    question: 'Can I keep my existing kitchen cabinets?',
+    answer: 'Often yes — sometimes a refresh, hardware, paint, and counters delivers a big change without a full replacement.',
   },
   {
-    question: 'Which towns do you cover?',
-    answer: 'Millbrook, Westbrook, Ashford, Harlow and the surrounding county, roughly 30 minutes from our office on Mill Road.',
-  },
-]
-
-export const processFaqs: FaqItem[] = [
-  {
-    question: 'How accurate is the online range?',
-    answer:
-      'Across the last 47 projects, the final invoice landed inside the online range 41 times. When it did not, it was because the visit uncovered something the questions could not, and we told you before signing.',
+    question: 'Can you do a tub-to-shower conversion?',
+    answer: "Yes — we'll talk through options during your consultation.",
   },
   {
-    question: 'What happens if you find something behind the walls?',
-    answer:
-      'Work on that area stops, we send photos and a priced change order the same day, and nothing continues until you sign it. Your proposal already includes a contingency line for this.',
-  },
-  {
-    question: 'Can we live in the house during the work?',
-    answer:
-      'For kitchens and bathrooms, almost always. For whole-home work we plan phases so one bathroom and the bedrooms stay usable, or help you compare the cost of moving out.',
-  },
-  {
-    question: 'Who pulls the permits?',
-    answer: 'We do, in our name, and we are on site for every inspection. Permit fees are a separate line on your proposal.',
-  },
-  {
-    question: 'Do we have to pay for the site visit?',
-    answer: 'No. The visit and the proposal are free, and there is no obligation to sign.',
+    question: 'Do you do roofing or HVAC?',
+    answer: 'No — those are specialty trades. We focus on renovation, remodeling, painting, and home improvement work.',
   },
 ]

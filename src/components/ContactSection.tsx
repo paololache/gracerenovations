@@ -1,135 +1,128 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
-import { submitLead } from '../lib/leads'
+import { company } from '../data/company'
+import { BUDGETS, PROJECT_TYPES, TIMELINES } from '../lib/leads'
+import { useConsultForm } from '../lib/useConsultForm'
+import { Accented } from './Heading'
 import { Photo } from './Photo'
 import './ContactSection.css'
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const ZIP_RE = /^\d{5}$/
-
-type Status = 'idle' | 'sending' | 'sent' | 'error'
+const BENEFITS = ['Free, no-pressure consultation', 'Clear scope, timeline, and plan', 'Clean finish work and communication']
 
 /**
- * "Your project starts here": photo band with a slanted terracotta form card.
- * As it scrolls in, the photo settles, the copy rises and the card slides up
- * with its fields one after another (scroll reveals from src/effects).
+ * "Tell us about your renovation": photo band with a slanted terracotta form
+ * card. As it scrolls in, the photo settles, the copy rises and the card
+ * slides up with its fields one after another.
  */
-export function ContactSection({ className = '' }: { className?: string }) {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [zip, setZip] = useState('')
-  const [notes, setNotes] = useState('')
-  const [touched, setTouched] = useState(false)
-  const [status, setStatus] = useState<Status>('idle')
-
-  const errors = {
-    name: name.trim().length < 2,
-    phone: phone.replace(/\D/g, '').length < 10,
-    email: !EMAIL_RE.test(email),
-    zip: !ZIP_RE.test(zip),
-  }
-  const isValid = !Object.values(errors).some(Boolean)
-  const invalid = (field: keyof typeof errors) => (touched && errors[field] ? 'is-invalid' : '')
-
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setTouched(true)
-    if (!isValid || status === 'sending') return
-    setStatus('sending')
-    try {
-      await submitLead({
-        service: 'Not specified',
-        timeline: '',
-        name: name.trim(),
-        phone,
-        email,
-        zip,
-        notes: notes.trim(),
-        source: 'Home contact form',
-      })
-      setStatus('sent')
-    } catch {
-      setStatus('error')
-    }
-  }
+export function ContactSection({ className = '', source = 'Home consultation form' }: { className?: string; source?: string }) {
+  const form = useConsultForm(source)
+  const { fields, set, invalid } = form
+  const cls = (key: Parameters<typeof invalid>[0], extra = '') => `contact-field ${extra} ${invalid(key) ? 'is-invalid' : ''}`
 
   return (
-    <section className={`contact-section ${className}`} aria-labelledby="contact-title">
+    <section className={`contact-section ${className}`} aria-labelledby="contact-title" id="consultation">
       {/* Fades in while the photo settles from a slight zoom (see .contact-bg.is-revealed) */}
       <div className="contact-bg" aria-hidden="true" data-fx-reveal="fade" data-fx-reveal-duration="1400" data-fx-reveal-offset="0">
-        <Photo local="deck-2" alt="" sizes="100vw" />
+        <Photo local="hero-kitchen" alt="" sizes="100vw" />
       </div>
 
       <div className="contact-layout">
         <div className="contact-copy" data-fx-reveal="fade-up" data-fx-reveal-duration="1000" data-fx-reveal-stagger="140">
+          <p className="eyebrow eyebrow-rule contact-eyebrow">Free consultation</p>
           <h2 id="contact-title" className="contact-title">
-            Your project starts here.
+            <Accented text="Tell us about" accent="your renovation." />
           </h2>
           <p className="contact-lede">
-            Make the first move. Tell us what you want built and get a free estimate from the crew who will build it.
+            Share a few details about your kitchen, bathroom, sunroom, painting, or remodeling project — we&rsquo;ll review
+            and walk you through next steps.
           </p>
+          <ul className="check-list contact-benefits">
+            {BENEFITS.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
           <p className="contact-direct">
-            <a href="tel:+15552104488">(555) 210-4488</a>
-            <span className="contact-direct-sep" aria-hidden="true">
-              {' | '}
-            </span>
-            <a href="mailto:hello@gracebuildingco.com">hello@gracebuildingco.com</a>
+            <a href={company.phoneHref}>Call {company.phone}</a>
           </p>
         </div>
 
         <div className="contact-card-wrap" data-fx-reveal="fade-up" data-fx-reveal-duration="1200" data-fx-reveal-delay="150">
           <div className="contact-card">
             <div className="contact-card-inner">
-              {status === 'sent' ? (
+              {form.status === 'sent' ? (
                 <div className="contact-done fx-pop-in" role="status">
-                  <p className="contact-done-title">Thank you, {name.trim().split(' ')[0]}.</p>
-                  <p>Your project lead will reply within one business day.</p>
+                  <p className="contact-done-title">Thank you, {form.firstName}.</p>
+                  <p>We&rsquo;ll review your project and get back to you with next steps.</p>
                 </div>
               ) : (
                 <form
                   className="contact-form"
-                  onSubmit={onSubmit}
+                  onSubmit={form.onSubmit}
                   noValidate
                   data-fx-reveal="fade-up"
                   data-fx-reveal-duration="700"
                   data-fx-reveal-delay="500"
-                  data-fx-reveal-stagger="90"
+                  data-fx-reveal-stagger="70"
                 >
-                  <label className={`contact-field ${invalid('name')}`}>
-                    <span className="visually-hidden">Full name</span>
-                    <input autoComplete="name" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <label className={cls('name')}>
+                    <span className="visually-hidden">Full name (required)</span>
+                    <input autoComplete="name" placeholder="Full name *" value={fields.name} onChange={(e) => set('name')(e.target.value)} />
                   </label>
-                  <label className={`contact-field ${invalid('phone')}`}>
-                    <span className="visually-hidden">Phone number</span>
-                    <input type="tel" autoComplete="tel" placeholder="Phone number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                  <label className={cls('phone')}>
+                    <span className="visually-hidden">Phone number (required, call or text is fine)</span>
+                    <input type="tel" autoComplete="tel" placeholder="Phone number *" value={fields.phone} onChange={(e) => set('phone')(e.target.value)} />
                   </label>
-                  <label className={`contact-field ${invalid('email')}`}>
+                  <label className={cls('email')}>
                     <span className="visually-hidden">Email</span>
-                    <input type="email" autoComplete="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" autoComplete="email" placeholder="Email" value={fields.email} onChange={(e) => set('email')(e.target.value)} />
                   </label>
-                  <label className={`contact-field ${invalid('zip')}`}>
-                    <span className="visually-hidden">Zip code</span>
-                    <input
-                      inputMode="numeric"
-                      autoComplete="postal-code"
-                      maxLength={5}
-                      placeholder="Zip code"
-                      value={zip}
-                      onChange={(e) => setZip(e.target.value.replace(/\D/g, ''))}
-                    />
+                  <label className={cls('city')}>
+                    <span className="visually-hidden">Project address or city (required)</span>
+                    <input autoComplete="address-level2" placeholder="Project address / city *" value={fields.city} onChange={(e) => set('city')(e.target.value)} />
+                  </label>
+                  <label className={cls('projectType', 'contact-field-wide')}>
+                    <span className="visually-hidden">Type of project (required)</span>
+                    <select value={fields.projectType} onChange={(e) => set('projectType')(e.target.value)}>
+                      <option value="">Type of project *</option>
+                      {PROJECT_TYPES.map((t) => (
+                        <option key={t}>{t}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className={cls('timeline')}>
+                    <span className="visually-hidden">Timeline (required)</span>
+                    <select value={fields.timeline} onChange={(e) => set('timeline')(e.target.value)}>
+                      <option value="">When do you want to start? *</option>
+                      {TIMELINES.map((t) => (
+                        <option key={t}>{t}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className={cls('budget')}>
+                    <span className="visually-hidden">Budget range (required)</span>
+                    <select value={fields.budget} onChange={(e) => set('budget')(e.target.value)}>
+                      <option value="">Estimated budget *</option>
+                      {BUDGETS.map((b) => (
+                        <option key={b}>{b}</option>
+                      ))}
+                    </select>
                   </label>
                   <label className="contact-field contact-field-wide">
-                    <span className="visually-hidden">Tell us about your project</span>
-                    <textarea rows={3} placeholder="Tell us about your project" value={notes} onChange={(e) => setNotes(e.target.value)} />
+                    <span className="visually-hidden">Project details</span>
+                    <textarea rows={3} placeholder="Project details" value={fields.details} onChange={(e) => set('details')(e.target.value)} />
                   </label>
                   <div className="contact-actions contact-field-wide">
-                    <button type="submit" className="btn contact-submit" disabled={status === 'sending'}>
-                      {status === 'sending' ? 'Sending…' : 'Submit'}
+                    <button type="submit" className="btn contact-submit" disabled={form.status === 'sending'}>
+                      {form.status === 'sending' ? 'Sending…' : 'Schedule My Free Consultation'}
                     </button>
-                    {touched && !isValid && <p className="contact-error">Check the highlighted fields.</p>}
-                    {status === 'error' && <p className="contact-error">That didn&rsquo;t go through. Call us at (555) 210-4488.</p>}
+                    {form.touched && !form.isValid && <p className="contact-error">Check the highlighted fields.</p>}
+                    {form.status === 'error' && (
+                      <p className="contact-error">
+                        That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a>.
+                      </p>
+                    )}
                   </div>
+                  <p className="contact-fineprint contact-field-wide">
+                    Free consultation · No obligation · Serving Indianapolis &amp; Central Indiana
+                  </p>
                 </form>
               )}
             </div>

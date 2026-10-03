@@ -1,154 +1,88 @@
 import type { PhotoRef } from '../components/Photo'
 import type { Service } from './services'
 
+/**
+ * Finished work, shown with Grace's own photos. Only what the photos and the
+ * current site's project notes support: no invented clients, prices or dates.
+ */
 export interface Project {
   id: string
   serviceId: Service['id']
   title: string
-  location: string
-  year: number
-  duration: string
-  cost: number
-  description: string
-  photo: PhotoRef
+  summary: string
+  scope: string[]
+  photos: PhotoRef[]
+  /** Optional walkthrough of how the job went, step by step. */
+  steps?: { title: string; text: string }[]
 }
 
 export const projects: Project[] = [
   {
-    id: 'brimfield',
-    serviceId: 'whole-home',
-    title: 'Brimfield Street, 1948 colonial',
-    location: 'Westbrook',
-    year: 2025,
-    duration: 'Five months',
-    cost: 214000,
-    description: 'Rear wall opened, kitchen relocated, all systems replaced.',
-    photo: { local: 'painting', alt: 'Living room with slate-blue walls, white crown moulding, an arched doorway and refinished oak floors' },
-  },
-  {
-    id: 'oak-street',
+    id: 'full-kitchen',
     serviceId: 'kitchen',
-    title: 'Oak Street',
-    location: 'Millbrook',
-    year: 2025,
-    duration: 'Six weeks',
-    cost: 34200,
-    description: 'Wall removed, island added, wiring replaced.',
-    photo: { local: 'kitchen', alt: 'White shaker kitchen with a fluted farmhouse sink, stone-look backsplash and a gas range' },
+    title: 'Full kitchen remodel, design to finish',
+    summary:
+      'A dated kitchen rebuilt from a 3D design — down to the joists and original brick, then new shaker cabinets, quartz counters, tile backsplash, and new flooring.',
+    scope: [
+      'White shaker uppers and bases, set and leveled',
+      'Apron-front farmhouse sink',
+      'Quartz counters and marble-look tile backsplash',
+      'Stainless chimney hood and appliances',
+      'New flooring, recessed lighting, matte black fixtures',
+    ],
+    photos: [
+      { local: 'kitchen', alt: 'White shaker kitchen with a fluted farmhouse sink, stone-look backsplash and a gas range' },
+      { local: 'hero-kitchen', alt: 'The same kitchen from the refrigerator wall, with a stainless French-door fridge' },
+    ],
+    steps: [
+      { title: '3D design & layout', text: 'Cabinet placement, the farmhouse sink wall, and appliance runs planned before anything is ordered.' },
+      { title: 'Demo & structure', text: 'Old walls, ceiling, and finishes out to the joists and original brick; new framing and drywall.' },
+      { title: 'Cabinets & sink', text: 'Shaker cabinets set and leveled, the farmhouse sink dry-fit ahead of the countertop template.' },
+      { title: 'Counters & finish', text: 'Quartz counters, tile run to the ceiling behind the range, hood, flooring, and lighting.' },
+    ],
   },
   {
-    id: 'delmar',
+    id: 'wallpaper-bath',
     serviceId: 'bathroom',
-    title: 'Delmar guest bath',
-    location: 'Ashford',
-    year: 2025,
-    duration: 'Three weeks',
-    cost: 11800,
-    description: 'Tub to walk-in shower, new vent and tile.',
-    photo: { local: 'bathroom-2', alt: 'Bathroom with a frameless glass shower, black fixtures and a floating oak vanity' },
+    title: 'Bathroom refresh with botanical wallpaper',
+    summary: 'A bathroom brought back to life with a statement wallpaper wall, warm brass fixtures, and new lighting.',
+    scope: ['Botanical wallpaper feature wall', 'Gold arched mirror and globe sconces', 'Brushed brass faucet', 'Dark vanity with brass pulls'],
+    photos: [{ local: 'bathroom', alt: 'Bathroom with botanical wallpaper, a gold arched mirror, globe sconces and a dark vanity' }],
   },
   {
-    id: 'maple-ridge',
-    serviceId: 'addition',
-    title: 'Maple Ridge rear addition',
-    location: 'Westbrook',
-    year: 2025,
-    duration: 'Four and a half months',
-    cost: 148000,
-    description: 'Two-storey rear addition with a family room below and a primary suite above.',
-    photo: { local: 'sunroom', alt: 'Sunroom addition with a green feature wall, white shiplap ceiling and a row of windows onto the garden' },
+    id: 'green-sunroom',
+    serviceId: 'sunroom',
+    title: 'Sunroom made for everyday use',
+    summary: 'A bright sunroom finished with a shiplap ceiling, a deep green feature wall, and wood-look flooring.',
+    scope: ['White shiplap vaulted ceiling', 'Wood-framed clerestory windows', 'Green feature wall and white trim', 'Wood-look flooring', 'Ceiling fan with light'],
+    photos: [{ local: 'sunroom', alt: 'Sunroom with a green feature wall, white shiplap ceiling and a row of windows onto the garden' }],
   },
   {
-    id: 'hawthorne',
-    serviceId: 'kitchen',
-    title: 'Hawthorne Avenue kitchen',
-    location: 'Ashford',
-    year: 2024,
-    duration: 'Seven weeks',
-    cost: 41600,
-    description: 'Galley opened to the dining room, painted cabinetry and open shelving.',
-    photo: { local: 'hero-kitchen', alt: 'Kitchen with white shaker cabinets, a stainless French-door fridge and wood-look floors' },
+    id: 'slate-living-room',
+    serviceId: 'painting',
+    title: 'Living room repaint',
+    summary: 'Walls in a deep slate blue, crisp white trim and crown moulding, and an arched doorway picked out in white.',
+    scope: ['Slate-blue walls', 'White crown moulding, chair rail, and baseboards', 'Arched doorway trim', 'Clean lines against original oak floors'],
+    photos: [{ local: 'painting', alt: 'Living room with slate-blue walls, white crown moulding, an arched doorway and oak floors' }],
   },
   {
-    id: 'linden',
-    serviceId: 'bathroom',
-    title: 'Linden Court primary bath',
-    location: 'Millbrook',
-    year: 2024,
-    duration: 'Four weeks',
-    cost: 24900,
-    description: 'Closet borrowed for a freestanding tub, heated floor and double vanity.',
-    photo: { local: 'bathroom', alt: 'Bathroom with botanical wallpaper, a gold arched mirror, globe sconces and a dark vanity' },
+    id: 'screened-room',
+    serviceId: 'remodeling',
+    title: 'Screened garden room',
+    summary: 'A backyard room with screened openings, a screen door, and a pet door, finished in cream siding with grey trim.',
+    scope: ['Framed screened openings', 'Screen door and pet door', 'Cream panel siding with grey trim', 'Covered roof and lighting'],
+    photos: [{ local: 'exterior', alt: 'Screened garden room with grey-trimmed openings and a screen door' }],
   },
   {
-    id: 'willow',
-    serviceId: 'whole-home',
-    title: 'Willow Street craftsman',
-    location: 'Harlow',
-    year: 2024,
-    duration: 'Four months',
-    cost: 127000,
-    description: 'Knob-and-tube wiring removed, floors refinished, new kitchen and two baths.',
-    photo: { id: '1600121848594-d8644e57abab', alt: 'Living room with grey sofas, built-in shelving and a pendant light' },
-  },
-  {
-    id: 'cedar-lane',
-    serviceId: 'addition',
-    title: 'Cedar Lane second floor',
-    location: 'Harlow',
-    year: 2024,
-    duration: 'Six months',
-    cost: 186500,
-    description: 'Ranch house lifted to two storeys, three bedrooms and a bath added.',
-    photo: { local: 'roofing-2', alt: 'Two-storey home with tan siding, black shutters and a two-car garage' },
-  },
-  {
-    id: 'birch-hollow',
-    serviceId: 'kitchen',
-    title: 'Birch Hollow kitchen',
-    location: 'Westbrook',
-    year: 2023,
-    duration: 'Seven weeks',
-    cost: 52300,
-    description: 'Range wall rebuilt around a new hood, eight-foot island, butler pantry.',
-    photo: { id: '1507089947368-19c1da9775ae', alt: 'White kitchen with a long island, glass pendants and a range hood' },
-  },
-  {
-    id: 'garfield',
-    serviceId: 'bathroom',
-    title: 'Garfield hall bath',
-    location: 'Ashford',
-    year: 2023,
-    duration: 'Two and a half weeks',
-    cost: 16400,
-    description: 'Wall-hung toilet and vanity, large-format porcelain, slatted oak niche.',
-    photo: { id: '1631889993959-41b4e9c6e3c5', alt: 'Contemporary bathroom with large grey tiles and slatted wood panel' },
-  },
-  {
-    id: 'elm-terrace',
-    serviceId: 'whole-home',
-    title: 'Elm Terrace timber cottage',
-    location: 'Millbrook',
-    year: 2023,
-    duration: 'Three months',
-    cost: 96800,
-    description: 'Original beams exposed, loft stair rebuilt, kitchen and insulation replaced.',
-    photo: { id: '1590725140246-20acdee442be', alt: 'Cottage interior with exposed timber beams and an open kitchen' },
-  },
-  {
-    id: 'pinecrest',
-    serviceId: 'addition',
-    title: 'Pinecrest garden room',
-    location: 'Harlow',
-    year: 2023,
-    duration: 'Four months',
-    cost: 72400,
-    description: 'Glass-walled family room on a new slab, opening onto the back garden.',
-    photo: { local: 'exterior', alt: 'Screened garden room with grey-trimmed openings and a screen door, built on a new slab' },
+    id: 'backyard-deck',
+    serviceId: 'exterior',
+    title: 'Raised backyard deck',
+    summary: 'A new pressure-treated deck off the back of the home, with a full staircase down to the yard.',
+    scope: ['Pressure-treated framing and decking', 'Full-height staircase to the yard', 'Railings and balusters all around'],
+    photos: [{ local: 'deck', alt: 'New pressure-treated deck with a staircase and railings off the back of a home' }],
   },
 ]
 
 export const featuredProject = projects[0]
 export const secondaryProjects = projects.slice(1, 3)
-
-export const formatCost = (n: number) => `$${n.toLocaleString('en-US')}`
+export const projectById = (id: string) => projects.find((p) => p.id === id)

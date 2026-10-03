@@ -1,0 +1,45 @@
+.contact-reach {
+  padding: 80px 0 90px;
+}
+
+.contact-reach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.contact-reach-label {
+  color: var(--color-blue);
+  margin-bottom: 10px;
+}
+
+.contact-reach-value {
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.35;
+  color: var(--color-carbon);
+}
+
+a.contact-reach-value:hover {
+  color: var(--color-terracotta);
+}
+
+.contact-reach-note {
+  margin-top: 28px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .contact-reach-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .contact-reach-value {
+    font-size: 19px;
+  }
+}

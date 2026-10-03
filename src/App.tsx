@@ -1,39 +1,33 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Footer } from './components/Footer'
 import { LeadPopup } from './components/LeadPopup'
-import { QuoteFlow } from './components/QuoteFlow'
+import { ProjectModal } from './components/ProjectModal'
 import { SiteHeader } from './components/SiteHeader'
-import { StoryModal } from './components/StoryModal'
-import { storyFor } from './data/stories'
+import { projectById } from './data/projects'
 import { initTouchActive, useReveal } from './effects'
 import { PAGE_TITLES, useHashRoute } from './lib/router'
 import { markLeadSeen, useLeadTrigger } from './lib/useLeadTrigger'
 import { AboutPage } from './pages/AboutPage'
+import { ContactPage } from './pages/ContactPage'
+import { GalleryPage } from './pages/GalleryPage'
 import { HomePage } from './pages/HomePage'
-import { HowWeWorkPage } from './pages/HowWeWorkPage'
-import { ProjectsPage } from './pages/ProjectsPage'
 import { ServicesPage } from './pages/ServicesPage'
 
 const PAGES = {
   home: HomePage,
   services: ServicesPage,
-  projects: ProjectsPage,
+  gallery: GalleryPage,
   about: AboutPage,
-  'how-we-work': HowWeWorkPage,
+  contact: ContactPage,
 }
 
 function App() {
-  const [quoteOpen, setQuoteOpen] = useState(false)
-  const [storyId, setStoryId] = useState<string | null>(null)
+  const [projectId, setProjectId] = useState<string | null>(null)
   const [leadPending, setLeadPending] = useState(false)
   const [leadSource, setLeadSource] = useState('')
   const route = useHashRoute()
   const Page = PAGES[route]
-  const openQuote = () => {
-    setLeadPending(false)
-    setQuoteOpen(true)
-  }
-  const closeStory = useCallback(() => setStoryId(null), [])
+  const closeProject = useCallback(() => setProjectId(null), [])
   const closeLead = useCallback(() => setLeadPending(false), [])
 
   const openLead = (source: string) => {
@@ -41,9 +35,15 @@ function App() {
     setLeadPending(true)
   }
 
-  useLeadTrigger(route, () => openLead('Success stories popup'))
-  // Wait for any open story or estimate to close before interrupting.
-  const leadOpen = leadPending && !storyId && !quoteOpen
+  /** Every "Schedule a free consultation" button opens the form popup. */
+  const consult = () => {
+    markLeadSeen()
+    openLead('Consultation button')
+  }
+
+  useLeadTrigger(route, () => openLead('Recent work popup'))
+  // Wait for an open project to close before interrupting.
+  const leadOpen = leadPending && !projectId
 
   useEffect(() => {
     document.title = PAGE_TITLES[route]
@@ -57,22 +57,14 @@ function App() {
   return (
     <>
       <div className="site-shell">
-        <SiteHeader route={route} onStartEstimate={openQuote} />
+        <SiteHeader route={route} onConsult={consult} />
         <main>
-          <Page
-            onStartEstimate={openQuote}
-            onOpenStory={setStoryId}
-            onRequestEstimate={() => {
-              markLeadSeen()
-              openLead('Start the estimate button')
-            }}
-          />
+          <Page onConsult={consult} onOpenProject={setProjectId} />
         </main>
       </div>
       <Footer />
-      <StoryModal story={storyId ? (storyFor(storyId) ?? null) : null} onClose={closeStory} onStartEstimate={openQuote} />
+      <ProjectModal project={projectId ? (projectById(projectId) ?? null) : null} onClose={closeProject} onConsult={consult} />
       <LeadPopup open={leadOpen} source={leadSource} onClose={closeLead} />
-      <QuoteFlow open={quoteOpen} onClose={() => setQuoteOpen(false)} />
     </>
   )
 }

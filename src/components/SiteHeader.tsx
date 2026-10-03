@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { company } from '../data/company'
 import { useHeaderWatch } from '../effects'
 import { NAV_ITEMS, routeHref, type Route } from '../lib/router'
 import { Logo } from './Logo'
@@ -6,10 +7,10 @@ import './SiteHeader.css'
 
 interface SiteHeaderProps {
   route: Route
-  onStartEstimate: () => void
+  onConsult: () => void
 }
 
-export function SiteHeader({ route, onStartEstimate }: SiteHeaderProps) {
+export function SiteHeader({ route, onConsult }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   // Transparent over the hero; the cream bar slides in once the page scrolls
@@ -29,13 +30,13 @@ export function SiteHeader({ route, onStartEstimate }: SiteHeaderProps) {
 
   const startEstimate = () => {
     setMenuOpen(false)
-    onStartEstimate()
+    onConsult()
   }
 
   return (
     <header className="site-header fx-header" ref={headerRef}>
       <div className="site-header-inner">
-        <a href={routeHref('home')} className="site-header-home" aria-label="Grace Building Co., home" data-fx-step="1">
+        <a href={routeHref('home')} className="site-header-home" aria-label="Grace Renovations, home" data-fx-step="1">
           <Logo />
         </a>
 
@@ -50,8 +51,11 @@ export function SiteHeader({ route, onStartEstimate }: SiteHeaderProps) {
               {item.label}
             </a>
           ))}
+          <a className="site-header-phone" href={company.phoneHref}>
+            {company.phone}
+          </a>
           <button type="button" className="btn btn-primary site-header-cta" onClick={startEstimate}>
-            Get a cost range
+            Get a Quote
           </button>
         </nav>
 
@@ -69,8 +73,9 @@ export function SiteHeader({ route, onStartEstimate }: SiteHeaderProps) {
         {menuOpen && (
           <nav id="site-mobile-menu" className="site-mobile-menu" aria-label="Mobile">
             {links}
+            <a href={company.phoneHref}>Call {company.phone}</a>
             <button type="button" className="btn btn-primary" onClick={startEstimate}>
-              Get a cost range
+              Get a Quote
             </button>
           </nav>
         )}

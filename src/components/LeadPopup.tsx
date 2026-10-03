@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
-import type { FormEvent } from 'react'
-import { services } from '../data/services'
-import { submitLead } from '../lib/leads'
+import { useEffect, useRef } from 'react'
+import { company } from '../data/company'
+import { BUDGETS, TIMELINES } from '../lib/leads'
+import { useConsultForm } from '../lib/useConsultForm'
 import { Photo } from './Photo'
 import './LeadPopup.css'
 
@@ -12,30 +12,29 @@ interface LeadPopupProps {
   onClose: () => void
 }
 
-const TIMELINE_OPTIONS = ['ASAP', '1–3 months', '3–6 months', 'Not sure']
-
-const PROOF = [
-  { value: '41 of 47', label: 'jobs landed inside our estimate' },
-  { value: '2 yr', label: 'warranty on every job' },
-  { value: '1 day', label: 'to hear back from us' },
+/** Project chips: the main services, mapped to the current site's project types. */
+const PROJECTS = [
+  { label: 'Kitchen', value: 'Kitchen Renovation' },
+  { label: 'Bathroom', value: 'Bathroom Renovation' },
+  { label: 'Sunroom', value: 'Sunroom Renovation' },
+  { label: 'Painting', value: 'Interior Painting' },
+  { label: 'Exterior', value: 'Exterior Renovation' },
+  { label: 'Remodeling', value: 'Remodeling' },
+  { label: 'Other', value: 'General Home Improvement' },
+  { label: 'Not sure yet', value: 'Not Sure Yet' },
 ]
 
-const PROMISES = ['Free, no-obligation estimate', 'Licensed, bonded and insured', 'No calls unless you ask for one']
+const PROOF = [
+  { value: '2018', label: 'renovating homes in Central Indiana' },
+  { value: 'Free', label: 'no-pressure consultation' },
+  { value: 'Local', label: 'a contractor you can call directly' },
+]
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const ZIP_RE = /^\d{5}$/
-
-type Status = 'idle' | 'sending' | 'sent' | 'error'
+const PROMISES = ['Free, no-pressure consultation', 'Clear scope, timeline, and plan', 'Clean finish work and communication']
 
 export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
-  const [service, setService] = useState('')
-  const [timeline, setTimeline] = useState('')
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [zip, setZip] = useState('')
-  const [touched, setTouched] = useState(false)
-  const [status, setStatus] = useState<Status>('idle')
+  const form = useConsultForm(source)
+  const { fields, set, invalid } = form
   const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -55,37 +54,7 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
 
   if (!open) return null
 
-  const errors = {
-    service: !service,
-    name: name.trim().length < 2,
-    phone: phone.replace(/\D/g, '').length < 10,
-    email: !EMAIL_RE.test(email),
-    zip: !ZIP_RE.test(zip),
-  }
-  const isValid = !Object.values(errors).some(Boolean)
-  const showError = (field: keyof typeof errors) => touched && errors[field]
-
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setTouched(true)
-    if (!isValid || status === 'sending') return
-    setStatus('sending')
-    try {
-      await submitLead({
-        service: services.find((s) => s.id === service)?.name ?? service,
-        timeline,
-        name: name.trim(),
-        phone,
-        email,
-        zip,
-        notes: '',
-        source,
-      })
-      setStatus('sent')
-    } catch {
-      setStatus('error')
-    }
-  }
+  const inputClass = (key: Parameters<typeof invalid>[0]) => `lead-input ${invalid(key) ? 'is-invalid' : ''}`
 
   return (
     <div className="lead-overlay" role="dialog" aria-modal="true" aria-labelledby="lead-title">
@@ -98,15 +67,10 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
         <span className="lead-handle" aria-hidden="true" />
 
         <aside className="lead-aside">
-          <Photo
-            local="kitchen"
-            alt="White shaker kitchen finished by our crew"
-            sizes="(max-width: 900px) 100vw, 400px"
-            className="lead-aside-photo"
-          />
+          <Photo local="kitchen" alt="White shaker kitchen finished by our crew" sizes="(max-width: 900px) 100vw, 400px" className="lead-aside-photo" />
           <div className="lead-aside-content">
-            <span className="badge badge-solid">Free estimate</span>
-            <p className="lead-aside-title">Your project could be the next story.</p>
+            <span className="badge badge-solid">Free consultation</span>
+            <p className="lead-aside-title">Ready to fall in love with your home again?</p>
             <dl className="lead-proof">
               {PROOF.map((p) => (
                 <div key={p.label}>
@@ -120,136 +84,109 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
                 <li key={p}>{p}</li>
               ))}
             </ul>
-            <figure className="lead-quote">
-              <blockquote>
-                The estimate they sent online was within nine hundred dollars of the final invoice.
-              </blockquote>
-              <figcaption>Marta Ellis · Kitchen, 2025</figcaption>
-            </figure>
           </div>
         </aside>
 
         <div className="lead-main">
-          {status === 'sent' ? (
+          {form.status === 'sent' ? (
             <div className="lead-done">
               <p className="eyebrow lead-eyebrow">Request received</p>
               <h2 id="lead-title" className="lead-title">
-                Thank you, {name.trim().split(' ')[0]}.
+                Thank you, {form.firstName}.
               </h2>
-              <p className="lead-sub">
-                Your project lead will reply within one business day with a first range and a time for a free visit,
-                if you want one.
-              </p>
+              <p className="lead-sub">We&rsquo;ll review your project and walk you through the next steps.</p>
               <button type="button" className="btn btn-primary" onClick={onClose}>
-                Keep reading stories
+                Keep browsing
               </button>
             </div>
           ) : (
-            <form className="lead-form" onSubmit={onSubmit} noValidate>
-              <p className="eyebrow lead-eyebrow">Takes 30 seconds</p>
+            <form className="lead-form" onSubmit={form.onSubmit} noValidate>
+              <p className="eyebrow lead-eyebrow">Free consultation</p>
               <h2 id="lead-title" className="lead-title">
-                Get a free estimate for your project
+                Tell us about your renovation
               </h2>
-              <p className="lead-sub">
-                Tell us what you want built. We&rsquo;ll price it against 47 published jobs, not a sales script.
-              </p>
-              <p className="lead-trust">41 of 47 jobs landed inside our estimate · 2-year warranty</p>
+              <p className="lead-sub">Share a few details and we&rsquo;ll walk you through next steps.</p>
+              <p className="lead-trust">Since 2018 · Serving Indianapolis &amp; Central Indiana</p>
 
               <fieldset className="lead-fieldset">
-                <legend className="lead-label">What are we building?</legend>
+                <legend className="lead-label">Type of project</legend>
                 <div className="lead-chips">
-                  {services.map((s) => (
+                  {PROJECTS.map((p) => (
                     <button
-                      key={s.id}
+                      key={p.value}
                       type="button"
-                      className={`lead-chip ${service === s.id ? 'is-selected' : ''}`}
-                      aria-pressed={service === s.id}
-                      onClick={() => setService(s.id)}
+                      className={`lead-chip ${fields.projectType === p.value ? 'is-selected' : ''}`}
+                      aria-pressed={fields.projectType === p.value}
+                      onClick={() => set('projectType')(p.value)}
                     >
-                      {s.name}
-                      <small>{s.priceLabel}</small>
+                      {p.label}
                     </button>
                   ))}
                 </div>
-                {showError('service') && <p className="lead-error">Pick the type of project.</p>}
+                {invalid('projectType') && <p className="lead-error">Pick the type of project.</p>}
               </fieldset>
 
               <fieldset className="lead-fieldset">
-                <legend className="lead-label">
-                  When do you want to start? <span>Optional</span>
-                </legend>
+                <legend className="lead-label">When do you want to start?</legend>
                 <div className="lead-chips lead-chips-small">
-                  {TIMELINE_OPTIONS.map((t) => (
+                  {TIMELINES.map((t) => (
                     <button
                       key={t}
                       type="button"
-                      className={`lead-chip ${timeline === t ? 'is-selected' : ''}`}
-                      aria-pressed={timeline === t}
-                      onClick={() => setTimeline(timeline === t ? '' : t)}
+                      className={`lead-chip ${fields.timeline === t ? 'is-selected' : ''}`}
+                      aria-pressed={fields.timeline === t}
+                      onClick={() => set('timeline')(t)}
                     >
                       {t}
                     </button>
                   ))}
                 </div>
+                {invalid('timeline') && <p className="lead-error">Pick a timeline.</p>}
               </fieldset>
 
               <div className="lead-fields">
                 <label className="lead-field lead-field-wide">
                   <span className="lead-label">Full name</span>
-                  <input
-                    className={`lead-input ${showError('name') ? 'is-invalid' : ''}`}
-                    autoComplete="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </label>
-                <label className="lead-field lead-field-wide">
-                  <span className="lead-label">Email</span>
-                  <input
-                    className={`lead-input ${showError('email') ? 'is-invalid' : ''}`}
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <input className={inputClass('name')} autoComplete="name" value={fields.name} onChange={(e) => set('name')(e.target.value)} />
                 </label>
                 <label className="lead-field">
-                  <span className="lead-label">Phone</span>
-                  <input
-                    className={`lead-input ${showError('phone') ? 'is-invalid' : ''}`}
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder="(555) 000-0000"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
+                  <span className="lead-label">
+                    Phone <span>Call or text is fine</span>
+                  </span>
+                  <input className={inputClass('phone')} type="tel" autoComplete="tel" value={fields.phone} onChange={(e) => set('phone')(e.target.value)} />
                 </label>
                 <label className="lead-field">
-                  <span className="lead-label">Zip code</span>
-                  <input
-                    className={`lead-input ${showError('zip') ? 'is-invalid' : ''}`}
-                    inputMode="numeric"
-                    autoComplete="postal-code"
-                    maxLength={5}
-                    value={zip}
-                    onChange={(e) => setZip(e.target.value.replace(/\D/g, ''))}
-                  />
+                  <span className="lead-label">
+                    Email <span>Optional</span>
+                  </span>
+                  <input className={inputClass('email')} type="email" autoComplete="email" value={fields.email} onChange={(e) => set('email')(e.target.value)} />
+                </label>
+                <label className="lead-field">
+                  <span className="lead-label">Project address / city</span>
+                  <input className={inputClass('city')} autoComplete="address-level2" value={fields.city} onChange={(e) => set('city')(e.target.value)} />
+                </label>
+                <label className="lead-field">
+                  <span className="lead-label">Estimated budget</span>
+                  <select className={inputClass('budget')} value={fields.budget} onChange={(e) => set('budget')(e.target.value)}>
+                    <option value="">Select…</option>
+                    {BUDGETS.map((b) => (
+                      <option key={b}>{b}</option>
+                    ))}
+                  </select>
                 </label>
               </div>
 
-              {touched && !isValid && (
-                <p className="lead-error">Check the highlighted fields so we can reach you.</p>
-              )}
-              {status === 'error' && (
-                <p className="lead-error">That didn&rsquo;t go through. Try again or call (555) 210-4488.</p>
+              {form.touched && !form.isValid && <p className="lead-error">Check the highlighted fields so we can reach you.</p>}
+              {form.status === 'error' && (
+                <p className="lead-error">
+                  That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a>.
+                </p>
               )}
 
-              <button type="submit" className="btn btn-primary lead-submit" disabled={status === 'sending'}>
-                {status === 'sending' ? 'Sending…' : 'Get my free estimate'}
+              <button type="submit" className="btn btn-primary lead-submit" disabled={form.status === 'sending'}>
+                {form.status === 'sending' ? 'Sending…' : 'Schedule My Free Consultation'}
               </button>
-              <p className="lead-fineprint">
-                No obligation and no spam. We only use your details to reply about this project.
-              </p>
+              <p className="lead-fineprint">Free consultation · No obligation · Serving Indianapolis &amp; Central Indiana</p>
               <button type="button" className="lead-dismiss" onClick={onClose}>
                 No thanks, I&rsquo;m still looking
               </button>

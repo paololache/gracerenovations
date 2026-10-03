@@ -12,7 +12,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 30px;
 }
 
@@ -25,9 +25,12 @@
 }
 
 .process-preview-number {
-  font-size: 13px;
-  color: var(--color-terracotta);
-  margin-bottom: 30px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--color-blue);
+  margin-bottom: 26px;
 }
 
 .process-preview-step h3 {
@@ -40,15 +43,6 @@
   font-size: 15px;
   line-height: 1.6;
   color: var(--color-text-secondary);
-  margin-bottom: 24px;
-}
-
-.process-preview-timing {
-  margin-top: auto;
-  font-size: 12px;
-  letter-spacing: var(--tracking-button);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
 }
 
 @media (max-width: 900px) {

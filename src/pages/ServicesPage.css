@@ -41,7 +41,7 @@
   gap: 70px;
   align-items: start;
   margin-bottom: 126px;
-  scroll-margin-top: 40px;
+  scroll-margin-top: 100px;
 }
 
 .service-detail-reverse .service-detail-image {
@@ -50,71 +50,57 @@
 
 .service-detail-image {
   position: sticky;
-  top: 40px;
+  top: 110px;
   height: 620px;
 }
 
 .service-detail-title {
-  font-size: 44px;
+  font-size: 40px;
   font-weight: 300;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 26px;
 }
 
-.service-detail-facts {
-  display: flex;
-  gap: 50px;
-  margin: 36px 0 40px;
-  padding: 26px 0;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-}
 
-.service-detail-fact-label {
-  display: block;
-  font-size: 11px;
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-  margin-bottom: 8px;
-}
 
-.service-detail-fact-value {
-  font-size: 24px;
-  font-weight: 300;
-}
 
 .service-detail-subhead {
   color: var(--color-text-subtle);
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
-.service-detail-list {
-  list-style: none;
-  margin: 0 0 40px;
+/* Benefits as quiet blue-washed chips */
+.service-detail-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 30px 0 36px;
   padding: 0;
+  list-style: none;
+}
+
+.service-detail-benefits li {
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-tint);
+  color: var(--color-carbon);
+  font-size: 13px;
+}
+
+.service-detail-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 30px;
+  gap: 30px;
+  margin-bottom: 36px;
 }
 
-.service-detail-list li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 15px;
-  line-height: 1.5;
+.service-detail-cta {
+  margin-top: 36px;
 }
 
-.service-detail-list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.62em;
-  width: 10px;
-  height: 1px;
-  background: var(--color-terracotta);
-}
+
+
 
 .service-detail-examples {
   list-style: none;
@@ -123,58 +109,32 @@
 }
 
 .service-detail-examples li {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 14px 0;
   border-bottom: 1px solid var(--color-border);
-  font-size: 15px;
 }
 
-.service-detail-examples a {
+.service-detail-examples button {
+  width: 100%;
+  justify-content: space-between;
+  padding: 14px 0;
+  border: none;
+  background: none;
   color: var(--color-carbon);
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
 }
 
-.service-detail-examples a:hover {
+.service-detail-examples button:hover {
   color: var(--color-terracotta);
 }
 
-.service-detail-examples span {
-  color: var(--color-text-secondary);
-}
 
-.other-trades {
-  background: var(--color-bone);
-  padding: 110px 0;
-}
 
-.other-trades .section-title {
-  max-width: 24ch;
-}
 
-.other-trades-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 30px;
-}
 
-.other-trade {
-  background: var(--color-cream);
-  border-radius: var(--radius-card-md);
-  padding: 34px 30px;
-}
 
-.other-trade h3 {
-  font-size: 22px;
-  font-weight: 300;
-  margin-bottom: 12px;
-}
 
-.other-trade p {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-}
 
 @media (max-width: 900px) {
   .service-details {
@@ -197,22 +157,13 @@
   }
 
   .service-detail-title {
-    font-size: 36px;
+    font-size: 32px;
   }
 
-  .other-trades-grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (max-width: 560px) {
-  .service-detail-list,
-  .other-trades-grid {
+  .service-detail-columns {
     grid-template-columns: 1fr;
-  }
-
-  .service-detail-facts {
-    flex-direction: column;
-    gap: 20px;
   }
 }

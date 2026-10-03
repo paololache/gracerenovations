@@ -4,19 +4,25 @@
   --color-bone: #eae6e2; /* background secondary — footer, cards */
   --color-terracotta: #cf6f4c; /* accent primary — CTAs */
   --color-terracotta-hover: #d97757;
-  --color-carbon: #282828; /* text primary */
+  /* Deep navy ink: text and dark bands (a quiet variant of the brand blue) */
+  --color-carbon: #0b1a3a;
+  --color-navy-soft: #16294f; /* raised surfaces inside navy bands */
+  --color-blue: #34508c; /* small blue details: rules, icons, focus rings */
+  --color-blue-tint: #eef1f7; /* pale blue wash for chips and highlights */
   --color-white: #ffffff; /* text over dark photos */
 
-  --color-text-secondary: rgba(40, 40, 40, 0.7);
-  --color-text-subtle: rgba(40, 40, 40, 0.46);
-  --color-border: rgba(40, 40, 40, 0.12);
-  --color-border-strong: rgba(40, 40, 40, 0.24);
+  --color-text-secondary: rgba(11, 26, 58, 0.7);
+  --color-text-subtle: rgba(11, 26, 58, 0.46);
+  --color-border: rgba(11, 26, 58, 0.12);
+  --color-border-strong: rgba(11, 26, 58, 0.24);
 
   --color-text-on-dark-secondary: rgba(255, 255, 255, 0.7);
   --color-text-on-dark-subtle: rgba(255, 255, 255, 0.6);
 
   /* Typography */
   --font-family: 'Inter', sans-serif;
+  /* Italic serif for the one accent phrase in a heading */
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
   --tracking-eyebrow: 0.19em;
   --tracking-button: 0.125em;
 
