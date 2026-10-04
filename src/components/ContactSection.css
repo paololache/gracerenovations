@@ -1,4 +1,4 @@
-/* Contact band: light photo, copy on the left, slanted terracotta form card on the right */
+/* Contact band: light photo, copy on the left, slanted midnight form card on the right */
 .contact-section {
   position: relative;
   overflow: hidden;
@@ -22,7 +22,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(248, 245, 243, 0.6);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .contact-bg .photo {
@@ -91,7 +91,8 @@
   margin-bottom: -80px;
   padding: 110px 44px 140px;
   border-radius: 32px;
-  background: var(--color-terracotta);
+  background: var(--color-carbon);
+  box-shadow: 0 40px 80px rgba(10, 22, 40, 0.25);
   transform: skewY(var(--contact-skew));
   transform-origin: top left;
 }
@@ -115,9 +116,9 @@
 .contact-field select {
   width: 100%;
   padding: 15px 22px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--color-white);
   font: inherit;
   font-size: 16px;
@@ -129,21 +130,21 @@
 
 .contact-field input::placeholder,
 .contact-field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .contact-field input:focus,
 .contact-field textarea:focus,
 .contact-field select:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-terracotta-hover);
 }
 
 .contact-field.is-invalid input,
 .contact-field.is-invalid select {
-  border-color: var(--color-white);
-  box-shadow: inset 0 0 0 1px var(--color-white);
+  border-color: var(--color-terracotta-hover);
+  box-shadow: inset 0 0 0 1px var(--color-terracotta-hover);
 }
 
 .contact-actions {
@@ -155,8 +156,8 @@
 }
 
 .contact-submit {
-  background: var(--color-white);
-  color: var(--color-carbon);
+  background: var(--color-terracotta);
+  color: var(--color-white);
   padding: 16px 40px;
   transition:
     background var(--fx-dur-base) var(--fx-ease-in),
@@ -165,7 +166,7 @@
 }
 
 .contact-submit:hover {
-  background: var(--color-carbon);
+  background: var(--color-terracotta-hover);
   color: var(--color-white);
 }
 

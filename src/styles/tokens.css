@@ -1,22 +1,23 @@
 :root {
-  /* Colors */
-  --color-cream: #f8f5f3; /* background primary */
-  --color-bone: #eae6e2; /* background secondary — footer, cards */
-  --color-terracotta: #cf6f4c; /* accent primary — CTAs */
-  --color-terracotta-hover: #d97757;
-  /* Deep navy ink: text and dark bands (a quiet variant of the brand blue) */
-  --color-carbon: #0b1a3a;
-  --color-navy-soft: #16294f; /* raised surfaces inside navy bands */
-  --color-blue: #34508c; /* small blue details: rules, icons, focus rings */
-  --color-blue-tint: #eef1f7; /* pale blue wash for chips and highlights */
+  /* Colors — "Midnight · Ember · Paper": cool white paper, a deep midnight
+     navy and one vivid ember orange, used sparingly */
+  --color-cream: #ffffff; /* background primary: plain white paper */
+  --color-bone: #f2f4f7; /* background secondary: a cool mist grey for footer and cards */
+  --color-terracotta: #e5531a; /* accent primary — CTAs (ember orange) */
+  --color-terracotta-hover: #ff6a2e;
+  /* Midnight navy ink: text and dark bands */
+  --color-carbon: #0a1628;
+  --color-navy-soft: #13233d; /* raised surfaces inside navy bands */
+  --color-blue: #27457a; /* small blue details: rules, icons, focus rings */
+  --color-blue-tint: #edf1f7; /* pale blue wash for chips and highlights */
   --color-white: #ffffff; /* text over dark photos */
 
-  --color-text-secondary: rgba(11, 26, 58, 0.7);
-  --color-text-subtle: rgba(11, 26, 58, 0.46);
-  --color-border: rgba(11, 26, 58, 0.12);
-  --color-border-strong: rgba(11, 26, 58, 0.24);
+  --color-text-secondary: rgba(10, 22, 40, 0.7);
+  --color-text-subtle: rgba(10, 22, 40, 0.48);
+  --color-border: rgba(10, 22, 40, 0.1);
+  --color-border-strong: rgba(10, 22, 40, 0.22);
 
-  --color-text-on-dark-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-on-dark-secondary: rgba(255, 255, 255, 0.72);
   --color-text-on-dark-subtle: rgba(255, 255, 255, 0.6);
 
   /* Typography */

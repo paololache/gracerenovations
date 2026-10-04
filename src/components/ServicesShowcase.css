@@ -163,7 +163,7 @@
   font-size: 54px;
   line-height: 1;
   color: var(--color-white);
-  text-shadow: 0 2px 18px rgba(8, 18, 42, 0.55);
+  text-shadow: 0 2px 18px rgba(6, 13, 26, 0.55);
 }
 
 .showcase-card-body {

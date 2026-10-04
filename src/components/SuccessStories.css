@@ -33,7 +33,7 @@
 
 .story-card:hover,
 .story-card.is-touch-active {
-  background: #e3ded9;
+  background: #e7ebf1;
 }
 
 /* The before photo lifts off the after photo (on touch screens, while the card is centred) */
@@ -71,7 +71,7 @@
   height: 100px;
   border: 3px solid var(--color-cream);
   border-radius: 13px;
-  box-shadow: 0 10px 30px rgba(11, 26, 58, 0.3);
+  box-shadow: 0 10px 30px rgba(10, 22, 40, 0.3);
   transition: translate var(--fx-dur-base) var(--fx-ease-standard);
 }
 

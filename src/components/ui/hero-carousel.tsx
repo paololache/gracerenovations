@@ -205,7 +205,7 @@ export function HeroCarousel({
   const active = items[index]
   if (!active) return null
   const lines = [...active.title.split('\n'), ...(active.accent ? [active.accent] : [])]
-  const tint = active.tint ?? '#34508c'
+  const tint = active.tint ?? '#27457a'
   const fade = { duration: 0.7, ease: 'easeOut' as const }
 
   const stage = (

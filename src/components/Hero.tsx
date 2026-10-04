@@ -13,13 +13,13 @@ const image = (name: LocalPhoto, alt: string) => ({
 
 /** One slide per service, on Grace's own job photos; each backdrop takes a tone of the brand navy. */
 const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; tint: string }[] = [
-  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'kitchen', tint: '#1f3566' },
-  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom', tint: '#1a2d57' },
-  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom', tint: '#24396b' },
-  { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting', tint: '#1f3566' },
-  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck', tint: '#1c3160' },
-  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior', tint: '#223868' },
-  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2', tint: '#1a2d57' },
+  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'kitchen', tint: '#1a2d50' },
+  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom', tint: '#15264a' },
+  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom', tint: '#1e3358' },
+  { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting', tint: '#1a2d50' },
+  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck', tint: '#172a4c' },
+  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior', tint: '#1c3054' },
+  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2', tint: '#15264a' },
 ]
 
 const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
