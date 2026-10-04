@@ -1,0 +1,249 @@
+/* Filmstrip hero (see hero-carousel.tsx). Sizes that depend on the stage box are set inline. */
+.hc {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  /* Unlike hidden, clip can't be scrolled, so focusing an off-screen card never shifts the stage */
+  overflow: clip;
+  background: var(--color-carbon);
+  color: var(--color-white);
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.hc:focus-visible {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+/* Backdrop: photo keeps its light and takes the tint's hue */
+.hc-backdrop {
+  position: absolute;
+  inset: 0;
+}
+
+.hc-backdrop img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hc-grade {
+  position: absolute;
+  inset: 0;
+}
+
+.hc-grade-color {
+  mix-blend-mode: color;
+}
+
+.hc-grade-multiply {
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+}
+
+.hc-wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(11, 26, 58, 0.6), rgba(11, 26, 58, 0.15) 45%, rgba(11, 26, 58, 0.7));
+}
+
+.hc-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-size: 180px 180px;
+  pointer-events: none;
+}
+
+/* Headline block, above the strip */
+.hc-head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x) clamp(18px, 3vh, 32px);
+}
+
+.hc-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 6vw;
+  width: 100%;
+}
+
+.hc-title {
+  font-size: clamp(34px, min(9vh, 7vw), 96px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.hc-line {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders and the italic overhang inside the clip */
+  padding: 0 0.08em 0.06em 0;
+}
+
+.hc-line-inner {
+  display: block;
+}
+
+.hc-line-inner.accent {
+  color: var(--color-terracotta-hover);
+}
+
+.hc-label {
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hc-meta {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  margin-left: auto;
+}
+
+.hc-link {
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--color-terracotta-hover);
+  color: var(--color-white);
+}
+
+.hc-link:hover {
+  color: var(--color-terracotta-hover);
+}
+
+/* Strip */
+.hc-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.hc-track {
+  display: flex;
+  align-items: flex-start;
+}
+
+.hc-card {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: inherit;
+}
+
+.hc-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  pointer-events: none;
+}
+
+.hc-card[aria-current='true'] {
+  box-shadow: 0 24px 60px rgba(4, 10, 26, 0.45);
+}
+
+.hc-card-dim {
+  position: absolute;
+  inset: 0;
+  background: var(--color-carbon);
+}
+
+/* Rail and actions along the bottom */
+.hc-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(18px, 3vh, 36px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+.hc-rail {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.hc-rail-numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.hc-rail-track {
+  position: relative;
+  height: 1px;
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.hc-rail-thumb {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--color-terracotta-hover);
+}
+
+.hc-actions {
+  display: flex;
+  gap: 14px;
+}
+
+/* Phones: a bigger headline, and the actions as a full-width row under the rail */
+@media (max-width: 599px) {
+  .hc-title {
+    font-size: min(11.5vw, 7svh);
+  }
+
+  .hc-head-row {
+    gap: 8px 20px;
+  }
+
+  .hc-credit {
+    display: none;
+  }
+
+  .hc-meta {
+    margin-left: 0;
+    gap: 8px 20px;
+  }
+
+  .hc-foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .hc-actions .btn {
+    flex: 1;
+    padding: 16px 10px;
+  }
+}

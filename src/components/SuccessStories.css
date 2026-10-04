@@ -1,0 +1,184 @@
+.projects-stories {
+  padding: 110px 0;
+}
+
+.projects-stories-lede {
+  max-width: 44ch;
+}
+
+.projects-stories-lede a {
+  color: var(--color-terracotta);
+  white-space: nowrap;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.story-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 30px;
+  border: none;
+  border-radius: var(--radius-card-lg);
+  background: var(--color-bone);
+  color: var(--color-carbon);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--ease-hover);
+}
+
+.story-card:hover,
+.story-card.is-touch-active {
+  background: #e3ded9;
+}
+
+/* The before photo lifts off the after photo (on touch screens, while the card is centred) */
+.story-card:hover .story-card-before,
+.story-card.is-touch-active .story-card-before {
+  translate: 0 -8px;
+}
+
+.story-card:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+}
+
+.story-card-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  margin-bottom: 26px;
+}
+
+/* fx-card: photo zooms, title turns terracotta, arrow nudges on hover */
+.story-card {
+  --fx-card-accent: var(--color-terracotta);
+}
+
+.story-card-photo {
+  height: 100%;
+  border-radius: var(--radius-card-md);
+}
+
+.story-card-before {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  width: 150px;
+  height: 100px;
+  border: 3px solid var(--color-cream);
+  border-radius: 13px;
+  box-shadow: 0 10px 30px rgba(11, 26, 58, 0.3);
+  transition: translate var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.story-card-before span {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-carbon);
+  color: var(--color-white);
+  font-size: 10px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+.story-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 14px;
+}
+
+.story-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.story-card h3 {
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.story-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.story-card-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+}
+
+.story-card-cost {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.story-card-cost small {
+  margin-left: 6px;
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.story-card-link {
+  white-space: nowrap;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+.story-card:hover .story-card-link,
+.story-card.is-touch-active .story-card-link {
+  color: var(--color-terracotta-hover);
+}
+
+@media (max-width: 900px) {
+  .projects-stories {
+    padding: 80px 0;
+  }
+
+  .stories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-card-before {
+    width: 110px;
+    height: 76px;
+  }
+}
+
+@media (max-width: 480px) {
+  .story-card-footer {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .story-card-cost small {
+    display: block;
+    margin: 4px 0 0;
+  }
+}

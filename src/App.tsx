@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Footer } from './components/Footer'
 import { LeadPopup } from './components/LeadPopup'
-import { ProjectModal } from './components/ProjectModal'
 import { SiteHeader } from './components/SiteHeader'
+import { StoryModal } from './components/StoryModal'
 import { projectById } from './data/projects'
 import { initTouchActive, useReveal } from './effects'
 import { PAGE_TITLES, useHashRoute } from './lib/router'
@@ -41,7 +41,7 @@ function App() {
     openLead('Consultation button')
   }
 
-  useLeadTrigger(route, () => openLead('Recent work popup'))
+  useLeadTrigger(route, () => openLead('Success stories popup'))
   // Wait for an open project to close before interrupting.
   const leadOpen = leadPending && !projectId
 
@@ -63,7 +63,11 @@ function App() {
         </main>
       </div>
       <Footer />
-      <ProjectModal project={projectId ? (projectById(projectId) ?? null) : null} onClose={closeProject} onConsult={consult} />
+      <StoryModal
+        project={projectId ? (projectById(projectId) ?? null) : null}
+        onClose={closeProject}
+        onConsult={consult}
+      />
       <LeadPopup open={leadOpen} source={leadSource} onClose={closeLead} />
     </>
   )

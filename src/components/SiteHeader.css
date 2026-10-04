@@ -178,3 +178,26 @@
     font-size: 17px;
   }
 }
+
+/* Smallest phones: a tighter logo and menu button so they never touch */
+@media (max-width: 340px) {
+  .site-header-inner {
+    gap: 12px;
+  }
+
+  .site-header .logo {
+    gap: 6px;
+  }
+
+  .site-header .logo-mark {
+    width: 42px;
+  }
+
+  .site-header .logo-word {
+    font-size: 15px;
+  }
+
+  .site-menu-toggle {
+    padding: 9px 12px;
+  }
+}

@@ -6,11 +6,12 @@ import { Hero } from '../components/Hero'
 import { ProcessPreview } from '../components/ProcessPreview'
 import { ProjectMap } from '../components/ProjectMap'
 import { QuoteBanner } from '../components/QuoteBanner'
-import { RecentProjects } from '../components/RecentProjects'
 import { ServicesShowcase } from '../components/ServicesShowcase'
+import { SuccessStories } from '../components/SuccessStories'
 import { TrustStrip } from '../components/TrustStrip'
 import { WhyChoose } from '../components/WhyChoose'
 import { faqs } from '../data/faqs'
+import { storyProjects } from '../data/projects'
 import { useCurtain } from '../effects'
 import type { PageProps } from '../lib/router'
 
@@ -25,7 +26,7 @@ export function HomePage({ onConsult, onOpenProject }: PageProps) {
       <Hero onConsult={onConsult} />
       <TrustStrip />
       <ServicesShowcase onConsult={onConsult} />
-      <RecentProjects onOpenProject={onOpenProject} />
+      <SuccessStories projects={storyProjects} onOpenProject={onOpenProject} />
       <WhyChoose />
       <ProcessPreview onConsult={onConsult} />
       <About onConsult={onConsult} />

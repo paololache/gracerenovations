@@ -1,110 +1,57 @@
-import { useEffect, useState } from 'react'
 import { localPhotos, type LocalPhoto } from '../assets/photos'
 import { company } from '../data/company'
-import { routeHref, serviceHref } from '../lib/router'
-import { ZoomParallax } from './ui/zoom-parallax'
+import { services, type Service } from '../data/services'
+import { serviceHref } from '../lib/router'
+import { HeroCarousel, type HeroCarouselItem } from './ui/hero-carousel'
 import './Hero.css'
 
-const unsplash = (id: string, alt: string) => ({
-  src: `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=70`,
-  srcSet: [800, 1600, 2400]
-    .map((w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=70 ${w}w`)
-    .join(', '),
-  alt,
-})
-const local = (name: LocalPhoto, alt: string) => ({
+const image = (name: LocalPhoto, alt: string) => ({
   src: localPhotos[name].large,
   srcSet: `${localPhotos[name].small} 640w, ${localPhotos[name].large} 1280w`,
   alt,
 })
 
-/** Collage under the hero. The first image is the one the zoom ends on, full screen. */
-const COLLAGE = [
-  unsplash('1600585154084-4e5fe7c39198', 'Open-plan living room with oak floors and glass doors onto a deck'),
-  local('kitchen', 'White shaker kitchen with a farmhouse sink, by our crew'),
-  local('sunroom', 'Sunroom with a green feature wall and shiplap ceiling, by our crew'),
-  local('bathroom', 'Bathroom with botanical wallpaper and a gold arched mirror, by our crew'),
-  local('painting', 'Living room repainted in slate blue with white trim, by our crew'),
-  unsplash('1556912173-3bb406ef7e77', 'Bright kitchen with hexagon tile and white cabinets'),
-  local('exterior', 'Screened garden room, by our crew'),
+/** One slide per service, on Grace's own job photos; each backdrop takes a tone of the brand navy. */
+const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; tint: string }[] = [
+  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'kitchen', tint: '#1f3566' },
+  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom', tint: '#1a2d57' },
+  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom', tint: '#24396b' },
+  { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting', tint: '#1f3566' },
+  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck', tint: '#1c3160' },
+  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior', tint: '#223868' },
+  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2', tint: '#1a2d57' },
 ]
 
-const WORDS = ['Transform.', 'Renew.', 'Refresh.', 'Restore.']
-
-const TABS = [
-  { id: 'kitchen', label: 'Kitchens', text: 'Kitchen renovations' },
-  { id: 'bathroom', label: 'Bathrooms', text: 'Bathroom renovations' },
-  { id: 'sunroom', label: 'Sunrooms', text: 'Sunroom updates' },
-  { id: 'painting', label: 'Painting', text: 'Interior painting' },
-  { id: 'roofing', label: 'Roofing', text: 'Roof repairs & replacement' },
-]
+const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
+  const service = services.find((s) => s.id === slide.id)!
+  return {
+    id: slide.id,
+    title: slide.title,
+    accent: slide.accent,
+    image: image(slide.photo, service.photo.alt),
+    credit: `Service ${service.number}`,
+    link: { href: serviceHref(slide.id), label: `View ${service.tag}` },
+    tint: slide.tint,
+  }
+})
 
 export function Hero({ onConsult }: { onConsult: () => void }) {
-  const [word, setWord] = useState(0)
-
-  // The accent word cycles, as on the current site; it stays put with reduced motion
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const timer = window.setInterval(() => setWord((w) => (w + 1) % WORDS.length), 2800)
-    return () => window.clearInterval(timer)
-  }, [])
-
   return (
-    <>
-      <header className="hero">
-        <div className="hero-spotlight" aria-hidden="true" />
-
-        <div
-          className="hero-copy"
-          data-fx-reveal="fade-up"
-          data-fx-reveal-duration="1000"
-          data-fx-reveal-stagger="140"
-          data-fx-reveal-offset="0"
-        >
-          <p className="eyebrow hero-eyebrow">Kitchens · Bathrooms · Sunrooms · Painting · Roofing</p>
-          <h1 className="hero-title">
-            Built to{' '}
-            <span className="hero-word" aria-live="polite">
-              <span key={word} className="accent hero-word-inner">
-                {WORDS[word]}
-              </span>
-            </span>
-          </h1>
-          <p className="hero-tagline">Renovation &amp; remodeling in Indianapolis, Indiana.</p>
-          <p className="hero-sub">
-            {company.legalName} helps homeowners across Indianapolis and Central Indiana bring their ideas to life with
-            kitchen renovations, bathroom renovations, sunroom updates, interior painting, and home improvement services
-            backed by experience since {company.since}.
-          </p>
-          <div className="hero-actions">
-            <button type="button" className="btn btn-primary" onClick={onConsult}>
-              Schedule a Free Consultation
-            </button>
-            <a className="btn btn-outline-light" href={company.phoneHref}>
-              Call {company.phone}
-            </a>
-          </div>
-        </div>
-
-        <nav className="hero-tabs" aria-label="Main services">
-          {TABS.map((tab) => (
-            <a key={tab.id} className="hero-tab" href={serviceHref(tab.id)}>
-              <span className="hero-tab-label">{tab.label}</span>
-              <span className="hero-tab-text">{tab.text}</span>
-            </a>
-          ))}
-        </nav>
-      </header>
-
-      <ZoomParallax images={COLLAGE}>
-        <p className="eyebrow hero-zoom-eyebrow">Kitchens · Bathrooms · Sunrooms · Painting · Roofing</p>
-        <p className="hero-zoom-title">
-          Spaces that work better, <span className="accent">finished with care.</span>
-        </p>
-        <a className="btn btn-outline-light" href={routeHref('gallery')}>
-          View Project Gallery
+    <header className="hero">
+      <HeroCarousel
+        items={ITEMS}
+        autoplay
+        eyebrow={
+          <h1 className="hero-h1">Renovation &amp; remodeling in Indianapolis, Indiana · Since {company.since}</h1>
+        }
+      >
+        <button type="button" className="btn btn-primary" onClick={onConsult}>
+          <span className="hero-cta-long">Schedule a&nbsp;</span>Free Consultation
+        </button>
+        <a className="btn btn-outline-light" href={company.phoneHref}>
+          Call<span className="hero-cta-long">&nbsp;{company.phone}</span>
         </a>
-      </ZoomParallax>
-    </>
+      </HeroCarousel>
+    </header>
   )
 }

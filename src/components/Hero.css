@@ -1,259 +1,27 @@
 .hero {
   position: relative;
-  min-height: 760px;
-  overflow: hidden;
-  color: var(--color-white);
   background: var(--color-carbon);
 }
 
-/* Soft radial glow behind the headline (the demo's "spotlight"), in the brand blue */
-.hero-spotlight {
-  position: absolute;
-  top: -45%;
-  left: 30%;
-  width: 120vmin;
-  height: 120vmin;
-  translate: -50% 0;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(52, 80, 140, 0.55), transparent 60%);
-  filter: blur(30px);
-  pointer-events: none;
-}
-
-.hero-copy {
-  position: relative;
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 200px var(--section-pad-x) 190px;
-}
-
-.hero-copy > * {
-  max-width: 720px;
-}
-
-.hero-eyebrow {
-  color: var(--color-white);
-  opacity: 0.8;
-  margin-bottom: 30px;
-}
-
-.hero-title {
-  font-size: 64px;
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  color: var(--color-white);
-  margin: 0 0 30px;
-  text-wrap: pretty;
-}
-
-.hero-word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  padding-right: 0.1em;
-}
-
-.hero-word-inner {
-  display: inline-block;
-  color: var(--color-terracotta-hover);
-  animation: hero-word-in 700ms var(--fx-ease-brand) both;
-}
-
-@keyframes hero-word-in {
-  from {
-    opacity: 0;
-    translate: 0 60%;
-  }
-}
-
-.hero-tagline {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 26px;
-  line-height: 1.3;
-  color: var(--color-white);
-  margin-bottom: 18px;
-}
-
-.hero-sub {
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--color-text-on-dark-secondary);
-  max-width: 56ch;
-}
-
-/* Service tabs along the bottom edge of the hero */
-.hero-tabs {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 0 var(--section-pad-x);
-}
-
-.hero-tab {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 24px 24px 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.22);
-  color: var(--color-white);
-  transition: background var(--fx-dur-base) var(--fx-ease-standard), border-color var(--fx-dur-base) var(--fx-ease-standard);
-}
-
-.hero-tab + .hero-tab {
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.hero-tab:hover,
-.hero-tab:focus-visible {
-  color: var(--color-white);
-  background: rgba(11, 26, 58, 0.55);
-  border-top-color: var(--color-terracotta);
-}
-
-.hero-tab-label {
-  font-size: 11px;
+/* The page's h1 sits small above the slide headline */
+.hero-h1 {
+  max-width: 46ch;
+  margin-bottom: clamp(14px, 2.4vh, 26px);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
-  color: var(--color-terracotta-hover);
-}
-
-.hero-tab-text {
-  font-size: 17px;
-  font-weight: 300;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: 40px;
-}
-
-@media (max-width: 900px) {
-  .hero-tagline {
-    font-size: 21px;
-  }
-
-  .hero-tabs {
-    position: relative;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 0;
-  }
-
-  .hero-tab {
-    padding: 18px var(--section-pad-x) 20px;
-  }
-
-  .hero-tab:nth-child(odd) {
-    border-left: none;
-  }
-
-  /* Fifth tab spans the row on two-column phones */
-  .hero-tab:last-child {
-    grid-column: 1 / -1;
-  }
-
-  .hero-tab-text {
-    font-size: 15px;
-  }
-
-
-  .hero {
-    min-height: 0;
-  }
-
-  .hero-spotlight {
-    left: 50%;
-    top: -25%;
-  }
-
-  .hero-copy {
-    padding-top: 160px;
-    padding-bottom: 60px;
-  }
-
-  .hero-title {
-    font-size: 40px;
-  }
-}
-
-/* Caption over the full-screen photo at the end of the zoom collage */
-.hero-zoom-eyebrow {
   color: var(--color-text-on-dark-secondary);
-  margin-bottom: 14px;
 }
 
-.hero-zoom-title {
-  max-width: 18ch;
-  margin-bottom: 26px;
-  font-size: 48px;
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.hero-zoom-title .accent {
-  color: var(--color-terracotta-hover);
-}
-
-@media (max-width: 900px) {
-  .hero-zoom-title {
-    font-size: 32px;
-  }
-}
-
-/* Narrow phones: the rotating word always gets its own line, so the title never changes height */
-@media (max-width: 480px) {
-  .hero-word {
-    display: block;
-  }
-}
-
-/* Tablets: a larger headline and full-height hero, so the first screen isn't left half empty */
-@media (min-width: 600px) and (max-width: 900px) {
-  .hero {
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .hero .hero-copy {
-    padding-top: 180px;
-  }
-
-  .hero .hero-title {
-    font-size: 64px;
-  }
-
-  .hero-tagline {
-    font-size: 24px;
-  }
-
-  .hero-sub {
-    font-size: 18px;
-  }
-
-  .hero .hero-tabs {
-    max-width: none;
-    margin: 0;
-  }
-}
-
-/* Phones: a bigger headline, and buttons full width for easy tapping */
+/* Phones: shorter button labels so both fit on one row */
 @media (max-width: 599px) {
-  .hero .hero-title {
-    font-size: 46px;
+  .hero-cta-long {
+    display: none;
   }
 
-  .hero-actions .btn {
-    width: 100%;
+  .hero-h1 {
+    font-size: 11px;
   }
 }
