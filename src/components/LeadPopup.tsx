@@ -31,7 +31,11 @@ const PROOF = [
   { value: 'Local', label: 'a contractor you can call directly' },
 ]
 
-const PROMISES = ['Free, no-pressure consultation', 'Clear scope, timeline, and plan', 'Clean finish work and communication']
+const PROMISES = [
+  'Free, no-pressure consultation',
+  'Clear scope, timeline, and plan',
+  'Clean finish work and communication',
+]
 
 export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
   const form = useConsultForm(source)
@@ -46,7 +50,8 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
     document.addEventListener('keydown', onKeyDown)
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    cardRef.current?.focus()
+    // preventScroll: iOS Safari otherwise scrolls the page behind the fixed overlay to the focused element
+    cardRef.current?.focus({ preventScroll: true })
     return () => {
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = previousOverflow
@@ -68,7 +73,12 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
         <span className="lead-handle" aria-hidden="true" />
 
         <aside className="lead-aside">
-          <Photo local="kitchen" alt="White shaker kitchen finished by our crew" sizes="(max-width: 900px) 100vw, 400px" className="lead-aside-photo" />
+          <Photo
+            local="kitchen"
+            alt="White shaker kitchen finished by our crew"
+            sizes="(max-width: 900px) 100vw, 400px"
+            className="lead-aside-photo"
+          />
           <div className="lead-aside-content">
             <span className="badge badge-solid">Free consultation</span>
             <p className="lead-aside-title">Ready to fall in love with your home again?</p>
@@ -148,27 +158,53 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
               <div className="lead-fields">
                 <label className="lead-field lead-field-wide">
                   <span className="lead-label">Full name</span>
-                  <input className={inputClass('name')} autoComplete="name" value={fields.name} onChange={(e) => set('name')(e.target.value)} />
+                  <input
+                    className={inputClass('name')}
+                    autoComplete="name"
+                    value={fields.name}
+                    onChange={(e) => set('name')(e.target.value)}
+                  />
                 </label>
                 <label className="lead-field">
                   <span className="lead-label">
                     Phone <span>Call or text is fine</span>
                   </span>
-                  <input className={inputClass('phone')} type="tel" autoComplete="tel" value={fields.phone} onChange={(e) => set('phone')(e.target.value)} />
+                  <input
+                    className={inputClass('phone')}
+                    type="tel"
+                    autoComplete="tel"
+                    value={fields.phone}
+                    onChange={(e) => set('phone')(e.target.value)}
+                  />
                 </label>
                 <label className="lead-field">
                   <span className="lead-label">
                     Email <span>Optional</span>
                   </span>
-                  <input className={inputClass('email')} type="email" autoComplete="email" value={fields.email} onChange={(e) => set('email')(e.target.value)} />
+                  <input
+                    className={inputClass('email')}
+                    type="email"
+                    autoComplete="email"
+                    value={fields.email}
+                    onChange={(e) => set('email')(e.target.value)}
+                  />
                 </label>
                 <label className="lead-field">
                   <span className="lead-label">Project address / city</span>
-                  <input className={inputClass('city')} autoComplete="address-level2" value={fields.city} onChange={(e) => set('city')(e.target.value)} />
+                  <input
+                    className={inputClass('city')}
+                    autoComplete="address-level2"
+                    value={fields.city}
+                    onChange={(e) => set('city')(e.target.value)}
+                  />
                 </label>
                 <label className="lead-field">
                   <span className="lead-label">Estimated budget</span>
-                  <select className={inputClass('budget')} value={fields.budget} onChange={(e) => set('budget')(e.target.value)}>
+                  <select
+                    className={inputClass('budget')}
+                    value={fields.budget}
+                    onChange={(e) => set('budget')(e.target.value)}
+                  >
                     <option value="">Select…</option>
                     {BUDGETS.map((b) => (
                       <option key={b}>{b}</option>
@@ -177,7 +213,9 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
                 </label>
               </div>
 
-              {form.touched && !form.isValid && <p className="lead-error">Check the highlighted fields so we can reach you.</p>}
+              {form.touched && !form.isValid && (
+                <p className="lead-error">Check the highlighted fields so we can reach you.</p>
+              )}
               {form.status === 'error' && (
                 <p className="lead-error">
                   That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a>.
@@ -187,7 +225,9 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
               <button type="submit" className="btn btn-primary lead-submit" disabled={form.status === 'sending'}>
                 {form.status === 'sending' ? 'Sending…' : 'Schedule My Free Consultation'}
               </button>
-              <p className="lead-fineprint">Free consultation · No obligation · Serving Indianapolis &amp; Central Indiana</p>
+              <p className="lead-fineprint">
+                Free consultation · No obligation · Serving Indianapolis &amp; Central Indiana
+              </p>
               <button type="button" className="lead-dismiss" onClick={onClose}>
                 No thanks, I&rsquo;m still looking
               </button>

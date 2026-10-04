@@ -3,7 +3,7 @@
 Reusable motion and interaction effects. They set **how things move**, never what they look like: colors come from `--fx-*` variables that default to `currentColor` or the system colors `Canvas` / `CanvasText`, and fonts, sizes and spacing are left to your own classes.
 
 - No dependencies. GSAP, ScrollTrigger, SplitText and Swiper are replaced by CSS, `IntersectionObserver` and a few small helpers.
-- `prefers-reduced-motion` is respected everywhere: loops stop, nothing travels or zooms, and the scroll-driven parts switch off. Fades and colour changes stay, so the page doesn't look frozen.
+- `prefers-reduced-motion` is respected everywhere: loops stop, nothing travels or zooms on its own, and the circle hero and marquee switch off. Fades, colour changes and the curtain (which only moves with the visitor's scroll) stay, so the page doesn't look frozen.
 - Base layout rules use `:where()`, so they have zero specificity and any of your own classes override them.
 
 ## Setup

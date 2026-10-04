@@ -24,8 +24,8 @@
 /*
  * Reduced motion: looping animations stop and nothing travels across the
  * screen, but fades and colour changes stay, so the page still feels alive.
- * Reveals fade in place (reveal.ts), and the scroll-driven modules (circle
- * hero, curtain, marquee) skip their setup.
+ * Reveals fade in place (reveal.ts), and the circle hero and marquee skip
+ * their setup. The curtain stays: it only moves with the visitor's scroll.
  */
 @media (prefers-reduced-motion: reduce) {
   [class*='fx-'],

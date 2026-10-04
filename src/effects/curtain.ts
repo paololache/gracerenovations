@@ -13,14 +13,14 @@ export interface CurtainOptions {
 /**
  * Drives a `.fx-curtain` (see curtain.css): keeps the under section pinned
  * and sets --fx-cover from 0 to 1 as the over section slides across the
- * screen. Turns itself off on narrow screens, for very tall sections and
- * with reduced motion. Returns a cleanup function.
+ * screen. Turns itself off on narrow screens and for very tall sections. It
+ * stays on with reduced motion: it only moves as the visitor scrolls, and the
+ * under section just fades and settles back. Returns a cleanup function.
  */
 export function initCurtain(wrapper: HTMLElement, options: CurtainOptions = {}): () => void {
   const { minWidth = 900, maxHeight = 1.25 } = options
   const under = wrapper.querySelector<HTMLElement>(':scope > .fx-curtain__under')
   const over = wrapper.querySelector<HTMLElement>(':scope > .fx-curtain__over')
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
   if (!under || !over) return () => {}
   let frame = 0
 
@@ -33,7 +33,7 @@ export function initCurtain(wrapper: HTMLElement, options: CurtainOptions = {}):
   const update = () => {
     frame = 0
     const vh = window.innerHeight
-    if (motion.matches || window.innerWidth < minWidth || under.offsetHeight > vh * maxHeight) {
+    if (window.innerWidth < minWidth || under.offsetHeight > vh * maxHeight) {
       off()
       return
     }
@@ -54,14 +54,12 @@ export function initCurtain(wrapper: HTMLElement, options: CurtainOptions = {}):
   update()
   window.addEventListener('scroll', schedule, { passive: true })
   window.addEventListener('resize', schedule)
-  motion.addEventListener('change', schedule)
 
   return () => {
     cancelAnimationFrame(frame)
     resize.disconnect()
     window.removeEventListener('scroll', schedule)
     window.removeEventListener('resize', schedule)
-    motion.removeEventListener('change', schedule)
     off()
   }
 }

@@ -25,6 +25,9 @@ export function SuccessStories({ projects, onOpenProject }: SuccessStoriesProps)
             after, and what we did. <a href={routeHref('gallery')}>View the gallery</a>
           </p>
         </div>
+        <p className="stories-swipe-hint" aria-hidden="true">
+          Swipe to see all {projects.length} projects →
+        </p>
         <SuccessStoriesGrid projects={projects} onOpenProject={onOpenProject} />
       </div>
     </section>
@@ -63,9 +66,7 @@ export function SuccessStoriesGrid({ projects, onOpenProject }: SuccessStoriesPr
             <div className="story-card-body">
               <div className="story-card-meta">
                 <span className="badge badge-outline">{tag}</span>
-                <span>
-                  {project.before?.example ? 'Central Indiana · Before photo is an example' : 'Central Indiana'}
-                </span>
+                <span>{project.before?.example ? 'Before photo: example' : 'Central Indiana'}</span>
               </div>
               <h3 className="fx-card__title">{project.title}</h3>
               <p>{project.summary}</p>

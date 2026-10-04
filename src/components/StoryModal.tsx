@@ -22,7 +22,8 @@ export function StoryModal({ project, onClose, onConsult }: StoryModalProps) {
     document.addEventListener('keydown', onKeyDown)
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    closeRef.current?.focus()
+    // preventScroll: iOS Safari otherwise scrolls the page behind the fixed overlay to the focused element
+    closeRef.current?.focus({ preventScroll: true })
     return () => {
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = previousOverflow
