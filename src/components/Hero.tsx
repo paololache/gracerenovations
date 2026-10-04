@@ -30,7 +30,6 @@ const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
     title: slide.title,
     accent: slide.accent,
     image: { ...image(slide.photo, service.photo.alt), position: slide.position },
-    credit: `Service ${service.number}`,
   }
 })
 
