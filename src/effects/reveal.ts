@@ -1,4 +1,5 @@
 const READY_CLASS = 'fx-reveal-ready'
+const GENTLE_CLASS = 'fx-reveal-gentle'
 const DEFAULT_OFFSET = 150
 
 const prefersReducedMotion = () =>
@@ -10,11 +11,11 @@ const prefersReducedMotion = () =>
  * Returns a cleanup function; elements already revealed stay revealed.
  */
 export function initReveal(root: ParentNode = document): () => void {
-  if (typeof window === 'undefined' || !('IntersectionObserver' in window) || prefersReducedMotion()) {
-    return () => {}
-  }
+  if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return () => {}
 
   document.documentElement.classList.add(READY_CLASS)
+  // Reduced motion: elements still fade in, but without moving
+  document.documentElement.classList.toggle(GENTLE_CLASS, prefersReducedMotion())
   const observers = new Map<number, IntersectionObserver>()
   const cleanups: (() => void)[] = []
 

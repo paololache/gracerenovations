@@ -6,7 +6,6 @@
  */
 export function initTouchActive(selector = '.fx-card', root: ParentNode = document): () => void {
   if (typeof window === 'undefined' || !window.matchMedia('(hover: none)').matches) return () => {}
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {}
 
   const observer = new IntersectionObserver(
     (entries) => {

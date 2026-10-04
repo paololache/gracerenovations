@@ -24,7 +24,7 @@ export interface HeroCarouselItem {
 interface HeroCarouselProps {
   items: HeroCarouselItem[]
   defaultIndex?: number
-  /** Advance on a timer. Pauses on mouse hover, keyboard focus and drag, and while off screen. */
+  /** Advance on a timer, also with reduced motion (it then only fades). Pauses on mouse hover, keyboard focus and drag, and while off screen. */
   autoplay?: boolean
   autoplayDelay?: number
   /** Above the headline, e.g. the page's h1. */
@@ -105,7 +105,10 @@ export function HeroCarousel({
   const xFor = useCallback((i: number) => box.w / 2 - (i * step + cardW / 2), [box.w, step, cardW])
   const x = useMotionValue(0)
   const target = xFor(index)
-  const spring = reduced ? { duration: 0 } : { type: 'spring' as const, stiffness: 260, damping: 34, mass: 0.9 }
+  // Reduced motion keeps the carousel moving, but with short glides and fades instead of springs, zooms and wipes
+  const spring = reduced
+    ? { duration: 0.45, ease: 'easeOut' as const }
+    : { type: 'spring' as const, stiffness: 260, damping: 34, mass: 0.9 }
 
   // A motion value rather than an `animate` prop, so a drag that starts mid-spring reads the real position
   useEffect(() => {
@@ -138,16 +141,16 @@ export function HeroCarousel({
   }, [go, index, last])
 
   useEffect(() => {
-    if (!autoplay || reduced || paused || dragging || !onScreen || items.length < 2) return
+    if (!autoplay || paused || dragging || !onScreen || items.length < 2) return
     const id = window.setTimeout(() => go(index === last ? 0 : index + 1), autoplayDelay)
     return () => window.clearTimeout(id)
-  }, [autoplay, autoplayDelay, reduced, paused, dragging, onScreen, go, index, items.length, last])
+  }, [autoplay, autoplayDelay, paused, dragging, onScreen, go, index, items.length, last])
 
   const active = items[index]
   if (!active) return null
   const lines = [...active.title.split('\n'), ...(active.accent ? [active.accent] : [])]
   const tint = active.tint ?? '#34508c'
-  const fade = reduced ? { duration: 0 } : { duration: 0.7, ease: 'easeOut' as const }
+  const fade = { duration: 0.7, ease: 'easeOut' as const }
 
   return (
     <div
@@ -216,11 +219,9 @@ export function HeroCarousel({
                 <span key={i} className="hc-line">
                   <motion.span
                     className={active.accent && i === lines.length - 1 ? 'hc-line-inner accent' : 'hc-line-inner'}
-                    initial={{ y: '110%' }}
-                    animate={{ y: 0 }}
-                    transition={
-                      reduced ? { duration: 0 } : { duration: 0.62, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }
-                    }
+                    initial={reduced ? { opacity: 0 } : { y: '110%' }}
+                    animate={reduced ? { opacity: 1 } : { y: 0 }}
+                    transition={{ duration: reduced ? 0.5 : 0.62, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
                   >
                     {line}
                   </motion.span>
@@ -246,9 +247,9 @@ export function HeroCarousel({
               <motion.span
                 key={`${index}-${fact}`}
                 className="hc-label"
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: reduced ? 0 : 6 }}
                 animate={{ opacity: 0.8, y: 0 }}
-                transition={reduced ? { duration: 0 } : { duration: 0.45, delay: 0.12 + i * 0.06 }}
+                transition={{ duration: 0.45, delay: 0.12 + i * 0.06 }}
               >
                 {fact}
               </motion.span>
@@ -258,9 +259,9 @@ export function HeroCarousel({
                 key={`link-${index}`}
                 className="hc-label hc-link"
                 href={active.link.href}
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: reduced ? 0 : 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={reduced ? { duration: 0 } : { duration: 0.45, delay: 0.3 }}
+                transition={{ duration: 0.45, delay: 0.3 }}
               >
                 {active.link.label}{' '}
                 <span className="fx-arrow" aria-hidden="true">

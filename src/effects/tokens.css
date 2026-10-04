@@ -22,9 +22,10 @@
 }
 
 /*
- * Reduced motion: every fx-* effect jumps straight to its end state, and
- * looping animations stop. Modules with JS (reveal, circle hero, marquee)
- * also skip their setup when this preference is on.
+ * Reduced motion: looping animations stop and nothing travels across the
+ * screen, but fades and colour changes stay, so the page still feels alive.
+ * Reveals fade in place (reveal.ts), and the scroll-driven modules (circle
+ * hero, curtain, marquee) skip their setup.
  */
 @media (prefers-reduced-motion: reduce) {
   [class*='fx-'],
@@ -33,10 +34,6 @@
   [class*='fx-'] *,
   [data-fx-reveal],
   [data-fx-reveal] * {
-    animation-duration: 1ms !important;
-    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important;
-    transition-delay: 0s !important;
   }
 }

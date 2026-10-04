@@ -14,7 +14,7 @@
  * parent: wrap them in .fx-mask (lines get one automatically).
  *
  * Content is only hidden once reveal.ts has added .fx-reveal-ready to <html>,
- * so pages stay readable without JS or with reduced motion.
+ * so pages stay readable without JS. With reduced motion they fade without moving.
  */
 
 /* Presets set where each target starts from */
@@ -60,6 +60,12 @@
 .fx-reveal-ready [data-fx-reveal='bg-zoom-out']:not(.is-revealed).fx-reveal-target,
 .fx-reveal-ready [data-fx-reveal='bg-zoom-out']:not(.is-revealed) .fx-reveal-target {
   background-size: 120%;
+}
+
+/* Reduced motion (set by reveal.ts): fade in place, no travel */
+.fx-reveal-gentle .fx-reveal-target {
+  --fx-from-x: 0;
+  --fx-from-y: 0;
 }
 
 /* Clipping wrapper for "up" / "down" */
