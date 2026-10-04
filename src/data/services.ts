@@ -215,4 +215,15 @@ export const services: Service[] = [
   },
 ]
 
+/** Order of the services on the home page: the hero carousel and the services row follow it. */
+export const homeServiceOrder: Service['id'][] = [
+  'sunroom',
+  'roofing',
+  'remodeling',
+  'exterior',
+  'bathroom',
+  'kitchen',
+  'painting',
+]
+
 export const serviceName = (id: Service['id']) => services.find((s) => s.id === id)?.name ?? ''

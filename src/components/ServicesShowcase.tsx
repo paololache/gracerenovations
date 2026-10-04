@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
-import { services, type Service } from '../data/services'
+import { homeServiceOrder, services, type Service } from '../data/services'
 import { serviceHref } from '../lib/router'
 import { Accented } from './Heading'
 import { Photo } from './Photo'
 import './ServicesShowcase.css'
+
+/** Same order as the hero carousel */
+const ORDERED = homeServiceOrder.map((id) => services.find((s) => s.id === id)!)
 
 /** Time on each card while autoplaying, and the pause after the visitor touches the row. */
 const AUTOPLAY_MS = 4500
@@ -23,7 +26,7 @@ export function ServicesShowcase({ onConsult }: { onConsult: () => void }) {
   const [progress, setProgress] = useState(0)
   const [dragging, setDragging] = useState(false)
   const busyUntil = useRef(0)
-  const count = services.length
+  const count = ORDERED.length
 
   /** The visitor is using the row: hold the autoplay for a moment. */
   const hold = () => {
@@ -153,8 +156,8 @@ export function ServicesShowcase({ onConsult }: { onConsult: () => void }) {
         {...dragHandlers}
       >
         <div className="showcase-track">
-          {services.map((service) => (
-            <ShowcaseCard key={service.id} service={service} />
+          {ORDERED.map((service, i) => (
+            <ShowcaseCard key={service.id} service={service} number={String(i + 1).padStart(2, '0')} />
           ))}
         </div>
       </div>
@@ -173,14 +176,14 @@ function cardLefts(row: HTMLElement) {
 }
 
 /** One service card, linking to its section on the services page. */
-function ShowcaseCard({ service }: { service: Service }) {
+function ShowcaseCard({ service, number }: { service: Service; number: string }) {
   return (
     <a className="showcase-card fx-card" href={serviceHref(service.id)} draggable={false}>
       <div className="showcase-card-media">
         <div className="showcase-card-photo">
           <Photo {...service.photo} sizes="(max-width: 700px) 80vw, 460px" />
         </div>
-        <span className="showcase-card-number">{service.number}</span>
+        <span className="showcase-card-number">{number}</span>
       </div>
       <div className="showcase-card-body">
         <h3 className="fx-card__title">{service.name}</h3>

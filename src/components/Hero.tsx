@@ -1,7 +1,7 @@
 import { localPhotos, type LocalPhoto } from '../assets/photos'
 import { company } from '../data/company'
 import { projects } from '../data/projects'
-import { services, type Service } from '../data/services'
+import { homeServiceOrder, services, type Service } from '../data/services'
 import { HeroCarousel, type HeroCarouselItem } from './ui/hero-carousel'
 import './Hero.css'
 
@@ -11,8 +11,8 @@ const image = (name: LocalPhoto, alt: string) => ({
   alt,
 })
 
-/** One slide per service, on Grace's own job photos, shown in their natural colours. */
-const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; position?: string }[] = [
+/** One slide per service, on Grace's own job photos, shown in their natural colours (ordered by homeServiceOrder). */
+const SLIDE_LIST: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; position?: string }[] = [
   { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom' },
   { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2' },
   { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior' },
@@ -22,6 +22,7 @@ const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPh
   { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'hero-kitchen', position: '50% 58%' },
   { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting' },
 ]
+const SLIDES = homeServiceOrder.map((id) => SLIDE_LIST.find((slide) => slide.id === id)!)
 
 const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
   const service = services.find((s) => s.id === slide.id)!
@@ -53,7 +54,10 @@ export function Hero({ onConsult, onOpenProject }: HeroProps) {
           if (id) onOpenProject(id)
         }}
         eyebrow={
-          <h1 className="hero-h1">Renovation &amp; remodeling in Indianapolis, Indiana · Since {company.since}</h1>
+          <h1 className="hero-h1">
+            Renovation &amp; remodeling in Indianapolis, Indiana ·{' '}
+            <span className="hero-since">Since {company.since}</span>
+          </h1>
         }
       >
         <button type="button" className="btn btn-primary" onClick={onConsult}>
