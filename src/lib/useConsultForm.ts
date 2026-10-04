@@ -5,7 +5,7 @@ import { submitLead, type Lead } from './leads'
 type Fields = Omit<Lead, 'source'>
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-const EMPTY: Fields = { name: '', phone: '', email: '', city: '', projectType: '', timeline: '', budget: '', details: '' }
+const EMPTY: Fields = { name: '', phone: '', email: '', city: '', projectType: '', timeline: '', details: '' }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /** State, validation and sending for the free consultation form. Required fields follow the current site. */
@@ -21,7 +21,6 @@ export function useConsultForm(source: string) {
     city: fields.city.trim().length < 2,
     projectType: !fields.projectType,
     timeline: !fields.timeline,
-    budget: !fields.budget,
   }
   const isValid = !Object.values(errors).some(Boolean)
 

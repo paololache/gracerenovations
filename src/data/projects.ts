@@ -118,9 +118,11 @@ export const projects: Project[] = [
       },
     ],
     before: {
-      text: 'A typical starting point: an open porch exposed to the weather and hard to use for most of the year.',
-      photo: { id: '1780866701873-2867a59c6aaf', alt: 'Example of a weathered open porch with overgrown grass' },
-      example: true,
+      text: 'The room mid-build: the shiplap ceiling and skylights in, with the stone walls and subfloor still bare and the ladders still up.',
+      photo: {
+        local: 'sunroom-before',
+        alt: 'The sunroom during the build, with a new shiplap ceiling, two skylights, stone walls and ladders on the subfloor',
+      },
     },
   },
   {

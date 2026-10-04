@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { company } from '../data/company'
-import { BUDGETS, TIMELINES } from '../lib/leads'
+import { TIMELINES } from '../lib/leads'
 import { useConsultForm } from '../lib/useConsultForm'
 import { Photo } from './Photo'
 import './LeadPopup.css'
@@ -189,7 +189,7 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
                     onChange={(e) => set('email')(e.target.value)}
                   />
                 </label>
-                <label className="lead-field">
+                <label className="lead-field lead-field-wide">
                   <span className="lead-label">Project address / city</span>
                   <input
                     className={inputClass('city')}
@@ -197,19 +197,6 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
                     value={fields.city}
                     onChange={(e) => set('city')(e.target.value)}
                   />
-                </label>
-                <label className="lead-field">
-                  <span className="lead-label">Estimated budget</span>
-                  <select
-                    className={inputClass('budget')}
-                    value={fields.budget}
-                    onChange={(e) => set('budget')(e.target.value)}
-                  >
-                    <option value="">Select…</option>
-                    {BUDGETS.map((b) => (
-                      <option key={b}>{b}</option>
-                    ))}
-                  </select>
                 </label>
               </div>
 

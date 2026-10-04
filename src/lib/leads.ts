@@ -6,7 +6,6 @@ export interface Lead {
   city: string
   projectType: string
   timeline: string
-  budget: string
   details: string
   source: string
 }
@@ -24,9 +23,7 @@ export const PROJECT_TYPES = [
   'Not Sure Yet',
 ]
 
-export const TIMELINES = ['ASAP', 'Within 1 Month', '1–3 Months', '3–6 Months', 'Planning / Researching']
-
-export const BUDGETS = ['Under $5,000', '$5,000 – $15,000', '$15,000 – $30,000', '$30,000 – $60,000', '$60,000+', 'Not sure yet']
+export const TIMELINES = ['ASAP', 'Within 1 Month', '1–3 Months', '3–6 Months']
 
 /**
  * Where lead forms post to, e.g. a Formspree or CRM webhook URL, set as

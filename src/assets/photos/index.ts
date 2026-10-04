@@ -20,6 +20,8 @@ import roofing2 from './roofing-2-640.webp'
 import roofing2Large from './roofing-2-1280.webp'
 import sunroom from './sunroom-640.webp'
 import sunroomLarge from './sunroom-1280.webp'
+import sunroomBefore from './sunroom-before-640.webp'
+import sunroomBeforeLarge from './sunroom-before-1280.webp'
 import truck from './truck-logo-640.webp'
 import truckLarge from './truck-logo-1280.webp'
 
@@ -33,6 +35,7 @@ export const localPhotos = {
   roofing: { small: roofing, large: roofing },
   'roofing-2': { small: roofing2, large: roofing2Large },
   sunroom: { small: sunroom, large: sunroomLarge },
+  'sunroom-before': { small: sunroomBefore, large: sunroomBeforeLarge },
   truck: { small: truck, large: truckLarge },
 }
 

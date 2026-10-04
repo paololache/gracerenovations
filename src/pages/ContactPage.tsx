@@ -34,7 +34,7 @@ export function ContactPage(_props: PageProps) {
         </div>
         <p className="section contact-reach-note">
           For the most accurate consultation, share your project address, the room or space you&rsquo;d like to renovate,
-          photos if available, your timeline, and rough budget.
+          photos if available, and your timeline.
         </p>
       </section>
 
