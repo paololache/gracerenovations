@@ -75,6 +75,9 @@ export function AboutPage({ onConsult }: PageProps) {
               <li>
                 <a href={company.phoneHref}>{company.phone}</a>
               </li>
+              <li>
+                <a href={company.emailHref}>{company.email}</a>
+              </li>
               <li>{company.address}</li>
             </ul>
           </div>

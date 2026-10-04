@@ -4,7 +4,7 @@
 
 .contact-reach-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 30px;
   padding-bottom: 36px;
   border-bottom: 1px solid var(--color-border);
@@ -20,6 +20,11 @@
   font-weight: 300;
   line-height: 1.35;
   color: var(--color-carbon);
+}
+
+/* A long address: it wraps after the @, and only breaks mid-word if it still can't fit */
+.contact-reach-email {
+  overflow-wrap: break-word;
 }
 
 a.contact-reach-value:hover {

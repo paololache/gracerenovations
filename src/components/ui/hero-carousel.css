@@ -151,6 +151,13 @@
 .hc-track {
   display: flex;
   align-items: flex-start;
+  /* Sideways gestures belong to the strip, vertical ones still scroll the page */
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.hc-track.is-dragging {
+  cursor: grabbing;
 }
 
 .hc-card {
@@ -234,11 +241,11 @@
   }
 
   .hc-head {
-  /* Keeps the white and orange type crisp over bright photos */
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
-}
+    /* Keeps the white and orange type crisp over bright photos */
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  }
 
-.hc-head-row {
+  .hc-head-row {
     gap: 8px 20px;
   }
 
@@ -263,16 +270,7 @@
   }
 }
 
-/* Scroll-driven mode: the stage pins while its tall outer box scrolls by */
-.hc-scroll {
-  position: relative;
-}
-
-.hc.is-pinned {
-  position: sticky;
-  top: 0;
-}
-
+/* Hint beside the rail: the strip moves sideways */
 .hc-hint {
   font-size: 11px;
   letter-spacing: var(--tracking-eyebrow);
@@ -283,18 +281,18 @@
 
 .hc-hint span {
   display: inline-block;
-  margin-left: 6px;
+  margin: 0 6px;
   color: var(--color-terracotta-hover);
-  animation: hc-hint-bob 1.6s var(--fx-ease-standard) infinite;
+  animation: hc-hint-sway 1.8s var(--fx-ease-standard) infinite;
 }
 
-.hc-hint.is-hidden {
-  opacity: 0;
+.hc-hint span:last-child {
+  animation-direction: reverse;
 }
 
-@keyframes hc-hint-bob {
+@keyframes hc-hint-sway {
   50% {
-    translate: 0 4px;
+    translate: -3px 0;
   }
 }
 

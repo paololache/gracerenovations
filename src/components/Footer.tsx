@@ -16,6 +16,7 @@ export function Footer() {
           </p>
           <p className="footer-contact">
             <a href={company.phoneHref}>{company.phone}</a>
+            <a href={company.emailHref}>{company.email}</a>
             <span>{company.address}</span>
           </p>
         </div>

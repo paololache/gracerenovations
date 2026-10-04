@@ -63,6 +63,11 @@ export function ContactSection({
           </ul>
           <p className="contact-direct">
             <a href={company.phoneHref}>Call {company.phone}</a>
+            <span className="contact-direct-sep" aria-hidden="true">
+              {' '}
+              ·{' '}
+            </span>
+            <a href={company.emailHref}>{company.email}</a>
           </p>
         </div>
 
@@ -158,10 +163,11 @@ export function ContactSection({
                     <button type="submit" className="btn contact-submit" disabled={form.status === 'sending'}>
                       {form.status === 'sending' ? 'Sending…' : 'Schedule My Free Consultation'}
                     </button>
-                    {form.touched && !form.isValid && <p className="contact-error">Check the highlighted fields.</p>}
+                    {form.touched && !form.isValid && <p className="contact-error">Please add {form.missing.join(', ')}.</p>}
                     {form.status === 'error' && (
                       <p className="contact-error">
-                        That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a>.
+                        That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a> or
+                        email <a href={company.emailHref}>{company.email}</a>.
                       </p>
                     )}
                   </div>

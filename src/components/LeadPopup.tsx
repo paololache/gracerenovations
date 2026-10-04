@@ -201,11 +201,12 @@ export function LeadPopup({ open, source, onClose }: LeadPopupProps) {
               </div>
 
               {form.touched && !form.isValid && (
-                <p className="lead-error">Check the highlighted fields so we can reach you.</p>
+                <p className="lead-error">Please add {form.missing.join(', ')}.</p>
               )}
               {form.status === 'error' && (
                 <p className="lead-error">
-                  That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a>.
+                  That didn&rsquo;t go through. Call us at <a href={company.phoneHref}>{company.phone}</a> or email{' '}
+                  <a href={company.emailHref}>{company.email}</a>.
                 </p>
               )}
 

@@ -1,13 +1,5 @@
-import {
-  AnimatePresence,
-  animate,
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-} from 'framer-motion'
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState, type MouseEvent, type PointerEvent, type ReactNode } from 'react'
 import './hero-carousel.css'
 
 export interface HeroCarouselItem {
@@ -33,14 +25,13 @@ export interface HeroCarouselItem {
 interface HeroCarouselProps {
   items: HeroCarouselItem[]
   defaultIndex?: number
-  /** Advance on a timer, also with reduced motion (it then only fades). Pauses on mouse hover, keyboard focus and drag, and while off screen. */
+  /**
+   * Advance on a timer while the visitor leaves it alone, also with reduced
+   * motion (it then only fades). Waits while the pointer moves over the hero,
+   * during a swipe, with keyboard focus and while off screen.
+   */
   autoplay?: boolean
   autoplayDelay?: number
-  /**
-   * Pin the hero while the page scrolls past it, sliding the strip from card to
-   * card as you go (wheel, trackpad or finger alike). Scroll distance per card, in svh.
-   */
-  scrollPerCard?: number
   /**
    * Tapping or clicking a card calls this instead of just focusing it, e.g. to
    * open that card's project; the headline also gets a matching button.
@@ -62,6 +53,12 @@ const GAP = 0.038 // gap ÷ card width
 const STRIP_TOP = 0.5 // the strip's shared top edge, down the stage
 const RAIL = 0.2 // progress rail width ÷ stage width
 
+/** How long the carousel waits after the visitor touches or moves over it before playing again. */
+const IDLE_MS = 4000
+/** Movement before a press counts as a swipe, and the swipe distance that always changes card. */
+const SWIPE_START = 8
+const SWIPE_COMMIT = 40
+
 /** Horizontal trackpad distance that commits to a step, and the lockout after one. */
 const WHEEL_THRESHOLD = 60
 const WHEEL_COOLDOWN = 420
@@ -77,46 +74,38 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
  * HeroCarousel, with plain CSS instead of Tailwind). Every card shares one top
  * edge; the focused card unfurls to full height while its neighbours stay
  * clipped to half, and the whole backdrop re-grades to the focused photo.
- * Swipe or drag the strip, tap a card, use the arrow keys or a sideways
- * trackpad swipe. With `scrollPerCard` the hero pins and the page scroll walks
- * the strip through every card; otherwise vertical scrolling goes straight to the page.
+ * Swipe or drag the strip either way, tap a card, use the arrow keys or a
+ * sideways trackpad swipe; left alone it plays on its own. Vertical gestures
+ * always scroll the page, even when they start on the strip.
  */
 export function HeroCarousel({
   items,
   defaultIndex = 0,
   autoplay = false,
   autoplayDelay = 5000,
-  scrollPerCard,
   onSelect,
   selectLabel = 'View',
   eyebrow,
   children,
   className,
 }: HeroCarouselProps) {
-  const outerRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const [box, setBox] = useState({ w: 0, h: 0 })
   const [index, setIndex] = useState(defaultIndex)
   const [dragging, setDragging] = useState(false)
   const [paused, setPaused] = useState(false)
   const [onScreen, setOnScreen] = useState(true)
+  // Bumped to re-arm the autoplay timer after it found the visitor busy
+  const [tick, setTick] = useState(0)
+  const busyUntil = useRef(0)
   const reduced = useReducedMotion()
 
   const last = items.length - 1
-  const scrollMode = Boolean(scrollPerCard) && last > 0
-
-  const go = useCallback(
-    (next: number) => {
-      const i = clamp(next, 0, Math.max(0, last))
-      const outer = outerRef.current
-      if (!scrollMode || !outer) return setIndex(i)
-      // Scroll-driven: move the page to where that card is in front, and the strip follows
-      const top = outer.getBoundingClientRect().top + window.scrollY
-      const range = outer.offsetHeight - window.innerHeight
-      window.scrollTo({ top: top + (i / last) * range, behavior: reduced ? 'auto' : 'smooth' })
-    },
-    [last, scrollMode, reduced],
-  )
+  const go = useCallback((next: number) => setIndex(clamp(next, 0, Math.max(0, last))), [last])
+  /** The visitor is using the carousel: hold the autoplay for a moment. */
+  const hold = () => {
+    busyUntil.current = Date.now() + IDLE_MS
+  }
 
   // One observer feeds every measurement below
   useEffect(() => {
@@ -149,31 +138,13 @@ export function HeroCarousel({
     ? { duration: 0.45, ease: 'easeOut' as const }
     : { type: 'spring' as const, stiffness: 260, damping: 34, mass: 0.9 }
 
-  // Scroll-driven: the strip glides with the scroll, and the nearest card takes focus
-  const { scrollYProgress } = useScroll({
-    target: scrollMode ? outerRef : undefined,
-    offset: ['start start', 'end end'],
-  })
-  const placeStrip = (p: number) => {
-    if (!dragging) x.set(xFor(clamp(p, 0, 1) * last))
-  }
-  useMotionValueEvent(scrollYProgress, 'change', (p) => {
-    if (!scrollMode) return
-    placeStrip(p)
-    setIndex(Math.round(clamp(p, 0, 1) * last))
-  })
-  // Re-place the strip when the layout changes or a drag ends
-  useEffect(() => {
-    if (scrollMode) placeStrip(scrollYProgress.get())
-  }, [scrollMode, box.w, step, dragging]) // eslint-disable-line react-hooks/exhaustive-deps
-
   // A motion value rather than an `animate` prop, so a drag that starts mid-spring reads the real position
   useEffect(() => {
-    if (dragging || scrollMode) return
+    if (dragging) return
     const run = animate(x, target, spring)
     return () => run.stop()
     // `spring` only derives from `reduced`
-  }, [target, dragging, scrollMode, reduced, x]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [target, dragging, reduced, x, box.w]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sideways trackpad swipes step the strip; vertical wheel scrolling is left to the page
   useEffect(() => {
@@ -186,6 +157,7 @@ export function HeroCarousel({
       const stuck = (e.deltaX > 0 && index === last) || (e.deltaX < 0 && index === 0)
       if (stuck) return
       e.preventDefault()
+      hold()
       if (e.timeStamp < until) return
       acc += e.deltaX
       if (Math.abs(acc) < WHEEL_THRESHOLD) return
@@ -198,10 +170,74 @@ export function HeroCarousel({
   }, [go, index, last])
 
   useEffect(() => {
-    if (!autoplay || scrollMode || paused || dragging || !onScreen || items.length < 2) return
-    const id = window.setTimeout(() => go(index === last ? 0 : index + 1), autoplayDelay)
+    if (!autoplay || paused || dragging || !onScreen || items.length < 2) return
+    const id = window.setTimeout(() => {
+      // Still being used: look again shortly instead of moving under the visitor's hand
+      if (Date.now() < busyUntil.current) return setTick((t) => t + 1)
+      go(index === last ? 0 : index + 1)
+    }, autoplayDelay)
     return () => window.clearTimeout(id)
-  }, [autoplay, autoplayDelay, scrollMode, paused, dragging, onScreen, go, index, items.length, last])
+  }, [autoplay, autoplayDelay, paused, dragging, onScreen, go, index, items.length, last, tick])
+
+  // Swipe / drag on the strip. Only a sideways gesture is taken: a vertical one is left to the
+  // browser (touch-action: pan-y), which scrolls the page and cancels the pointer.
+  const swipe = useRef<{ id: number; x0: number; y0: number; base: number; sideways: boolean | null } | null>(null)
+  const justSwiped = useRef(false)
+  const endSwipe = (dx: number) => {
+    swipe.current = null
+    setDragging(false)
+    hold()
+    // The card nearest the release; a clear swipe always moves at least one card
+    let next = Math.round((box.w / 2 - x.get() - cardW / 2) / step)
+    if (next === index && Math.abs(dx) > SWIPE_COMMIT) next = index - Math.sign(dx)
+    go(next)
+  }
+  const swipeHandlers = {
+    onPointerDown: (e: PointerEvent) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      hold()
+      swipe.current = { id: e.pointerId, x0: e.clientX, y0: e.clientY, base: x.get(), sideways: null }
+    },
+    onPointerMove: (e: PointerEvent<HTMLDivElement>) => {
+      const s = swipe.current
+      if (!s || s.id !== e.pointerId) return
+      const dx = e.clientX - s.x0
+      const dy = e.clientY - s.y0
+      if (s.sideways === null) {
+        if (Math.abs(dx) < SWIPE_START && Math.abs(dy) < SWIPE_START) return
+        s.sideways = Math.abs(dx) > Math.abs(dy)
+        if (!s.sideways) return void (swipe.current = null)
+        e.currentTarget.setPointerCapture(e.pointerId)
+        setDragging(true)
+      }
+      // Follow the finger, with some resistance past the first and last card
+      const raw = s.base + dx
+      const min = xFor(last)
+      const max = xFor(0)
+      x.set(raw > max ? max + (raw - max) * 0.3 : raw < min ? min + (raw - min) * 0.3 : raw)
+    },
+    onPointerUp: (e: PointerEvent) => {
+      const s = swipe.current
+      if (!s || s.id !== e.pointerId) return
+      if (!s.sideways) return void (swipe.current = null)
+      // A swipe is not a tap: keep it from opening the card underneath
+      justSwiped.current = true
+      window.setTimeout(() => (justSwiped.current = false), 0)
+      endSwipe(e.clientX - s.x0)
+    },
+    onPointerCancel: (e: PointerEvent) => {
+      const s = swipe.current
+      if (!s || s.id !== e.pointerId) return
+      if (s.sideways) endSwipe(e.clientX - s.x0)
+      else swipe.current = null
+    },
+    onClickCapture: (e: MouseEvent) => {
+      if (justSwiped.current) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+  }
 
   const active = items[index]
   if (!active) return null
@@ -209,7 +245,7 @@ export function HeroCarousel({
   const tint = active.tint
   const fade = { duration: 0.7, ease: 'easeOut' as const }
 
-  const stage = (
+  return (
     <div
       ref={stageRef}
       tabIndex={0}
@@ -222,12 +258,11 @@ export function HeroCarousel({
         e.preventDefault()
         go(keys[e.key])
       }}
-      // Touch "hover" would pause it after every tap, so only a mouse pauses it
-      onPointerEnter={(e) => e.pointerType === 'mouse' && setPaused(true)}
-      onPointerLeave={(e) => e.pointerType === 'mouse' && setPaused(false)}
+      // A moving mouse means someone is looking: wait until it rests
+      onPointerMove={(e) => e.pointerType === 'mouse' && hold()}
       onFocus={(e) => e.target.matches(':focus-visible') && setPaused(true)}
       onBlur={() => setPaused(false)}
-      className={['hc', scrollMode && 'is-pinned', className].filter(Boolean).join(' ')}
+      className={['hc', className].filter(Boolean).join(' ')}
     >
       {/* Backdrop: the focused photo, blown up (and re-hued to its tint, if it has one) */}
       <AnimatePresence initial={false}>
@@ -354,22 +389,7 @@ export function HeroCarousel({
 
       {/* The strip: one shared top edge, the focused card twice as tall */}
       <div className="hc-strip" style={{ top: `${STRIP_TOP * 100}%`, height: fullH }}>
-        <motion.div
-          className="hc-track"
-          style={{ gap, x, cursor: scrollMode ? undefined : dragging ? 'grabbing' : 'grab' }}
-          // Scroll-driven, a finger on the strip has to scroll the page, so there is no sideways drag
-          drag={scrollMode ? false : 'x'}
-          dragMomentum={false}
-          dragElastic={0.08}
-          dragConstraints={{ left: xFor(last), right: xFor(0) }}
-          onDragStart={() => setDragging(true)}
-          onDragEnd={(_, info) => {
-            setDragging(false)
-            // Land on the card nearest the release, nudged by throw velocity so a flick clears more than one
-            const thrown = x.get() + info.velocity.x * 0.12
-            go(Math.round((box.w / 2 - thrown - cardW / 2) / step))
-          }}
-        >
+        <motion.div className={`hc-track ${dragging ? 'is-dragging' : ''}`} style={{ gap, x }} {...swipeHandlers}>
           {items.map((item, i) => (
             <motion.button
               key={item.id}
@@ -421,21 +441,11 @@ export function HeroCarousel({
             />
           </div>
         </div>
-        {scrollMode && (
-          <p className={`hc-hint ${index === 0 ? '' : 'is-hidden'}`} aria-hidden="true">
-            Scroll to see our work <span>↓</span>
-          </p>
-        )}
+        <p className="hc-hint" aria-hidden="true">
+          <span>←</span> Swipe to see our work <span>→</span>
+        </p>
         {children && <div className="hc-actions">{children}</div>}
       </div>
-    </div>
-  )
-
-  if (!scrollMode) return stage
-  // The outer box is as tall as the scroll it takes to pass every card; the stage stays pinned inside it
-  return (
-    <div ref={outerRef} className="hc-scroll" style={{ height: `calc(100svh + ${last * (scrollPerCard ?? 0)}svh)` }}>
-      {stage}
     </div>
   )
 }

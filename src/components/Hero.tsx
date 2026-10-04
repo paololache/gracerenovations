@@ -46,7 +46,7 @@ export function Hero({ onConsult, onOpenProject }: HeroProps) {
     <header className="hero">
       <HeroCarousel
         items={ITEMS}
-        scrollPerCard={45}
+        autoplay
         selectLabel="View project"
         onSelect={(i) => {
           const id = PROJECT_FOR_SLIDE[i]

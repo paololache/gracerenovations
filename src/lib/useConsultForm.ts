@@ -8,6 +8,15 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
 const EMPTY: Fields = { name: '', phone: '', email: '', city: '', projectType: '', timeline: '', details: '' }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+const FIELD_NAMES = {
+  name: 'your full name',
+  phone: 'a 10-digit phone number',
+  email: 'a valid email (or leave it empty)',
+  city: 'the project address or city',
+  projectType: 'the type of project',
+  timeline: 'when you want to start',
+}
+
 /** State, validation and sending for the free consultation form. Required fields follow the current site. */
 export function useConsultForm(source: string) {
   const [fields, setFields] = useState<Fields>(EMPTY)
@@ -23,8 +32,16 @@ export function useConsultForm(source: string) {
     timeline: !fields.timeline,
   }
   const isValid = !Object.values(errors).some(Boolean)
+  /** What still needs fixing, in plain words, for the message under the form. */
+  const missing = (Object.keys(errors) as (keyof typeof errors)[]).filter((k) => errors[k]).map((k) => FIELD_NAMES[k])
 
-  const set = <K extends keyof Fields>(key: K) => (value: Fields[K]) => setFields((f) => ({ ...f, [key]: value }))
+  const set =
+    <K extends keyof Fields>(key: K) =>
+    (value: Fields[K]) => {
+      setFields((f) => ({ ...f, [key]: value }))
+      // A failed send is stale once the visitor edits the form
+      setStatus((s) => (s === 'error' ? 'idle' : s))
+    }
   const invalid = (key: keyof typeof errors) => touched && errors[key]
 
   const onSubmit = async (e: FormEvent) => {
@@ -41,5 +58,15 @@ export function useConsultForm(source: string) {
     }
   }
 
-  return { fields, set, invalid, isValid, touched, status, onSubmit, firstName: fields.name.trim().split(' ')[0] }
+  return {
+    fields,
+    set,
+    invalid,
+    isValid,
+    missing,
+    touched,
+    status,
+    onSubmit,
+    firstName: fields.name.trim().split(' ')[0],
+  }
 }

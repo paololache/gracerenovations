@@ -25,22 +25,39 @@ export const PROJECT_TYPES = [
 
 export const TIMELINES = ['ASAP', 'Within 1 Month', '1–3 Months', '3–6 Months']
 
-/**
- * Where lead forms post to, e.g. a Formspree or CRM webhook URL, set as
- * VITE_LEAD_ENDPOINT in `.env.local`. Grace has no public email address on
- * the current site, so without an endpoint the form cannot send: it throws,
- * and the form asks the visitor to call instead.
- */
-const LEAD_ENDPOINT = import.meta.env.VITE_LEAD_ENDPOINT as string | undefined
+import { company } from '../data/company'
 
-export const leadsConfigured = Boolean(LEAD_ENDPOINT)
+/**
+ * Where lead forms post to. By default each request is emailed to Grace's
+ * inbox through FormSubmit (formsubmit.co), which needs no account: the very
+ * first submission sends an activation link to that inbox, and requests are
+ * delivered once it has been clicked. Set VITE_LEAD_ENDPOINT in `.env.local`
+ * to post the same JSON to a CRM or webhook instead. If sending fails, the
+ * form asks the visitor to call or email.
+ */
+const CUSTOM_ENDPOINT = import.meta.env.VITE_LEAD_ENDPOINT as string | undefined
+const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${company.email}`
 
 export async function submitLead(lead: Lead): Promise<void> {
-  if (!LEAD_ENDPOINT) throw new Error('Lead endpoint is not configured (VITE_LEAD_ENDPOINT)')
-  const res = await fetch(LEAD_ENDPOINT, {
+  const endpoint = CUSTOM_ENDPOINT || FORMSUBMIT_ENDPOINT
+  // FormSubmit options: subject line, a table layout, and replies going to the homeowner
+  const body = CUSTOM_ENDPOINT
+    ? lead
+    : {
+        _subject: `New consultation request: ${lead.projectType} — ${lead.name}`,
+        _template: 'table',
+        ...(lead.email ? { _replyto: lead.email } : {}),
+        ...lead,
+      }
+  const res = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(lead),
+    body: JSON.stringify(body),
   })
   if (!res.ok) throw new Error(`Lead endpoint returned ${res.status}`)
+  if (!CUSTOM_ENDPOINT) {
+    // FormSubmit answers 200 with success "false" when, e.g., the inbox has not been activated yet
+    const data = (await res.json().catch(() => ({}))) as { success?: string | boolean; message?: string }
+    if (String(data.success) !== 'true') throw new Error(`FormSubmit: ${data.message ?? 'not sent'}`)
+  }
 }

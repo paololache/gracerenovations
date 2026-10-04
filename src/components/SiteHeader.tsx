@@ -74,6 +74,7 @@ export function SiteHeader({ route, onConsult }: SiteHeaderProps) {
           <nav id="site-mobile-menu" className="site-mobile-menu" aria-label="Mobile">
             {links}
             <a href={company.phoneHref}>Call {company.phone}</a>
+            <a href={company.emailHref}>{company.email}</a>
             <button type="button" className="btn btn-primary" onClick={startEstimate}>
               Get a Quote
             </button>

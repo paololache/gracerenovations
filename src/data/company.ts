@@ -4,6 +4,8 @@ export const company = {
   legalName: 'Grace Renovations LLC - Indiana',
   phone: '317-766-6648',
   phoneHref: 'tel:+13177666648',
+  email: 'Gulliver@gracerenovations.net',
+  emailHref: 'mailto:Gulliver@gracerenovations.net',
   address: '2206 Rolling Oak Dr, Indianapolis, IN',
   since: 2018,
 }
