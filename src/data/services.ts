@@ -1,7 +1,7 @@
 import type { PhotoRef } from '../components/Photo'
 
 export interface Service {
-  id: 'kitchen' | 'bathroom' | 'sunroom' | 'painting' | 'exterior' | 'remodeling'
+  id: 'kitchen' | 'bathroom' | 'sunroom' | 'painting' | 'exterior' | 'remodeling' | 'roofing'
   number: string
   name: string
   /** Singular label used as a project tag, e.g. "Kitchen". */
@@ -181,6 +181,37 @@ export const services: Service[] = [
     whoFor: ['Homeowners ready to refresh dated spaces', 'Owners combining multiple smaller projects'],
     cta: 'Start Your Remodel',
     photo: { local: 'exterior', alt: 'Screened garden room with grey-trimmed openings and a screen door' },
+  },
+  {
+    id: 'roofing',
+    number: '07',
+    name: 'Roofing',
+    tag: 'Roofing',
+    description: 'Roof repairs and replacements that keep the rest of your home protected.',
+    heading: { text: 'Roofing that protects', accent: 'everything below it.' },
+    longDescription:
+      'A sound roof protects every other improvement in your home. Grace Renovations handles roof repairs and replacements for homeowners across Central Indiana, with a clear plan before work starts, careful installation, and a clean site when the job is done.',
+    benefits: [
+      'Repair or replacement, explained plainly',
+      'Clear scope and timeline before work starts',
+      'Attention to flashing, vents, and edges',
+      'One contractor for roof and renovation work',
+    ],
+    included: [
+      'Roof inspections and assessments',
+      'Shingle roof replacement',
+      'Leak repairs',
+      'Flashing, vents, and drip edge',
+      'Gutters and downspouts',
+      'Cleanup and debris removal',
+    ],
+    whoFor: [
+      'Homeowners with an aging or leaking roof',
+      'Owners preparing to sell',
+      'Homeowners pairing a roof with other exterior work',
+    ],
+    cta: 'Request a Roofing Estimate',
+    photo: { local: 'roofing-2', alt: 'Two-storey home with a new dark shingle roof, tan siding and black shutters' },
   },
 ]
 

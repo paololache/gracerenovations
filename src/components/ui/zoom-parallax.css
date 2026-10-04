@@ -1,0 +1,95 @@
+/* ZoomParallax: a tall track with a sticky full-screen stage */
+.zp {
+  position: relative;
+  height: 300vh;
+  background: var(--color-carbon);
+}
+
+.zp-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* Each layer covers the stage and scales from its centre */
+.zp-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* No will-change: it would freeze the image at its small raster size and blur it when scaled up */
+  pointer-events: none;
+}
+
+.zp-frame {
+  position: relative;
+  width: 25vw;
+  height: 25vh;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-navy-soft);
+}
+
+.zp-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Collage positions, offset from the centre image (same layout as the original component) */
+.zp-layer-1 .zp-frame { top: -30vh; left: 5vw; width: 35vw; height: 30vh; }
+.zp-layer-2 .zp-frame { top: -10vh; left: -25vw; width: 20vw; height: 45vh; }
+.zp-layer-3 .zp-frame { left: 27.5vw; width: 25vw; height: 25vh; }
+.zp-layer-4 .zp-frame { top: 27.5vh; left: 5vw; width: 20vw; height: 25vh; }
+.zp-layer-5 .zp-frame { top: 27.5vh; left: -22.5vw; width: 30vw; height: 25vh; }
+.zp-layer-6 .zp-frame { top: 22.5vh; left: 25vw; width: 15vw; height: 15vh; }
+
+/* The centre image is drawn last so it grows over the others */
+.zp-layer-0 {
+  z-index: 1;
+}
+
+/* Trims a light band some photos carry along their edges */
+.zp-layer-0 img {
+  scale: 1.04;
+}
+
+/* Caption over the full-screen centre image */
+.zp-caption {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  padding: 0 var(--section-pad-x) 9vh;
+  background: linear-gradient(0deg, rgba(8, 18, 42, 0.75) 0%, transparent 100%);
+  padding-top: 20vh;
+  color: var(--color-white);
+}
+
+/* Phones: wider tiles so the collage still reads on a narrow screen */
+@media (max-width: 700px) {
+  /* The centre grows 4×, so it must start at least 25vw × 25vh to end up covering the screen */
+  .zp-frame { width: 34vw; height: 26vh; }
+  .zp-layer-1 .zp-frame { top: -27vh; left: 10vw; width: 50vw; height: 22vh; }
+  .zp-layer-2 .zp-frame { top: -8vh; left: -36vw; width: 26vw; height: 32vh; }
+  .zp-layer-3 .zp-frame { top: 2vh; left: 38vw; width: 28vw; height: 18vh; }
+  .zp-layer-4 .zp-frame { top: 26vh; left: 8vw; width: 34vw; height: 20vh; }
+  .zp-layer-5 .zp-frame { top: 26vh; left: -32vw; width: 40vw; height: 20vh; }
+  .zp-layer-6 .zp-frame { top: 22vh; left: 40vw; width: 22vw; height: 12vh; }
+}
+
+/* Reduced motion: no scroll track, just the collage on one screen */
+.zp--static {
+  height: auto;
+}
+
+.zp--static .zp-sticky {
+  position: relative;
+}
+
+.zp--static .zp-caption {
+  opacity: 1;
+}

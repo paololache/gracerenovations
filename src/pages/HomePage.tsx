@@ -7,7 +7,7 @@ import { ProcessPreview } from '../components/ProcessPreview'
 import { ProjectMap } from '../components/ProjectMap'
 import { QuoteBanner } from '../components/QuoteBanner'
 import { RecentProjects } from '../components/RecentProjects'
-import { Services } from '../components/Services'
+import { ServicesShowcase } from '../components/ServicesShowcase'
 import { TrustStrip } from '../components/TrustStrip'
 import { WhyChoose } from '../components/WhyChoose'
 import { faqs } from '../data/faqs'
@@ -24,7 +24,7 @@ export function HomePage({ onConsult, onOpenProject }: PageProps) {
     <>
       <Hero onConsult={onConsult} />
       <TrustStrip />
-      <Services onConsult={onConsult} />
+      <ServicesShowcase onConsult={onConsult} />
       <RecentProjects onOpenProject={onOpenProject} />
       <WhyChoose />
       <ProcessPreview onConsult={onConsult} />

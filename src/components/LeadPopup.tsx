@@ -20,6 +20,7 @@ const PROJECTS = [
   { label: 'Painting', value: 'Interior Painting' },
   { label: 'Exterior', value: 'Exterior Renovation' },
   { label: 'Remodeling', value: 'Remodeling' },
+  { label: 'Roofing', value: 'Roofing' },
   { label: 'Other', value: 'General Home Improvement' },
   { label: 'Not sure yet', value: 'Not Sure Yet' },
 ]

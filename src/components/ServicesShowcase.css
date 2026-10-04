@@ -1,0 +1,257 @@
+/* Services showcase: navy band, pinned while the cards slide sideways */
+.showcase {
+  position: relative;
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+.showcase-sticky {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 44px;
+  padding: 110px 0 80px;
+}
+
+.showcase.is-pinned .showcase-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  padding: 96px 0 48px;
+}
+
+.showcase-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px 60px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+.showcase-eyebrow {
+  color: var(--color-text-on-dark-subtle);
+  margin-bottom: 18px;
+}
+
+.showcase-title {
+  max-width: 18ch;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.showcase-title .accent {
+  color: var(--color-terracotta-hover);
+}
+
+.showcase-meta {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* Big counter in the accent serif: which service is in front */
+.showcase-counter {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--color-terracotta-hover);
+  font-variant-numeric: tabular-nums;
+}
+
+.showcase-counter-total {
+  font-size: 22px;
+  color: var(--color-text-on-dark-subtle);
+}
+
+.showcase-progress {
+  position: relative;
+  width: 140px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.showcase-progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--color-terracotta-hover);
+  transform-origin: left center;
+}
+
+.showcase:not(.is-pinned) .showcase-counter,
+.showcase:not(.is-pinned) .showcase-progress {
+  display: none;
+}
+
+/* Track: lines up with the page content on the left, runs off the right edge */
+.showcase-viewport {
+  overflow: hidden;
+}
+
+.showcase:not(.is-pinned) .showcase-viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.showcase-track {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  padding: 0 max(var(--section-pad-x), calc((100vw - var(--content-max)) / 2 + var(--section-pad-x)));
+}
+
+.showcase-card {
+  --fx-card-accent: var(--color-terracotta-hover);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, 34vw);
+  scroll-snap-align: start;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-card-lg);
+  background: var(--color-navy-soft);
+  color: var(--color-white);
+  transition:
+    border-color var(--fx-dur-base) var(--fx-ease-standard),
+    translate var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.showcase-card:hover,
+.showcase-card.is-touch-active {
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.28);
+  translate: 0 -6px;
+}
+
+.showcase-card-media {
+  position: relative;
+  height: min(40vh, 330px);
+  overflow: hidden;
+}
+
+/* Wider than its frame so it can drift sideways without showing an edge */
+.showcase-card-photo {
+  position: absolute;
+  inset: 0 -12%;
+}
+
+.showcase-card-photo .photo {
+  transition: scale var(--fx-dur-slow) var(--fx-ease-standard);
+}
+
+.showcase-card:hover .showcase-card-photo .photo,
+.showcase-card.is-touch-active .showcase-card-photo .photo {
+  scale: 1.05;
+}
+
+.showcase-card-number {
+  position: absolute;
+  left: 20px;
+  bottom: 14px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 54px;
+  line-height: 1;
+  color: var(--color-white);
+  text-shadow: 0 2px 18px rgba(8, 18, 42, 0.55);
+}
+
+.showcase-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px 26px 26px;
+}
+
+.showcase-card h3 {
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.showcase-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-on-dark-secondary);
+  margin-bottom: 20px;
+}
+
+.showcase-card-link {
+  margin-top: auto;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-terracotta-hover);
+}
+
+@media (max-width: 900px) {
+  .showcase-title {
+    font-size: 32px;
+  }
+
+  .showcase-meta {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 16px 22px;
+  }
+
+  .showcase-counter {
+    font-size: 34px;
+  }
+
+  .showcase-cta {
+    display: none;
+  }
+
+  .showcase.is-pinned .showcase-sticky {
+    gap: 26px;
+    padding: 84px 0 28px;
+  }
+
+  .showcase-card {
+    width: 78vw;
+  }
+
+  .showcase-card-media {
+    height: 30vh;
+  }
+}
+
+/* Short screens (tablets in landscape, small laptops): tighter, so the pinned cards fit the height */
+@media (max-height: 900px) {
+  .showcase.is-pinned .showcase-sticky {
+    gap: 24px;
+    padding: 88px 0 22px;
+  }
+
+  .showcase-title {
+    font-size: clamp(28px, 4.4vh, 40px);
+  }
+
+  .showcase-counter {
+    font-size: 34px;
+  }
+
+  .showcase-card-media {
+    height: 28vh;
+  }
+
+  .showcase-card-body {
+    padding: 18px 22px 20px;
+  }
+
+  .showcase-card p {
+    margin-bottom: 12px;
+  }
+}

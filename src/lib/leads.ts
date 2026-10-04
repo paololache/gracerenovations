@@ -19,6 +19,7 @@ export const PROJECT_TYPES = [
   'Exterior Renovation',
   'Interior Renovation',
   'Remodeling',
+  'Roofing',
   'General Home Improvement',
   'Not Sure Yet',
 ]

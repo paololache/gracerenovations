@@ -1,6 +1,6 @@
 /**
  * Grace's own job photos, each at 640px and 1280px wide. Photos that look like
- * renders (bathroom-2, deck-2, roofing*, sunroom-2) stay in this folder but are
+ * renders (bathroom-2, deck-2, sunroom-2) stay in this folder but are
  * not bundled: the brand shows real project photos only.
  */
 import bathroom from './bathroom-640.webp'
@@ -15,6 +15,9 @@ import kitchen from './kitchen-640.webp'
 import kitchenLarge from './kitchen-1280.webp'
 import painting from './painting-640.webp'
 import paintingLarge from './painting-1280.webp'
+import roofing from './roofing-640.webp'
+import roofing2 from './roofing-2-640.webp'
+import roofing2Large from './roofing-2-1280.webp'
 import sunroom from './sunroom-640.webp'
 import sunroomLarge from './sunroom-1280.webp'
 import truck from './truck-logo-640.webp'
@@ -27,6 +30,8 @@ export const localPhotos = {
   'hero-kitchen': { small: heroKitchen, large: heroKitchenLarge },
   kitchen: { small: kitchen, large: kitchenLarge },
   painting: { small: painting, large: paintingLarge },
+  roofing: { small: roofing, large: roofing },
+  'roofing-2': { small: roofing2, large: roofing2Large },
   sunroom: { small: sunroom, large: sunroomLarge },
   truck: { small: truck, large: truckLarge },
 }

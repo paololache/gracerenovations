@@ -1,35 +1,23 @@
 .hero {
   position: relative;
-  min-height: 860px;
+  min-height: 760px;
   overflow: hidden;
   color: var(--color-white);
+  background: var(--color-carbon);
 }
 
-.hero-media {
+/* Soft radial glow behind the headline (the demo's "spotlight"), in the brand blue */
+.hero-spotlight {
   position: absolute;
-  inset: 0;
-}
-
-.hero-media .photo {
-  /* Slow settle from a slight zoom on load */
-  animation: hero-settle 2.4s var(--fx-ease-standard) both;
-}
-
-@keyframes hero-settle {
-  from {
-    scale: 1.08;
-  }
-}
-
-/* Darker where the copy sits (left), opening up toward the windows on the right */
-.hero-scrim {
-  position: absolute;
-  inset: 0;
+  top: -45%;
+  left: 30%;
+  width: 120vmin;
+  height: 120vmin;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(52, 80, 140, 0.55), transparent 60%);
+  filter: blur(30px);
   pointer-events: none;
-  background:
-    linear-gradient(0deg, rgba(8, 18, 42, 0.78) 0%, transparent 26%),
-    linear-gradient(90deg, rgba(8, 18, 42, 0.82) 0%, rgba(8, 18, 42, 0.55) 45%, rgba(8, 18, 42, 0.12) 100%),
-    linear-gradient(180deg, rgba(8, 18, 42, 0.35) 0%, transparent 30%);
 }
 
 .hero-copy {
@@ -102,7 +90,7 @@
   right: 0;
   bottom: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 var(--section-pad-x);
@@ -163,26 +151,27 @@
     padding: 18px var(--section-pad-x) 20px;
   }
 
-  .hero-tab:nth-child(3) {
+  .hero-tab:nth-child(odd) {
     border-left: none;
+  }
+
+  /* Fifth tab spans the row on two-column phones */
+  .hero-tab:last-child {
+    grid-column: 1 / -1;
   }
 
   .hero-tab-text {
     font-size: 15px;
   }
 
-  /* Phones: keep the sofa and glass doors in frame, darken top to bottom behind the copy */
-  .hero-media .photo {
-    object-position: 62% center;
-  }
-
-  .hero-scrim {
-    background: linear-gradient(180deg, rgba(8, 18, 42, 0.6) 0%, rgba(8, 18, 42, 0.72) 55%, rgba(8, 18, 42, 0.85) 100%);
-  }
 
   .hero {
-    height: auto;
-    min-height: 640px;
+    min-height: 0;
+  }
+
+  .hero-spotlight {
+    left: 50%;
+    top: -25%;
   }
 
   .hero-copy {
@@ -192,5 +181,74 @@
 
   .hero-title {
     font-size: 40px;
+  }
+}
+
+/* Caption over the full-screen photo at the end of the zoom collage */
+.hero-zoom-eyebrow {
+  color: var(--color-text-on-dark-secondary);
+  margin-bottom: 14px;
+}
+
+.hero-zoom-title {
+  max-width: 18ch;
+  margin-bottom: 26px;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero-zoom-title .accent {
+  color: var(--color-terracotta-hover);
+}
+
+@media (max-width: 900px) {
+  .hero-zoom-title {
+    font-size: 32px;
+  }
+}
+
+/* Narrow phones: the rotating word always gets its own line, so the title never changes height */
+@media (max-width: 480px) {
+  .hero-word {
+    display: block;
+  }
+}
+
+/* Tablets: a larger headline and full-height hero, so the first screen isn't left half empty */
+@media (min-width: 600px) and (max-width: 900px) {
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hero-copy {
+    padding-top: 180px;
+  }
+
+  .hero-title {
+    font-size: 64px;
+  }
+
+  .hero-tagline {
+    font-size: 24px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+  }
+}
+
+/* Phones: a bigger headline, and buttons full width for easy tapping */
+@media (max-width: 599px) {
+  .hero-title {
+    font-size: 46px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
   }
 }
