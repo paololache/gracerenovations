@@ -272,6 +272,7 @@
 
 /* Hint beside the rail: the strip moves sideways */
 .hc-hint {
+  white-space: nowrap;
   font-size: 11px;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;

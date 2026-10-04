@@ -1,4 +1,12 @@
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'framer-motion'
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type PointerEvent, type ReactNode } from 'react'
 import './hero-carousel.css'
 
@@ -26,8 +34,7 @@ interface HeroCarouselProps {
   items: HeroCarouselItem[]
   defaultIndex?: number
   /**
-   * Advance on a timer while the visitor leaves it alone, also with reduced
-   * motion (it then only fades). Waits while the pointer moves over the hero,
+   * Advance on a timer, also with reduced motion (it then only fades). Waits
    * during a swipe, with keyboard focus and while off screen.
    */
   autoplay?: boolean
@@ -39,6 +46,14 @@ interface HeroCarouselProps {
   onSelect?: (index: number) => void
   /** Label for that action. @default "View" */
   selectLabel?: string
+  /**
+   * An opening headline shown before the slides, e.g. "Let's start today.".
+   * The carousel starts at the first sign of the visitor (a mouse move, touch,
+   * scroll or key) or after `introMs`, whichever comes first.
+   */
+  intro?: { title: string; accent?: string }
+  /** @default 4000 */
+  introMs?: number
   /** Above the headline, e.g. the page's h1. */
   eyebrow?: ReactNode
   /** Bottom right on wide screens, bottom row on phones, e.g. call-to-action buttons. */
@@ -53,7 +68,11 @@ const GAP = 0.038 // gap ÷ card width
 const STRIP_TOP = 0.5 // the strip's shared top edge, down the stage
 const RAIL = 0.2 // progress rail width ÷ stage width
 
-/** How long the carousel waits after the visitor touches or moves over it before playing again. */
+/** How far the strip and backdrop drift to follow the mouse, in px each side. */
+const PARALLAX_STRIP = 26
+const PARALLAX_BACKDROP = 10
+
+/** How long the carousel waits after a swipe before playing again. */
 const IDLE_MS = 4000
 /** Movement before a press counts as a swipe, and the swipe distance that always changes card. */
 const SWIPE_START = 8
@@ -85,6 +104,8 @@ export function HeroCarousel({
   autoplayDelay = 5000,
   onSelect,
   selectLabel = 'View',
+  intro,
+  introMs = 4000,
   eyebrow,
   children,
   className,
@@ -99,6 +120,14 @@ export function HeroCarousel({
   const [tick, setTick] = useState(0)
   const busyUntil = useRef(0)
   const reduced = useReducedMotion()
+  // Until the visitor shows up, the intro headline stands in for the slides
+  const [started, setStarted] = useState(!intro)
+  const showIntro = !!intro && !started
+
+  // Any mouse move eases the strip and backdrop after the cursor, for depth
+  const pointerX = useMotionValue(0)
+  const drift = useSpring(pointerX, { stiffness: 70, damping: 20, mass: 0.6 })
+  const backdropDrift = useTransform(drift, (v) => (-v * PARALLAX_BACKDROP) / PARALLAX_STRIP)
 
   const last = items.length - 1
   const go = useCallback((next: number) => setIndex(clamp(next, 0, Math.max(0, last))), [last])
@@ -169,15 +198,28 @@ export function HeroCarousel({
     return () => stage.removeEventListener('wheel', onWheel)
   }, [go, index, last])
 
+  // Start on the visitor's first touch, scroll or key (a mouse move starts it too, see the stage), or on a timer
   useEffect(() => {
-    if (!autoplay || paused || dragging || !onScreen || items.length < 2) return
+    if (started) return
+    const start = () => setStarted(true)
+    const events = ['touchstart', 'scroll', 'wheel', 'keydown'] as const
+    events.forEach((type) => window.addEventListener(type, start, { passive: true, once: true }))
+    const id = window.setTimeout(start, introMs)
+    return () => {
+      events.forEach((type) => window.removeEventListener(type, start))
+      window.clearTimeout(id)
+    }
+  }, [started, introMs])
+
+  useEffect(() => {
+    if (!autoplay || !started || paused || dragging || !onScreen || items.length < 2) return
     const id = window.setTimeout(() => {
       // Still being used: look again shortly instead of moving under the visitor's hand
       if (Date.now() < busyUntil.current) return setTick((t) => t + 1)
       go(index === last ? 0 : index + 1)
     }, autoplayDelay)
     return () => window.clearTimeout(id)
-  }, [autoplay, autoplayDelay, paused, dragging, onScreen, go, index, items.length, last, tick])
+  }, [autoplay, autoplayDelay, started, paused, dragging, onScreen, go, index, items.length, last, tick])
 
   // Swipe / drag on the strip. Only a sideways gesture is taken: a vertical one is left to the
   // browser (touch-action: pan-y), which scrolls the page and cancels the pointer.
@@ -241,7 +283,8 @@ export function HeroCarousel({
 
   const active = items[index]
   if (!active) return null
-  const lines = [...active.title.split('\n'), ...(active.accent ? [active.accent] : [])]
+  const heading = showIntro ? intro : active
+  const lines = [...heading.title.split('\n'), ...(heading.accent ? [heading.accent] : [])]
   const tint = active.tint
   const fade = { duration: 0.7, ease: 'easeOut' as const }
 
@@ -258,8 +301,13 @@ export function HeroCarousel({
         e.preventDefault()
         go(keys[e.key])
       }}
-      // A moving mouse means someone is looking: wait until it rests
-      onPointerMove={(e) => e.pointerType === 'mouse' && hold()}
+      // Any mouse movement starts the carousel and the strip drifts after the cursor
+      onPointerMove={(e) => {
+        if (e.pointerType !== 'mouse') return
+        if (!started) setStarted(true)
+        if (!reduced && box.w) pointerX.set(((e.clientX / box.w) * 2 - 1) * -PARALLAX_STRIP)
+      }}
+      onPointerLeave={() => pointerX.set(0)}
       onFocus={(e) => e.target.matches(':focus-visible') && setPaused(true)}
       onBlur={() => setPaused(false)}
       className={['hc', className].filter(Boolean).join(' ')}
@@ -276,12 +324,13 @@ export function HeroCarousel({
         >
           <motion.img
             src={active.image.src}
+            // Drift with the cursor, opposite the strip (the 1.02 zoom leaves room at the edges)
+            style={{ objectPosition: active.image.position, x: backdropDrift }}
             srcSet={active.image.srcSet}
             sizes="100vw"
             alt=""
             aria-hidden="true"
             draggable={false}
-            style={{ objectPosition: active.image.position }}
             // A gentle push-in that settles close to the photo's own framing, so rooms read wide
             initial={{ scale: reduced ? 1.02 : 1.14 }}
             animate={{ scale: 1.02 }}
@@ -306,7 +355,7 @@ export function HeroCarousel({
         <div className="hc-head-row">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.p
-              key={index}
+              key={showIntro ? 'intro' : index}
               className="hc-title"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -316,7 +365,7 @@ export function HeroCarousel({
                 // Each line wipes up from behind its own edge
                 <span key={i} className="hc-line">
                   <motion.span
-                    className={active.accent && i === lines.length - 1 ? 'hc-line-inner accent' : 'hc-line-inner'}
+                    className={heading.accent && i === lines.length - 1 ? 'hc-line-inner accent' : 'hc-line-inner'}
                     initial={reduced ? { opacity: 0 } : { y: '110%' }}
                     animate={reduced ? { opacity: 1 } : { y: 0 }}
                     transition={{ duration: reduced ? 0.5 : 0.62, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
@@ -352,7 +401,7 @@ export function HeroCarousel({
                 {fact}
               </motion.span>
             ))}
-            {onSelect && (
+            {onSelect && !showIntro && (
               <motion.button
                 key={`select-${index}`}
                 type="button"
@@ -388,7 +437,7 @@ export function HeroCarousel({
       </div>
 
       {/* The strip: one shared top edge, the focused card twice as tall */}
-      <div className="hc-strip" style={{ top: `${STRIP_TOP * 100}%`, height: fullH }}>
+      <motion.div className="hc-strip" style={{ top: `${STRIP_TOP * 100}%`, height: fullH, x: drift }}>
         <motion.div className={`hc-track ${dragging ? 'is-dragging' : ''}`} style={{ gap, x }} {...swipeHandlers}>
           {items.map((item, i) => (
             <motion.button
@@ -422,7 +471,7 @@ export function HeroCarousel({
             </motion.button>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Position rail, and the page's own controls */}
       <div className="hc-foot">

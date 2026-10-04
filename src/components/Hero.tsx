@@ -48,6 +48,8 @@ export function Hero({ onConsult, onOpenProject }: HeroProps) {
       <HeroCarousel
         items={ITEMS}
         autoplay
+        // The first words visitors see, before the services start rolling
+        intro={{ title: 'Let’s start', accent: 'today.' }}
         selectLabel="View project"
         onSelect={(i) => {
           const id = PROJECT_FOR_SLIDE[i]
