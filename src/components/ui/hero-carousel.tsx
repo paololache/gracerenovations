@@ -40,6 +40,13 @@ interface HeroCarouselProps {
    * card as you go (wheel, trackpad or finger alike). Scroll distance per card, in svh.
    */
   scrollPerCard?: number
+  /**
+   * Tapping or clicking a card calls this instead of just focusing it, e.g. to
+   * open that card's project; the headline also gets a matching button.
+   */
+  onSelect?: (index: number) => void
+  /** Label for that action. @default "View" */
+  selectLabel?: string
   /** Above the headline, e.g. the page's h1. */
   eyebrow?: ReactNode
   /** Bottom right on wide screens, bottom row on phones, e.g. call-to-action buttons. */
@@ -79,6 +86,8 @@ export function HeroCarousel({
   autoplay = false,
   autoplayDelay = 5000,
   scrollPerCard,
+  onSelect,
+  selectLabel = 'View',
   eyebrow,
   children,
   className,
@@ -301,7 +310,23 @@ export function HeroCarousel({
                 {fact}
               </motion.span>
             ))}
-            {active.link && (
+            {onSelect && (
+              <motion.button
+                key={`select-${index}`}
+                type="button"
+                className="hc-label hc-link"
+                onClick={() => onSelect(index)}
+                initial={{ opacity: 0, y: reduced ? 0 : 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.3 }}
+              >
+                {selectLabel}{' '}
+                <span className="fx-arrow" aria-hidden="true">
+                  →
+                </span>
+              </motion.button>
+            )}
+            {active.link && !onSelect && (
               <motion.a
                 key={`link-${index}`}
                 className="hc-label hc-link"
@@ -342,9 +367,11 @@ export function HeroCarousel({
             <motion.button
               key={item.id}
               type="button"
-              aria-label={[item.title.replace(/\n/g, ' '), item.accent].filter(Boolean).join(' ')}
+              aria-label={[onSelect && `${selectLabel}:`, item.title.replace(/\n/g, ' '), item.accent]
+                .filter(Boolean)
+                .join(' ')}
               aria-current={i === index}
-              onClick={() => go(i)}
+              onClick={() => (onSelect ? onSelect(i) : go(i))}
               className="hc-card"
               style={{ width: cardW }}
               initial={false}
@@ -365,6 +392,11 @@ export function HeroCarousel({
                 animate={{ opacity: i === index ? 0 : 0.28 }}
                 transition={spring}
               />
+              {onSelect && (
+                <span className="hc-card-view" aria-hidden="true">
+                  {selectLabel} →
+                </span>
+              )}
             </motion.button>
           ))}
         </motion.div>

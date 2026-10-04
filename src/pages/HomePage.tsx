@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { About } from '../components/About'
 import { ContactSection } from '../components/ContactSection'
 import { Faq } from '../components/Faq'
+import { FloatingConsult } from '../components/FloatingConsult'
 import { Hero } from '../components/Hero'
 import { ProcessPreview } from '../components/ProcessPreview'
 import { ProjectMap } from '../components/ProjectMap'
@@ -23,7 +24,7 @@ export function HomePage({ onConsult, onOpenProject }: PageProps) {
 
   return (
     <>
-      <Hero onConsult={onConsult} />
+      <Hero onConsult={onConsult} onOpenProject={onOpenProject} />
       <TrustStrip />
       <ServicesShowcase onConsult={onConsult} />
       <SuccessStories projects={storyProjects} onOpenProject={onOpenProject} />
@@ -36,6 +37,8 @@ export function HomePage({ onConsult, onOpenProject }: PageProps) {
       </div>
       <Faq title="Common questions from homeowners." items={faqs.slice(0, 5)} />
       <QuoteBanner onConsult={onConsult} />
+      {/* From the success stories on, a consultation is always one tap away */}
+      <FloatingConsult onConsult={onConsult} startId="projects" hideId="consultation" />
     </>
   )
 }

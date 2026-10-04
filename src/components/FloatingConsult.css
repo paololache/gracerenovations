@@ -1,0 +1,61 @@
+/* Floating contact: bottom right on wide screens, a bar along the bottom on phones */
+.floating-consult {
+  position: fixed;
+  right: 28px;
+  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  translate: 0 24px;
+  pointer-events: none;
+  transition:
+    opacity var(--fx-dur-mid) var(--fx-ease-brand),
+    translate var(--fx-dur-mid) var(--fx-ease-brand);
+}
+
+.floating-consult.is-shown {
+  opacity: 1;
+  translate: 0 0;
+  pointer-events: auto;
+}
+
+.floating-consult-main {
+  box-shadow: 0 14px 34px rgba(11, 26, 58, 0.3);
+}
+
+.floating-consult-call {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  background: var(--color-carbon);
+  color: var(--color-white);
+  box-shadow: 0 14px 34px rgba(11, 26, 58, 0.3);
+  transition: background var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.floating-consult-call:hover {
+  background: var(--color-navy-soft);
+  color: var(--color-white);
+}
+
+@media (max-width: 599px) {
+  .floating-consult {
+    left: 16px;
+    right: 16px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .floating-consult-main {
+    flex: 1;
+    padding: 17px 12px;
+  }
+}
+
+/* Phones: room at the end of the page so the bar never covers the footer's last lines */
+@media (max-width: 599px) {
+  body:has(.floating-consult) .footer {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+}

@@ -122,7 +122,11 @@
 }
 
 .hc-link {
-  padding-bottom: 4px;
+  padding: 0 0 4px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
   border-bottom: 1px solid var(--color-terracotta-hover);
   color: var(--color-white);
 }
@@ -163,6 +167,33 @@
 
 .hc-card[aria-current='true'] {
   box-shadow: 0 24px 60px rgba(4, 10, 26, 0.45);
+}
+
+/* "View" tag on the cards: always on the focused card, on hover for the rest */
+.hc-card-view {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 7px 12px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  font-size: 10px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  translate: 0 6px;
+  transition:
+    opacity var(--fx-dur-base) var(--fx-ease-standard),
+    translate var(--fx-dur-base) var(--fx-ease-standard);
+  pointer-events: none;
+}
+
+.hc-card[aria-current='true'] .hc-card-view,
+.hc-card:hover .hc-card-view,
+.hc-card:focus-visible .hc-card-view {
+  opacity: 1;
+  translate: 0 0;
 }
 
 .hc-card-dim {
