@@ -225,11 +225,11 @@
     justify-content: space-between;
   }
 
-  .hero-copy {
+  .hero .hero-copy {
     padding-top: 180px;
   }
 
-  .hero-title {
+  .hero .hero-title {
     font-size: 64px;
   }
 
@@ -240,11 +240,16 @@
   .hero-sub {
     font-size: 18px;
   }
+
+  .hero .hero-tabs {
+    max-width: none;
+    margin: 0;
+  }
 }
 
 /* Phones: a bigger headline, and buttons full width for easy tapping */
 @media (max-width: 599px) {
-  .hero-title {
+  .hero .hero-title {
     font-size: 46px;
   }
 
