@@ -13,14 +13,14 @@ const image = (name: LocalPhoto, alt: string) => ({
 
 /** One slide per service, on Grace's own job photos, shown in their natural colours. */
 const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; position?: string }[] = [
+  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom' },
+  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2' },
+  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior' },
+  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck' },
+  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom' },
   // The wide shot of the remodeled kitchen: ceiling to floor, so the room feels big
   { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'hero-kitchen', position: '50% 58%' },
-  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom' },
-  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom' },
   { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting' },
-  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck' },
-  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior' },
-  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2' },
 ]
 
 const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
