@@ -392,11 +392,6 @@ export function HeroCarousel({
                 animate={{ opacity: i === index ? 0 : 0.28 }}
                 transition={spring}
               />
-              {onSelect && (
-                <span className="hc-card-view" aria-hidden="true">
-                  {selectLabel} →
-                </span>
-              )}
             </motion.button>
           ))}
         </motion.div>
