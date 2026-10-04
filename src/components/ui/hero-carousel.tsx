@@ -18,7 +18,8 @@ export interface HeroCarouselItem {
   /** Last headline line, set in the italic accent serif. */
   accent?: string
   /** Shown both in the strip card and as the backdrop (graded to `tint`, if set). */
-  image: { src: string; srcSet?: string; alt: string }
+  /** `position` is the backdrop's object-position, to keep the best part of the photo in view. */
+  image: { src: string; srcSet?: string; alt: string; position?: string }
   /** Small label beside the headline, e.g. "Service 01". */
   credit?: string
   /** Facts on the right of the headline. */
@@ -245,8 +246,10 @@ export function HeroCarousel({
             alt=""
             aria-hidden="true"
             draggable={false}
-            initial={{ scale: reduced ? 1.12 : 1.3 }}
-            animate={{ scale: 1.12 }}
+            style={{ objectPosition: active.image.position }}
+            // A gentle push-in that settles close to the photo's own framing, so rooms read wide
+            initial={{ scale: reduced ? 1.02 : 1.14 }}
+            animate={{ scale: 1.02 }}
             transition={reduced ? { duration: 0 } : { duration: 6, ease: 'linear' }}
           />
           {tint && (

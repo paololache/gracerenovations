@@ -12,8 +12,9 @@ const image = (name: LocalPhoto, alt: string) => ({
 })
 
 /** One slide per service, on Grace's own job photos, shown in their natural colours. */
-const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto }[] = [
-  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'kitchen' },
+const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; position?: string }[] = [
+  // The wide shot of the remodeled kitchen: ceiling to floor, so the room feels big
+  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'hero-kitchen', position: '50% 58%' },
   { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom' },
   { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom' },
   { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting' },
@@ -28,7 +29,7 @@ const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
     id: slide.id,
     title: slide.title,
     accent: slide.accent,
-    image: image(slide.photo, service.photo.alt),
+    image: { ...image(slide.photo, service.photo.alt), position: slide.position },
     credit: `Service ${service.number}`,
   }
 })
