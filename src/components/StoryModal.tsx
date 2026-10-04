@@ -77,8 +77,11 @@ export function StoryModal({ project, onClose, onConsult }: StoryModalProps) {
             <section className="story-side">
               <div className="story-side-image">
                 <Photo {...before.photo} radius={16} sizes="(max-width: 900px) 100vw, 520px" />
-                <span className="story-side-label">Before</span>
+                <span className="story-side-label">{before.example ? 'Before · Example' : 'Before'}</span>
               </div>
+              {before.example && (
+                <p className="story-side-note">Example photo of a typical starting point, not this home.</p>
+              )}
               <h3>How we found it</h3>
               <p>{before.text}</p>
             </section>

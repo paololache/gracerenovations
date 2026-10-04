@@ -21,8 +21,8 @@ export function SuccessStories({ projects, onOpenProject }: SuccessStoriesProps)
             <h2 className="section-title">How we found it, and how we left it.</h2>
           </div>
           <p className="lede projects-stories-lede">
-            Real projects by our crew across Central Indiana. Open any one to see the before, the after, and what we
-            did. <a href={routeHref('gallery')}>View the gallery</a>
+            Real projects by our crew across Central Indiana, one for every service. Open any one to see the before, the
+            after, and what we did. <a href={routeHref('gallery')}>View the gallery</a>
           </p>
         </div>
         <SuccessStoriesGrid projects={projects} onOpenProject={onOpenProject} />
@@ -63,7 +63,9 @@ export function SuccessStoriesGrid({ projects, onOpenProject }: SuccessStoriesPr
             <div className="story-card-body">
               <div className="story-card-meta">
                 <span className="badge badge-outline">{tag}</span>
-                <span>Central Indiana</span>
+                <span>
+                  {project.before?.example ? 'Central Indiana · Before photo is an example' : 'Central Indiana'}
+                </span>
               </div>
               <h3 className="fx-card__title">{project.title}</h3>
               <p>{project.summary}</p>

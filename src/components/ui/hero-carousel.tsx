@@ -1,4 +1,12 @@
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'framer-motion'
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+} from 'framer-motion'
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import './hero-carousel.css'
 
@@ -27,6 +35,11 @@ interface HeroCarouselProps {
   /** Advance on a timer, also with reduced motion (it then only fades). Pauses on mouse hover, keyboard focus and drag, and while off screen. */
   autoplay?: boolean
   autoplayDelay?: number
+  /**
+   * Pin the hero while the page scrolls past it, sliding the strip from card to
+   * card as you go (wheel, trackpad or finger alike). Scroll distance per card, in svh.
+   */
+  scrollPerCard?: number
   /** Above the headline, e.g. the page's h1. */
   eyebrow?: ReactNode
   /** Bottom right on wide screens, bottom row on phones, e.g. call-to-action buttons. */
@@ -57,17 +70,20 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
  * edge; the focused card unfurls to full height while its neighbours stay
  * clipped to half, and the whole backdrop re-grades to the focused photo.
  * Swipe or drag the strip, tap a card, use the arrow keys or a sideways
- * trackpad swipe. Vertical scrolling always goes to the page.
+ * trackpad swipe. With `scrollPerCard` the hero pins and the page scroll walks
+ * the strip through every card; otherwise vertical scrolling goes straight to the page.
  */
 export function HeroCarousel({
   items,
   defaultIndex = 0,
   autoplay = false,
   autoplayDelay = 5000,
+  scrollPerCard,
   eyebrow,
   children,
   className,
 }: HeroCarouselProps) {
+  const outerRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const [box, setBox] = useState({ w: 0, h: 0 })
   const [index, setIndex] = useState(defaultIndex)
@@ -77,7 +93,20 @@ export function HeroCarousel({
   const reduced = useReducedMotion()
 
   const last = items.length - 1
-  const go = useCallback((next: number) => setIndex(clamp(next, 0, Math.max(0, last))), [last])
+  const scrollMode = Boolean(scrollPerCard) && last > 0
+
+  const go = useCallback(
+    (next: number) => {
+      const i = clamp(next, 0, Math.max(0, last))
+      const outer = outerRef.current
+      if (!scrollMode || !outer) return setIndex(i)
+      // Scroll-driven: move the page to where that card is in front, and the strip follows
+      const top = outer.getBoundingClientRect().top + window.scrollY
+      const range = outer.offsetHeight - window.innerHeight
+      window.scrollTo({ top: top + (i / last) * range, behavior: reduced ? 'auto' : 'smooth' })
+    },
+    [last, scrollMode, reduced],
+  )
 
   // One observer feeds every measurement below
   useEffect(() => {
@@ -110,13 +139,31 @@ export function HeroCarousel({
     ? { duration: 0.45, ease: 'easeOut' as const }
     : { type: 'spring' as const, stiffness: 260, damping: 34, mass: 0.9 }
 
+  // Scroll-driven: the strip glides with the scroll, and the nearest card takes focus
+  const { scrollYProgress } = useScroll({
+    target: scrollMode ? outerRef : undefined,
+    offset: ['start start', 'end end'],
+  })
+  const placeStrip = (p: number) => {
+    if (!dragging) x.set(xFor(clamp(p, 0, 1) * last))
+  }
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    if (!scrollMode) return
+    placeStrip(p)
+    setIndex(Math.round(clamp(p, 0, 1) * last))
+  })
+  // Re-place the strip when the layout changes or a drag ends
+  useEffect(() => {
+    if (scrollMode) placeStrip(scrollYProgress.get())
+  }, [scrollMode, box.w, step, dragging]) // eslint-disable-line react-hooks/exhaustive-deps
+
   // A motion value rather than an `animate` prop, so a drag that starts mid-spring reads the real position
   useEffect(() => {
-    if (dragging) return
+    if (dragging || scrollMode) return
     const run = animate(x, target, spring)
     return () => run.stop()
     // `spring` only derives from `reduced`
-  }, [target, dragging, reduced, x]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [target, dragging, scrollMode, reduced, x]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sideways trackpad swipes step the strip; vertical wheel scrolling is left to the page
   useEffect(() => {
@@ -141,10 +188,10 @@ export function HeroCarousel({
   }, [go, index, last])
 
   useEffect(() => {
-    if (!autoplay || paused || dragging || !onScreen || items.length < 2) return
+    if (!autoplay || scrollMode || paused || dragging || !onScreen || items.length < 2) return
     const id = window.setTimeout(() => go(index === last ? 0 : index + 1), autoplayDelay)
     return () => window.clearTimeout(id)
-  }, [autoplay, autoplayDelay, paused, dragging, onScreen, go, index, items.length, last])
+  }, [autoplay, autoplayDelay, scrollMode, paused, dragging, onScreen, go, index, items.length, last])
 
   const active = items[index]
   if (!active) return null
@@ -152,7 +199,7 @@ export function HeroCarousel({
   const tint = active.tint ?? '#34508c'
   const fade = { duration: 0.7, ease: 'easeOut' as const }
 
-  return (
+  const stage = (
     <div
       ref={stageRef}
       tabIndex={0}
@@ -170,7 +217,7 @@ export function HeroCarousel({
       onPointerLeave={(e) => e.pointerType === 'mouse' && setPaused(false)}
       onFocus={(e) => e.target.matches(':focus-visible') && setPaused(true)}
       onBlur={() => setPaused(false)}
-      className={['hc', className].filter(Boolean).join(' ')}
+      className={['hc', scrollMode && 'is-pinned', className].filter(Boolean).join(' ')}
     >
       {/* Backdrop: the focused photo, blown up and re-hued to its tint */}
       <AnimatePresence initial={false}>
@@ -277,8 +324,9 @@ export function HeroCarousel({
       <div className="hc-strip" style={{ top: `${STRIP_TOP * 100}%`, height: fullH }}>
         <motion.div
           className="hc-track"
-          style={{ gap, x, cursor: dragging ? 'grabbing' : 'grab' }}
-          drag="x"
+          style={{ gap, x, cursor: scrollMode ? undefined : dragging ? 'grabbing' : 'grab' }}
+          // Scroll-driven, a finger on the strip has to scroll the page, so there is no sideways drag
+          drag={scrollMode ? false : 'x'}
           dragMomentum={false}
           dragElastic={0.08}
           dragConstraints={{ left: xFor(last), right: xFor(0) }}
@@ -339,8 +387,21 @@ export function HeroCarousel({
             />
           </div>
         </div>
+        {scrollMode && (
+          <p className={`hc-hint ${index === 0 ? '' : 'is-hidden'}`} aria-hidden="true">
+            Scroll to see our work <span>↓</span>
+          </p>
+        )}
         {children && <div className="hc-actions">{children}</div>}
       </div>
+    </div>
+  )
+
+  if (!scrollMode) return stage
+  // The outer box is as tall as the scroll it takes to pass every card; the stage stays pinned inside it
+  return (
+    <div ref={outerRef} className="hc-scroll" style={{ height: `calc(100svh + ${last * (scrollPerCard ?? 0)}svh)` }}>
+      {stage}
     </div>
   )
 }

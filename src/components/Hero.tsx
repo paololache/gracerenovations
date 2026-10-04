@@ -40,7 +40,7 @@ export function Hero({ onConsult }: { onConsult: () => void }) {
     <header className="hero">
       <HeroCarousel
         items={ITEMS}
-        autoplay
+        scrollPerCard={45}
         eyebrow={
           <h1 className="hero-h1">Renovation &amp; remodeling in Indianapolis, Indiana · Since {company.since}</h1>
         }

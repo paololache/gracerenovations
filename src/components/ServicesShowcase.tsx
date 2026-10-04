@@ -1,4 +1,4 @@
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion'
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { services, type Service } from '../data/services'
 import { serviceHref } from '../lib/router'
@@ -9,12 +9,12 @@ import './ServicesShowcase.css'
 /**
  * Services as a pinned, sideways-scrolling showcase: the section holds the
  * screen while vertical scrolling slides the service cards across, with a
- * counter and progress line. With reduced motion it is a plain swipeable row.
+ * counter and progress line. The movement follows the visitor's own scroll, so
+ * it stays on with reduced motion too. Without room to slide it is a swipeable row.
  */
 export function ServicesShowcase({ onConsult }: { onConsult: () => void }) {
   const section = useRef<HTMLElement>(null)
   const track = useRef<HTMLDivElement>(null)
-  const reduceMotion = useReducedMotion()
   // How far the track has to travel sideways, measured from the layout
   const [shift, setShift] = useState(0)
 
@@ -32,9 +32,11 @@ export function ServicesShowcase({ onConsult }: { onConsult: () => void }) {
   const x = useTransform(scrollYProgress, (p) => -p * shift)
   const progress = useTransform(scrollYProgress, [0, 1], [0, 1])
   const count = services.length
-  const current = useTransform(scrollYProgress, (p) => String(Math.min(count, Math.floor(p * count) + 1)).padStart(2, '0'))
+  const current = useTransform(scrollYProgress, (p) =>
+    String(Math.min(count, Math.floor(p * count) + 1)).padStart(2, '0'),
+  )
 
-  const pinned = !reduceMotion && shift > 0
+  const pinned = shift > 0
 
   return (
     <section
@@ -55,7 +57,8 @@ export function ServicesShowcase({ onConsult }: { onConsult: () => void }) {
           </div>
           <div className="showcase-meta">
             <p className="showcase-counter" aria-hidden="true">
-              <motion.span>{current}</motion.span> <span className="showcase-counter-total">/ {String(count).padStart(2, '0')}</span>
+              <motion.span>{current}</motion.span>{' '}
+              <span className="showcase-counter-total">/ {String(count).padStart(2, '0')}</span>
             </p>
             <div className="showcase-progress" aria-hidden="true">
               <motion.span style={{ scaleX: progress }} />
@@ -69,7 +72,14 @@ export function ServicesShowcase({ onConsult }: { onConsult: () => void }) {
         <div className="showcase-viewport">
           <motion.div ref={track} className="showcase-track" style={pinned ? { x } : undefined}>
             {services.map((service, i) => (
-              <ShowcaseCard key={service.id} service={service} index={i} count={count} progress={scrollYProgress} animate={pinned} />
+              <ShowcaseCard
+                key={service.id}
+                service={service}
+                index={i}
+                count={count}
+                progress={scrollYProgress}
+                animate={pinned}
+              />
             ))}
           </motion.div>
         </div>
