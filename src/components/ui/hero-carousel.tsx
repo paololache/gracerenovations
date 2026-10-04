@@ -17,7 +17,7 @@ export interface HeroCarouselItem {
   title: string
   /** Last headline line, set in the italic accent serif. */
   accent?: string
-  /** Shown both in the strip card and, graded to `tint`, as the backdrop. */
+  /** Shown both in the strip card and as the backdrop (graded to `tint`, if set). */
   image: { src: string; srcSet?: string; alt: string }
   /** Small label beside the headline, e.g. "Service 01". */
   credit?: string
@@ -25,7 +25,7 @@ export interface HeroCarouselItem {
   meta?: string[]
   /** Link under the facts, e.g. to the service page. */
   link?: { href: string; label: string }
-  /** Colour the backdrop is graded to: the photo keeps its light and takes this hue. */
+  /** Optional colour the backdrop is graded to: the photo keeps its light and takes this hue. Without it the photo keeps its own colours. */
   tint?: string
 }
 
@@ -205,7 +205,7 @@ export function HeroCarousel({
   const active = items[index]
   if (!active) return null
   const lines = [...active.title.split('\n'), ...(active.accent ? [active.accent] : [])]
-  const tint = active.tint ?? '#27457a'
+  const tint = active.tint
   const fade = { duration: 0.7, ease: 'easeOut' as const }
 
   const stage = (
@@ -228,7 +228,7 @@ export function HeroCarousel({
       onBlur={() => setPaused(false)}
       className={['hc', scrollMode && 'is-pinned', className].filter(Boolean).join(' ')}
     >
-      {/* Backdrop: the focused photo, blown up and re-hued to its tint */}
+      {/* Backdrop: the focused photo, blown up (and re-hued to its tint, if it has one) */}
       <AnimatePresence initial={false}>
         <motion.div
           key={index}
@@ -249,8 +249,12 @@ export function HeroCarousel({
             animate={{ scale: 1.12 }}
             transition={reduced ? { duration: 0 } : { duration: 6, ease: 'linear' }}
           />
-          <div className="hc-grade hc-grade-color" style={{ backgroundColor: tint }} />
-          <div className="hc-grade hc-grade-multiply" style={{ backgroundColor: tint }} />
+          {tint && (
+            <>
+              <div className="hc-grade hc-grade-color" style={{ backgroundColor: tint }} />
+              <div className="hc-grade hc-grade-multiply" style={{ backgroundColor: tint }} />
+            </>
+          )}
         </motion.div>
       </AnimatePresence>
 

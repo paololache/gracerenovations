@@ -11,15 +11,15 @@ const image = (name: LocalPhoto, alt: string) => ({
   alt,
 })
 
-/** One slide per service, on Grace's own job photos; each backdrop takes a tone of the brand navy. */
-const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; tint: string }[] = [
-  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'kitchen', tint: '#1a2d50' },
-  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom', tint: '#15264a' },
-  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom', tint: '#1e3358' },
-  { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting', tint: '#1a2d50' },
-  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck', tint: '#172a4c' },
-  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior', tint: '#1c3054' },
-  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2', tint: '#15264a' },
+/** One slide per service, on Grace's own job photos, shown in their natural colours. */
+const SLIDES: { id: Service['id']; title: string; accent: string; photo: LocalPhoto }[] = [
+  { id: 'kitchen', title: 'Kitchen', accent: 'renovations.', photo: 'kitchen' },
+  { id: 'bathroom', title: 'Bathroom', accent: 'renovations.', photo: 'bathroom' },
+  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom' },
+  { id: 'painting', title: 'Interior', accent: 'painting.', photo: 'painting' },
+  { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck' },
+  { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior' },
+  { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2' },
 ]
 
 const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
@@ -30,7 +30,6 @@ const ITEMS: HeroCarouselItem[] = SLIDES.map((slide) => {
     accent: slide.accent,
     image: image(slide.photo, service.photo.alt),
     credit: `Service ${service.number}`,
-    tint: slide.tint,
   }
 })
 

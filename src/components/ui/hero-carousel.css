@@ -8,7 +8,7 @@
   overflow: hidden;
   /* Unlike hidden, clip can't be scrolled, so focusing an off-screen card never shifts the stage */
   overflow: clip;
-  background: var(--color-carbon);
+  background: #111;
   color: var(--color-white);
   user-select: none;
   -webkit-user-select: none;
@@ -50,7 +50,8 @@
 .hc-wash {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 22, 40, 0.6), rgba(10, 22, 40, 0.15) 45%, rgba(10, 22, 40, 0.7));
+  /* Neutral and see-through: just enough shade for white text, the photo keeps its colours */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.42) 50%, rgba(0, 0, 0, 0.55));
 }
 
 .hc-grain {
@@ -74,6 +75,11 @@
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 var(--section-pad-x) clamp(18px, 3vh, 32px);
+}
+
+.hc-head {
+  /* Keeps the white and orange type crisp over bright photos */
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
 }
 
 .hc-head-row {
@@ -166,13 +172,13 @@
 }
 
 .hc-card[aria-current='true'] {
-  box-shadow: 0 24px 60px rgba(4, 9, 18, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
 }
 
 .hc-card-dim {
   position: absolute;
   inset: 0;
-  background: var(--color-carbon);
+  background: #000;
 }
 
 /* Rail and actions along the bottom */
@@ -227,7 +233,12 @@
     font-size: min(11.5vw, 7svh);
   }
 
-  .hc-head-row {
+  .hc-head {
+  /* Keeps the white and orange type crisp over bright photos */
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+}
+
+.hc-head-row {
     gap: 8px 20px;
   }
 

@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  background: var(--color-carbon);
+  background: #111;
 }
 
 /* The page's h1 sits small above the slide headline */
