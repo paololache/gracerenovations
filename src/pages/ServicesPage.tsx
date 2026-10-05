@@ -7,7 +7,7 @@ import { faqs } from '../data/faqs'
 import { projects } from '../data/projects'
 import { services } from '../data/services'
 import { revealStagger } from '../lib/motion'
-import type { PageProps } from '../lib/router'
+import { routeHref, type PageProps } from '../lib/router'
 import './ServicesPage.css'
 
 export function ServicesPage({ onConsult, onOpenProject }: PageProps) {
@@ -100,9 +100,17 @@ export function ServicesPage({ onConsult, onOpenProject }: PageProps) {
                   </>
                 )}
 
-                <button type="button" className="btn btn-primary service-detail-cta" onClick={onConsult}>
-                  {service.cta}
-                </button>
+                <div className="service-detail-actions">
+                  <button type="button" className="btn btn-primary service-detail-cta" onClick={onConsult}>
+                    {service.cta}
+                  </button>
+                  {/* Roofing has its own page with the method and finished roofs */}
+                  {service.id === 'roofing' && (
+                    <a className="btn btn-outline-dark service-detail-cta" href={routeHref('roofing')}>
+                      Explore our roofing page
+                    </a>
+                  )}
+                </div>
               </div>
             </section>
           )

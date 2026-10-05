@@ -1,0 +1,342 @@
+/* Roofing page: intro, six-step method, real cases on navy, reasons, scope */
+
+.roof-title {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 22px;
+}
+
+/* Intro */
+.roof-intro {
+  padding: 100px 0 90px;
+}
+
+.roof-intro-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 60px;
+  align-items: end;
+}
+
+.roof-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.roof-facts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.roof-facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.roof-facts dt {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--color-terracotta);
+}
+
+.roof-facts dd {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Method */
+.roof-method {
+  padding: 40px 0 110px;
+  background: var(--color-bone);
+}
+
+.roof-method .section-head {
+  padding-top: 80px;
+}
+
+.roof-method-lede {
+  max-width: 40ch;
+}
+
+.roof-steps {
+  list-style: none;
+  margin: 50px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 70px;
+}
+
+.roof-step {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.roof-step.is-reverse .roof-step-media {
+  order: 2;
+}
+
+.roof-step-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+
+/* Small label on stock photos, so they are never mistaken for Grace's own jobs */
+.roof-step-tag {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(10, 22, 40, 0.65);
+  color: var(--color-white);
+  font-size: 10px;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+}
+
+.roof-step-number {
+  display: block;
+  margin-bottom: 14px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--color-terracotta);
+}
+
+.roof-step-copy h3 {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.roof-step-copy p {
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* Cases */
+.roof-cases {
+  padding: 110px 0;
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+.roof-cases-eyebrow {
+  color: var(--color-text-on-dark-subtle);
+  margin-bottom: 18px;
+}
+
+.roof-cases-title {
+  color: var(--color-white);
+}
+
+.roof-cases-lede {
+  color: var(--color-text-on-dark-secondary);
+}
+
+.roof-case {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 50px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.roof-case-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.roof-case-photo {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+/* A single photo spans the row */
+.roof-case-photo:only-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+}
+
+.roof-case-copy .badge {
+  margin-bottom: 18px;
+}
+
+.roof-case-copy h3 {
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 12px;
+}
+
+.roof-case-copy > p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text-on-dark-secondary);
+  margin-bottom: 22px;
+}
+
+.roof-case-scope {
+  margin-bottom: 28px;
+}
+
+.roof-case-scope li {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Why Grace */
+.roof-why {
+  padding: 110px 0;
+}
+
+.roof-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.roof-why-card {
+  padding: 30px 28px 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card-lg);
+  background: var(--color-cream);
+  transition:
+    border-color var(--fx-dur-base) var(--fx-ease-standard),
+    translate var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.roof-why-card:hover {
+  border-color: var(--color-terracotta);
+  translate: 0 -4px;
+}
+
+.roof-why-number {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--color-terracotta);
+}
+
+.roof-why-card h3 {
+  font-size: 21px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.roof-why-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Scope */
+.roof-scope {
+  padding: 0 0 110px;
+}
+
+.roof-scope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.roof-scope-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+
+.roof-scope-subhead {
+  margin-top: 36px;
+}
+
+@media (max-width: 900px) {
+  .roof-title {
+    font-size: 30px;
+  }
+
+  .roof-intro {
+    padding: 64px 0 56px;
+  }
+
+  .roof-intro-grid,
+  .roof-step,
+  .roof-case,
+  .roof-scope-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .roof-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .roof-method {
+    padding-bottom: 72px;
+  }
+
+  .roof-method .section-head {
+    padding-top: 56px;
+  }
+
+  .roof-steps {
+    gap: 56px;
+    margin-top: 32px;
+  }
+
+  /* Photo first on phones, whichever side it sits on wide screens */
+  .roof-step.is-reverse .roof-step-media {
+    order: 0;
+  }
+
+  .roof-step-number {
+    font-size: 44px;
+  }
+
+  .roof-step-copy h3,
+  .roof-case-copy h3 {
+    font-size: 24px;
+  }
+
+  .roof-cases,
+  .roof-why {
+    padding: 72px 0;
+  }
+
+  .roof-why-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .roof-case-copy .btn {
+    width: 100%;
+  }
+
+  .roof-scope {
+    padding-bottom: 72px;
+  }
+}

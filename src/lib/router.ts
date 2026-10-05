@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 
-export type Route = 'home' | 'services' | 'gallery' | 'about' | 'contact'
+export type Route = 'home' | 'services' | 'roofing' | 'gallery' | 'about' | 'contact'
 
 export const NAV_ITEMS: { route: Route; label: string }[] = [
   { route: 'home', label: 'Home' },
   { route: 'services', label: 'Services' },
+  { route: 'roofing', label: 'Roofing' },
   { route: 'gallery', label: 'Gallery' },
   { route: 'about', label: 'About' },
   { route: 'contact', label: 'Contact' },
@@ -13,6 +14,7 @@ export const NAV_ITEMS: { route: Route; label: string }[] = [
 export const PAGE_TITLES: Record<Route, string> = {
   home: 'Grace Renovations LLC - Indiana | Kitchen, Bathroom & Home Renovations',
   services: 'Renovation Services | Grace Renovations Indianapolis',
+  roofing: 'Roofing in Indianapolis & Central Indiana | Grace Renovations',
   gallery: 'Gallery | Grace Renovations Indianapolis',
   about: 'About Grace Renovations LLC - Indiana | Indianapolis Renovation Contractor',
   contact: 'Schedule a Free Consultation | Grace Renovations Indianapolis',
@@ -34,8 +36,8 @@ function parse(hash: string): Route {
 
 export const routeHref = (route: Route) => (route === 'home' ? '#/' : `#/${route}`)
 
-/** Link to one service's section on the services page. */
-export const serviceHref = (serviceId: string) => `#/services/${serviceId}`
+/** Link to one service: its section on the services page, or its own page (roofing). */
+export const serviceHref = (serviceId: string) => (serviceId === 'roofing' ? '#/roofing' : `#/services/${serviceId}`)
 
 /** Minimal hash router — the site is static, so no router dependency. */
 export function useHashRoute(): Route {

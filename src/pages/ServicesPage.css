@@ -167,3 +167,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+.service-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

@@ -11,11 +11,13 @@ import { AboutPage } from './pages/AboutPage'
 import { ContactPage } from './pages/ContactPage'
 import { GalleryPage } from './pages/GalleryPage'
 import { HomePage } from './pages/HomePage'
+import { RoofingPage } from './pages/RoofingPage'
 import { ServicesPage } from './pages/ServicesPage'
 
 const PAGES = {
   home: HomePage,
   services: ServicesPage,
+  roofing: RoofingPage,
   gallery: GalleryPage,
   about: AboutPage,
   contact: ContactPage,

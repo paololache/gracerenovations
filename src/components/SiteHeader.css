@@ -56,7 +56,7 @@
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 22px;
   font-size: 13px;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
@@ -149,7 +149,7 @@
 }
 
 /* Mid-size screens: the phone number would crowd the nav, so it moves into the menu */
-@media (max-width: 1240px) {
+@media (max-width: 1520px) {
   .site-nav a.site-header-phone {
     display: none;
   }
@@ -159,7 +159,7 @@
   }
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
   .site-nav {
     display: none;
   }
@@ -169,8 +169,14 @@
   }
 }
 
-.site-header-home .logo-word {
+.site-header-home .logo-word,
+.site-nav a.site-header-phone {
   white-space: nowrap;
+}
+
+/* Always some air between the logo and the first nav link */
+.site-header-inner {
+  gap: 32px;
 }
 
 @media (max-width: 380px) {
