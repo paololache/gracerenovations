@@ -11,7 +11,7 @@ export function ContactPage(_props: PageProps) {
       <PageHero
         eyebrow="Contact"
         title="Schedule a free consultation."
-        sub="Tell us what you want to improve and we'll get back to you with next steps. Kitchens, bathrooms, sunrooms, painting, or larger renovations — we're ready to help."
+        sub="Tell us what you want to improve and we'll get back to you with next steps. Kitchens, bathrooms, sunrooms & interiors, painting, or larger renovations — we're ready to help."
         photo={{ local: 'sunroom', alt: 'Sunroom with a green feature wall and shiplap ceiling' }}
       />
 

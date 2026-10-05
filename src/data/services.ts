@@ -77,12 +77,12 @@ export const services: Service[] = [
   {
     id: 'sunroom',
     number: '03',
-    name: 'Sunrooms & Four-Season Rooms',
-    tag: 'Sunroom',
-    description: 'Refresh and improve sunrooms and four-season rooms for everyday comfort and use.',
-    heading: { text: 'Sunrooms & four-season rooms built for', accent: 'everyday use.' },
+    name: 'Sunrooms & Interiors',
+    tag: 'Sunrooms & Interiors',
+    description: 'Refresh and improve sunrooms and interiors for everyday comfort and use.',
+    heading: { text: 'Sunrooms & interiors built for', accent: 'everyday use.' },
     longDescription:
-      'Grace Renovations helps homeowners turn underused or outdated sunrooms and four-season rooms into bright, comfortable spaces for everyday use. We focus on practical updates and quality results.',
+      'Grace Renovations helps homeowners turn underused or outdated rooms into cleaner, more comfortable spaces. Whether it is a sunroom, living area, bedroom, or interior improvement project, we focus on practical updates and quality results.',
     benefits: [
       'Make an underused room actually usable',
       'Refresh finishes, flooring, and trim',
@@ -96,8 +96,8 @@ export const services: Service[] = [
       'Fixture and hardware updates',
       'Cosmetic and functional improvements',
     ],
-    whoFor: ['Homeowners with a dated sunroom or four-season room', 'Homeowners reclaiming an underused space'],
-    cta: 'Talk About Your Sunroom',
+    whoFor: ['Homeowners with a dated sunroom or interior', 'Homeowners reclaiming an underused space'],
+    cta: 'Talk About Your Sunroom or Interior',
     photo: { local: 'sunroom', alt: 'Sunroom with a green feature wall, white shiplap ceiling and a row of windows onto the garden' },
   },
   {

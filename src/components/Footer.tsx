@@ -50,7 +50,7 @@ export function Footer() {
       <div className="section footer-bottom">
         <span>© 2026 {company.legalName}. All rights reserved.</span>
         <span>
-          Kitchen renovations, bathroom renovations, sunrooms, interior painting, remodeling, and home improvements in
+          Kitchen renovations, bathroom renovations, sunrooms &amp; interiors, interior painting, remodeling, and home improvements in
           Indianapolis and Central Indiana.
         </span>
       </div>

@@ -11,7 +11,7 @@ import './AboutPage.css'
 const POINTS = [
   'Locally based in Indianapolis, Indiana',
   'Renovation experience since 2018',
-  'Kitchen, bathroom, sunroom, and interior focus',
+  'Kitchen, bathroom, and sunroom & interior focus',
   'Practical solutions for outdated spaces',
   'Clear communication throughout the project',
 ]
@@ -36,7 +36,7 @@ export function AboutPage({ onConsult }: PageProps) {
             <p className="lede">
               {company.legalName} is a local renovation and remodeling contractor based in Indianapolis, serving
               homeowners across Central Indiana since {company.since}. We focus on the work that helps your home function
-              better and feel finished — kitchens, bathrooms, sunrooms, interior painting, and broader renovation
+              better and feel finished — kitchens, bathrooms, sunrooms &amp; interiors, interior painting, and broader renovation
               projects.
             </p>
             <p className="lede">

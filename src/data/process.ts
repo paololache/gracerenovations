@@ -8,7 +8,7 @@ export const processSteps: ProcessStep[] = [
   {
     number: '01',
     title: 'Tell us about your project',
-    text: 'Call or submit the form with details about your kitchen, bathroom, sunroom, painting, or renovation project.',
+    text: 'Call or submit the form with details about your kitchen, bathroom, sunroom & interior, painting, or renovation project.',
   },
   {
     number: '02',

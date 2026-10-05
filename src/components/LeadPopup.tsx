@@ -16,7 +16,7 @@ interface LeadPopupProps {
 const PROJECTS = [
   { label: 'Kitchen', value: 'Kitchen Renovation' },
   { label: 'Bathroom', value: 'Bathroom Renovation' },
-  { label: 'Sunroom', value: 'Sunroom Renovation' },
+  { label: 'Sunrooms & Interiors', value: 'Sunrooms & Interiors' },
   { label: 'Painting', value: 'Interior Painting' },
   { label: 'Exterior', value: 'Exterior Renovation' },
   { label: 'Remodeling', value: 'Remodeling' },

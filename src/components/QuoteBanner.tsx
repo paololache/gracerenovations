@@ -13,7 +13,7 @@ export function QuoteBanner({ onConsult }: { onConsult: () => void }) {
             <Accented text="Ready to fall in love with" accent="your home again?" />
           </h2>
           <p className="quote-banner-sub">
-            From kitchens and bathrooms to painting, sunrooms, and interior renovations, Grace Renovations helps turn
+            From kitchens and bathrooms to painting and sunrooms &amp; interiors, Grace Renovations helps turn
             outdated spaces into functional, finished areas.
           </p>
         </div>

@@ -7,7 +7,7 @@ export const faqs: FaqItem[] = [
   {
     question: 'What types of renovations do you handle?',
     answer:
-      'We handle kitchen renovations, bathroom renovations, sunrooms, interior painting, exterior renovations, roofing, remodeling, and general home improvement projects.',
+      'We handle kitchen renovations, bathroom renovations, sunrooms & interiors, interior painting, exterior renovations, roofing, remodeling, and general home improvement projects.',
   },
   {
     question: 'Do you offer free consultations?',

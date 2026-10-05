@@ -53,7 +53,7 @@ export function ContactSection({
             <Accented text="Tell us about" accent="your renovation." />
           </h2>
           <p className="contact-lede">
-            Share a few details about your kitchen, bathroom, sunroom, painting, or remodeling project — we&rsquo;ll
+            Share a few details about your kitchen, bathroom, sunroom &amp; interior, painting, or remodeling project — we&rsquo;ll
             review and walk you through next steps.
           </p>
           <ul className="check-list contact-benefits">

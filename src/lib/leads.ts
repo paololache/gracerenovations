@@ -13,10 +13,9 @@ export interface Lead {
 export const PROJECT_TYPES = [
   'Kitchen Renovation',
   'Bathroom Renovation',
-  'Sunroom Renovation',
+  'Sunrooms & Interiors',
   'Interior Painting',
   'Exterior Renovation',
-  'Interior Renovation',
   'Remodeling',
   'Roofing',
   'General Home Improvement',

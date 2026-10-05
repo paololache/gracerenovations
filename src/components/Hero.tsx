@@ -13,7 +13,7 @@ const image = (name: LocalPhoto, alt: string) => ({
 
 /** One slide per service, on Grace's own job photos, shown in their natural colours (ordered by homeServiceOrder). */
 const SLIDE_LIST: { id: Service['id']; title: string; accent: string; photo: LocalPhoto; position?: string }[] = [
-  { id: 'sunroom', title: 'Sunrooms &', accent: 'four-season rooms.', photo: 'sunroom' },
+  { id: 'sunroom', title: 'Sunrooms &', accent: 'interiors.', photo: 'sunroom' },
   { id: 'roofing', title: 'Roof repairs', accent: '& replacement.', photo: 'roofing-2' },
   { id: 'remodeling', title: 'Remodeling', accent: '& improvements.', photo: 'exterior' },
   { id: 'exterior', title: 'Decks &', accent: 'exteriors.', photo: 'deck' },
