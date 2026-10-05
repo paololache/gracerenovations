@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import { useCallback, useEffect, useState } from 'react'
 import { Footer } from './components/Footer'
 import { LeadPopup } from './components/LeadPopup'
@@ -71,6 +72,8 @@ function App() {
         onConsult={consult}
       />
       <LeadPopup open={leadOpen} source={leadSource} onClose={closeLead} />
+      {/* Vercel Web Analytics. The site routes by hash, so each page is reported by its own path */}
+      <Analytics route={route === 'home' ? '/' : `/${route}`} path={route === 'home' ? '/' : `/${route}`} />
     </>
   )
 }
