@@ -42,6 +42,12 @@ export function FloatingConsult({ onConsult, startId, hideId }: FloatingConsultP
     }
   }, [startId, hideId])
 
+  // Lets the chat launcher sit above the button while it is out
+  useEffect(() => {
+    document.body.classList.toggle('has-floating-consult', shown)
+    return () => document.body.classList.remove('has-floating-consult')
+  }, [shown])
+
   return (
     <div className={`floating-consult ${shown ? 'is-shown' : ''}`} aria-hidden={!shown}>
       <button
