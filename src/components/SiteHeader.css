@@ -93,6 +93,67 @@
   padding: 14px 26px;
 }
 
+/*
+ * Roofing, a line of business of its own: an outlined orange pill with a roof
+ * mark. Same brand orange as "Get a Quote", but rounded and see-through where
+ * the quote button is square and solid, so the two never read as twins.
+ */
+.site-nav a.site-nav-roofing,
+.site-nav-roofing {
+  --roof-orange: var(--color-terracotta-hover);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 13px;
+  border: 1.5px solid var(--roof-orange);
+  border-radius: var(--radius-pill);
+  color: var(--roof-orange);
+  opacity: 1;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background var(--fx-dur-base) var(--fx-ease-standard),
+    color var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+/* On the light bar the deeper orange reads better against cream */
+.site-header.is-active .site-nav-roofing {
+  --roof-orange: var(--color-terracotta);
+}
+
+.site-nav a.site-nav-roofing::after {
+  display: none;
+}
+
+.site-nav-roofing:hover,
+.site-nav-roofing[aria-current='page'] {
+  background: color-mix(in srgb, var(--roof-orange) 16%, transparent);
+  color: var(--roof-orange);
+}
+
+.site-nav-roofing .roof-icon {
+  flex: none;
+  transition: translate var(--fx-dur-base) var(--fx-ease-standard);
+}
+
+.site-nav-roofing:hover .roof-icon {
+  translate: 0 -2px;
+}
+
+/* Menu button and, on tablets, the roofing pill beside it */
+.site-header-compact {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-header-compact-roofing {
+  display: none;
+}
+
 .site-menu-toggle {
   display: none;
   background: transparent;
@@ -133,6 +194,28 @@
   color: var(--color-terracotta);
 }
 
+/* Roofing stands out in the phone menu too */
+.site-mobile-menu a.site-mobile-roofing {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 6px -12px;
+  padding: 14px 12px;
+  border: 1.5px solid var(--color-terracotta);
+  border-radius: var(--radius-card-sm);
+  background: color-mix(in srgb, var(--color-terracotta) 8%, transparent);
+  color: var(--color-terracotta);
+  font-weight: 500;
+}
+
+.site-mobile-roofing small {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-text-subtle);
+}
+
 .site-mobile-menu .btn {
   margin-top: 18px;
 }
@@ -162,6 +245,14 @@
 @media (max-width: 1180px) {
   .site-nav {
     display: none;
+  }
+
+  .site-header-compact {
+    display: flex;
+  }
+
+  .site-header-compact-roofing {
+    display: inline-flex;
   }
 
   .site-menu-toggle {
@@ -205,5 +296,12 @@
 
   .site-menu-toggle {
     padding: 9px 12px;
+  }
+}
+
+/* Phones: no room for the pill beside the logo; Roofing leads in the menu instead */
+@media (max-width: 599px) {
+  .site-header-compact-roofing {
+    display: none;
   }
 }

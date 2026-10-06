@@ -10,6 +10,23 @@ interface SiteHeaderProps {
   onConsult: () => void
 }
 
+/** Small house-and-roof mark for the roofing button. */
+function RoofIcon() {
+  return (
+    <svg className="roof-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+      <path
+        d="M2.5 11.5 12 4l9.5 7.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M5.5 10v9.5h13V10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function SiteHeader({ route, onConsult }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
@@ -20,11 +37,20 @@ export function SiteHeader({ route, onConsult }: SiteHeaderProps) {
     <a
       key={item.route}
       href={routeHref(item.route)}
-      className={route === item.route ? 'is-active' : undefined}
+      className={[route === item.route && 'is-active', item.route === 'roofing' && 'site-mobile-roofing']
+        .filter(Boolean)
+        .join(' ')}
       aria-current={route === item.route ? 'page' : undefined}
       onClick={() => setMenuOpen(false)}
     >
-      {item.label}
+      {item.route === 'roofing' ? (
+        <>
+          <RoofIcon /> {item.label}
+          <small>Our roofing line</small>
+        </>
+      ) : (
+        item.label
+      )}
     </a>
   ))
 
@@ -41,16 +67,29 @@ export function SiteHeader({ route, onConsult }: SiteHeaderProps) {
         </a>
 
         <nav className="site-nav" aria-label="Primary" data-fx-step="2">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.route}
-              href={routeHref(item.route)}
-              className="fx-underline fx-underline--draw"
-              aria-current={route === item.route ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) =>
+            // Roofing is its own line of business: an outlined orange pill, not a plain link
+            item.route === 'roofing' ? (
+              <a
+                key={item.route}
+                href={routeHref(item.route)}
+                className="site-nav-roofing"
+                aria-current={route === item.route ? 'page' : undefined}
+              >
+                <RoofIcon />
+                {item.label}
+              </a>
+            ) : (
+              <a
+                key={item.route}
+                href={routeHref(item.route)}
+                className="fx-underline fx-underline--draw"
+                aria-current={route === item.route ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ),
+          )}
           <a className="site-header-phone" href={company.phoneHref}>
             {company.phone}
           </a>
@@ -59,16 +98,26 @@ export function SiteHeader({ route, onConsult }: SiteHeaderProps) {
           </button>
         </nav>
 
-        <button
-          type="button"
-          className="site-menu-toggle"
-          data-fx-step="3"
-          aria-expanded={menuOpen}
-          aria-controls="site-mobile-menu"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          {menuOpen ? 'Close' : 'Menu'}
-        </button>
+        <div className="site-header-compact" data-fx-step="3">
+          {/* Tablets: the nav is folded away, so the roofing pill stays out beside the menu button */}
+          <a
+            href={routeHref('roofing')}
+            className="site-nav-roofing site-header-compact-roofing"
+            aria-current={route === 'roofing' ? 'page' : undefined}
+          >
+            <RoofIcon />
+            Roofing
+          </a>
+          <button
+            type="button"
+            className="site-menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="site-mobile-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? 'Close' : 'Menu'}
+          </button>
+        </div>
 
         {menuOpen && (
           <nav id="site-mobile-menu" className="site-mobile-menu" aria-label="Mobile">
