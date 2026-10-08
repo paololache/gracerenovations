@@ -3,6 +3,7 @@ import { About } from '../components/About'
 import { ContactSection } from '../components/ContactSection'
 import { Faq } from '../components/Faq'
 import { FloatingConsult } from '../components/FloatingConsult'
+import { GoogleReviews } from '../components/GoogleReviews'
 import { Hero } from '../components/Hero'
 import { ProcessPreview } from '../components/ProcessPreview'
 import { ProjectMap } from '../components/ProjectMap'
@@ -28,6 +29,7 @@ export function HomePage({ onConsult, onOpenProject }: PageProps) {
       <TrustStrip />
       <ServicesShowcase onConsult={onConsult} />
       <SuccessStories projects={storyProjects} onOpenProject={onOpenProject} />
+      <GoogleReviews />
       <WhyChoose />
       <ProcessPreview onConsult={onConsult} />
       <About onConsult={onConsult} />

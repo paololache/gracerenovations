@@ -5,7 +5,8 @@ import './WhyChoose.css'
 
 export function WhyChoose() {
   return (
-    <section className="why on-dark">
+    // Reaching this section opens the free consultation popup (once per visit, see useLeadTrigger)
+    <section className="why on-dark" data-lead-trigger>
       <div className="section">
         <div className="why-head" {...reveal}>
           <p className="eyebrow eyebrow-rule why-eyebrow">Why choose us</p>

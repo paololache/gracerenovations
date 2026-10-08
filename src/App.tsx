@@ -45,7 +45,7 @@ function App() {
     openLead('Consultation button')
   }
 
-  useLeadTrigger(route, () => openLead('Success stories popup'))
+  useLeadTrigger(route, () => openLead(route === 'home' ? 'Why choose us popup' : 'Scroll popup'))
   // Wait for an open project to close before interrupting.
   const leadOpen = leadPending && !projectId
 

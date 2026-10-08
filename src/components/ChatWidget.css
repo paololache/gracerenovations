@@ -26,6 +26,9 @@ body.has-floating-consult .chat {
   border-radius: var(--radius-pill);
   background: var(--color-carbon);
   color: var(--color-white);
+  /* A light ring keeps it visible over the dark bands too */
+  outline: 1px solid rgba(255, 255, 255, 0.22);
+  outline-offset: -1px;
   font: inherit;
   font-size: 12px;
   letter-spacing: var(--tracking-button);

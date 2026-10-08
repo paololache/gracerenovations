@@ -1,4 +1,5 @@
 import { Faq } from '../components/Faq'
+import { GoogleReviews } from '../components/GoogleReviews'
 import { Accented } from '../components/Heading'
 import { PageHero } from '../components/PageHero'
 import { Photo } from '../components/Photo'
@@ -204,6 +205,7 @@ export function RoofingPage({ onConsult, onOpenProject }: PageProps) {
         </div>
       </section>
 
+      <GoogleReviews />
       <Faq title="Roofing questions from homeowners." items={ROOFING_FAQS} />
       <QuoteBanner onConsult={onConsult} />
     </>

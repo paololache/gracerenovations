@@ -13,7 +13,7 @@ interface SuccessStoriesProps {
 /** Home page section: before-and-after success stories, each opening the full story. */
 export function SuccessStories({ projects, onOpenProject }: SuccessStoriesProps) {
   return (
-    <section className="projects-stories" id="projects" data-lead-trigger>
+    <section className="projects-stories" id="projects">
       <div className="section">
         <div className="section-head" {...reveal}>
           <div>
